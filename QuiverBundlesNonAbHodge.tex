@@ -1,0 +1,344 @@
+\documentclass[11pt]{amsart}
+
+\input{./preamble}
+
+\usepackage[style=alphabetic]{biblatex}
+\renewcommand{\subtitlepunct}{: }
+\addbibresource{refs.bib}
+\AtNextBibliography{\small}
+
+\title[Morphisms of {$\lambda$}--connections]
+      {Morphisms of {$\lambda$}--connections}
+
+\author{Mahmud Azam}
+\email{mahmud.azam@usask.ca}
+
+\author{Steven Rayan}
+\email{rayan@math.usask.ca}
+
+\address{Centre for Quantum Topology and Its Applications (quanTA) and
+Department of Mathematics and Statistics, University of Saskatchewan, SK,
+Canada~ S7N 5E6}
+
+\begin{document}
+
+\begin{abstract}
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+The main aspect of non-Abelian Hodge theory
+is a homeomorphism between the moduli spaces of polystable Higgs bundles
+with vanishing rational Chern classes and semisimiple flat connections over
+a smooth projective variety $X$. We may wonder:
+if ``continuous'' families of Higgs bundles are equivalent to those of flat
+connections, then families of morphisms of Higgs bundles should have some close
+relation to families of morphisms of flat connections.
+As a first step towards formalizing this idea, in \cite{ModQuivBun}
+in \cite{ModQuivBun}, we constructed a moduli stack parametrizing tuples
+$(E, \phi, F, \psi, f)$, where $E, F$ are vector bundles on $X$,
+$\phi, \psi$ are Higgs fields on $E, F$ respectively, and $f : E \to F$
+is a morphism of Higgs bundles. We showed that with fairly mild constraints
+on an algebraic stack $X$ over an algebraically closed field $k$, which includes
+all projective varieties, this moduli stack is algebraic.
+Denote this moduli stack as $\Higgs_1(X)$. A natural next step is
+to construct an algebraic stack parametrizing tuples $(E, \phi, F, \psi, f)$,
+where $E, F$ are again vector bundles on $X$, $\phi, \psi$ are flat connections
+on $E, F$ respectively, and $f : E \to F$ is morphism of connections.
+In the present work, we construct this stack --- call it $\Conn_1(X)$ ---
+along with a stack, denoted $\Hodge_1(X)$ over the affine line whose fibres over
+non-zero points are copies of $\Vect_1(X_{dR})$ and the fibre over $0$ is
+$\Higgs_1(X)$. Of course, taking the fibre over $0$ gives an alternate
+construction of $\Higgs_1(X)$. We show that $\Conn_1(X)$ is algebraic
+which implies that $\Conn_1(X)$ is algebraic. Again, this gives an alternate
+proof of the algebraicity of $\Higgs_1(X)$.
+
+\subsection{Notation and Conventions}
+
+We fix a base scheme $S$ and consider stacks on the category $\Sch_{/S}$ of
+schemes over $S$ with respect to the $\fppf$ topology.
+We denote the strict $2$--category of such objects as $\St_{/S}$.
+We denote the category of formal schemes over $S$ as $\FSch_{/S}$, which
+of course embeds fully faithfully into $\St_{/S}$.
+
+\section{Quotient Stacks of Formal Groupoids}
+
+In this subsection we review formal groupoids and the stacks associated
+to them as described in \cite[\S 3.1]{GeomNonAbHodgeFilt}. These are central
+to the stack-based formulation of non-Abelian Hodge theory. Specifically,
+the stacks of Higgs bundles and connections and deformations thereof
+are all defined as mapping stacks out of stacks associated to formal
+groupoids.
+
+\subsection{Definitions}
+
+\begin{defn}[Formal Groupoid]
+\label{defn:form-cat}
+A formal category over $S$ is an internal category $(X, \sF, s, t, c, i)$ in
+$\FSch_{/S}$ such that
+\begin{enumerate}
+\item $X$ is a scheme in $\Sch_{/S}$,
+\item $i : X \to \sF$ is a closed immersion realizing $X$ as the underlying
+scheme of $\sF$.
+\end{enumerate}
+This data is called a formal groupoid if, in addition:
+\begin{enumerate}[resume]
+\item for each $U \in \Sch_{/S}$, $(X(U), \sF(U), s_U, t_U, c_U, i_U)$
+is a groupoid (internal to $\Set$).
+\end{enumerate}
+A formal category as above is said to be smooth if
+\begin{enumerate}[resume]
+\item the structure map $X \to S$ is smooth,
+\item the morphisms $s, t : \sF \to X$ are formally smooth.
+\end{enumerate}
+\end{defn}
+
+\begin{notn}
+We will write a formal category as above simply as $(X, \sF)$,
+when the structure maps are clear from context.
+\end{notn}
+
+For convenience, we make the following definition:
+\begin{defn}[Formal Stack]
+\label{defn:form-st}
+A formal stack is a stack $\mathcal{X} \in \St_{/S}$ such that there exists
+a formal groupoid $(X, \sF)$ and a $2$--coequalizer diagram in $\St_{/S}$:
+\[\begin{tikzcd}
+\sF \ar[r, shift left, "s"] \ar[r, shift right, "t" below] &
+X \ar[r] &
+\mathcal{X}
+\end{tikzcd}\]
+presenting $\mathcal{X}$ as a quotient stack.
+We call $\mathcal{X}$ the stack associated to the formal groupoid
+$(X, \sF)$.
+\end{defn}
+
+\begin{warn}
+A formal stack is not necessarily a formal algebraic stack as defined in
+\cite[Definition 5.3]{FormalAlgSt}. For instance, it may have a digonal
+not representable by algebraic spaces --- see \cref{prop:Hodge-st-diag-non-rep}
+--- which contradicts \cite[Lemma 5.12.]{FormalAlgSt}.
+On the other hand, a formal algebraic stack is not necessarily a formal stack
+since it may be a quotient of formal algebraic spaces more general than formal
+schemes \cite[47]{FormalAlgSt}.
+\end{warn}
+
+\begin{notn}
+In the context of the above definition, if the formal groupoid $(X, \sF)$
+is clear from context, then we write $\mathcal{X}$ as $X_\sF$.
+\end{notn}
+
+\subsection{Main Examples}
+
+There are three main examples of interest to us \cite[31---33]{NonAbHodgeFilt}.
+The rough idea behind all of these is that a quasicoherent sheaf on
+a formal stack is $(X, \sF)$ is a quasicoherent sheaf on $X$ along with
+isomorphisms between the stalks encoded by $\sF$. By varying $\sF$,
+and consequently the isomorphisms of stalks, we can recover connections and
+Higgs bundles.
+
+\begin{exm}[de Rham Stack]
+\label{exm:dR-st}
+If $X \to S$ is separated, then the diagonal $\Delta_{X/S} : X \to X \times_S X$
+is a closed immersion and we take $\sF \to[{(s, t)}] X \times_S X$ to be the
+formal completion of $X \times_S X$ along the set theoretic image
+$\Delta_{X/S}(X)$. The composition morphisms $c : \sF \times_X \sF \to \sF$
+is the one induced by the map 
+\todo{Make this more precise.}
+$(X \times_S X) \times_X (X \times_S X) \to X$.
+The identity morphism $i : X \to \sF$
+is simply the closed immersion into the formal completion.
+We denote $\sF$ by $\sF_{dR}$ and the associated stack over $S$, by
+$X_{dR} \to S$, in this case.
+\end{exm}
+
+\begin{exm}[Dolbeault Stack]
+\label{exm:Dol-st}
+If $X \to S$ is again separated, then the diagonal
+$\Delta_{X/S} : X \to X \times_S X$ is again a closed immersion. Furthermore,
+any section of a separated morphism is a closed immersions. Since the
+projection $T(X \times_S X) \to X \times_S X$ of the tangent bundle of
+$X \times_S X$ is affine and hence separated, the zero section
+$0_X : X \to T(X \times_S X)$ is a closed immersion. Therefore, the composite
+\[
+\Delta' : X \to[\Delta_{X/S}] X \times_S X \to[0_X] T(X \times_S X)
+\]
+is a closed immersion.
+We can then take $\sF \to T(X \times_S X)$ to be the
+formal completion of $T(X \times_S X)$ along the set theoretic image
+$\Delta'(X)$.
+Then, the map $\sF \to[{(s, t)}] X \times_S X$ is obtained by
+composing with the bundle projection.
+The composition morphism $c : \sF \times_X \sF \to \sF$ is induced by
+the addition morphism \todo{Make this more precise.}
+\[
++ : T(X \times_S X) \times_{X \times_S X} T(X \times_S X) \to T(X \times_S X)
+\]
+The identity morphism $i : X \to \sF$
+is again the closed immersion into the formal completion.
+We denote $\sF$ by $\sF_{Dol}$ and the associated stack over $S$ by
+$X_{Dol} \to S$, in this case.
+\end{exm}
+
+\begin{exm}[Hodge Stack]
+\label{exm:Hodge-st}
+Take a separated morphism of schemes $X \to T$ over $\bZ$,
+consider a formal groupoid over $S := \bA^1_T = \bA^1_\bZ \times_\bZ T$
+whose scheme of objects
+is $X \times_T \bA^1_T \to \bA^1_T$. The formal scheme of morphisms is
+defined as follows. We take the blow up $B \to X \times_T X \times_T \bA^1_T$ of
+$(X \times_T \bA^1_T) \times_{\bA^1_T} (X \times_T \bA^1_T)
+\cong (X \times_T X \times_T \bA^1_T)$ along the set theoretic image of the
+map
+$\Delta_{X/T} \times_T 0 : X \cong X \times_T T
+\to X \times_T X \times_T \bA^1_T$ where
+$0 : T \to \bA^1_T$ is the pullback of the map
+$\Spec(\bZ[x] \to \bZ : x \mapsto 0)$ along the structure map
+$T \to \Spec(\bZ)$,
+and the blow up $B' \to X \times_T X$ of $X \times_T X$ along the image of
+$\Delta_{X/T}$.
+These fit into a commutative square:
+\[\begin{tikzcd}
+B' \ar[r] \ar[d] &
+B \ar[d] \\
+X \times_T X  \ar[r, "{(\id, 0)}"] & X \times_T X \times \bA^1_T
+\end{tikzcd}\]
+where the top and bottom arrows are both closed embeddings.
+\todo{Provide reference --- Annala's notes: an option}
+Then, $B'$ is the strict transform of $\im(\id_{X \times_T X}, 0)$
+in the blow up of $X \times_T X \times_s \bA^1_T$ along
+$\im(\Delta_{X/T} \times_T 0)$ by
+\cite[\href{https://stacks.math.columbia.edu/tag/080E}{Lemma 080E}]
+{stacks-project}.
+We take $Y$ to be the complement of $B'$ in $B$ --- note that
+$Y$ is an open subscheme of $B$ since the image of $B'$ is closed.
+We choose a closed embedding $\Delta' : X \times_T \bA^1_T \to Y$ making
+the following diagram commute:
+\[\begin{tikzcd}[column sep=huge]
+& Y \ar[d] \\
+X \cong X \times_T T
+  \ar[r, "\Delta_{X/T} \times_T 0" below]
+  \ar[ru, "\Delta'" above left] &
+X \times_T X \times_T \bA^1_T
+\end{tikzcd}\]
+Then, the formal scheme of morphisms is taken to be the formal completion
+$\sF \to Y$ of $Y$ along $\Delta'(X)$. The map
+$\sF \to[{(s, t)}] X \times_T X \times_T \bA^1_T$ is given by the two
+projections $Y \to X \times_T X \times_T \bA^1_T \to X \times_T \bA^1_T$.
+The composition map $c : \sF \times_{X \times_T \bA^1_T} \sF \to \sF$
+is induced by the map:
+\[
+(X \times_T X \times_T \bA^1_T) \times_{X \times_T \bA^1_T}
+(X \times_T X \times_T \bA^1_T) \to (X \times_T X \times_T \bA^1_T)
+\]
+The identity morphism $i : X \times_T \bA^1 \to \sF$
+is again the closed immersion into the formal completion.
+We will write $\sF$ as $\sF_{Hod}$ and the associated stack over $S = \bA^1_T$
+as $X_{Hod} \to \bA^1_T$, in this case.
+\end{exm}
+
+These stacks are related to each other by the following well known fact which
+is the main connection with non-Abelian Hodge theory.
+
+\begin{prop}
+Let $X \to T$ be a separated morphism of schemes and consider
+$X_{dR}$ and $X_{Dol}$ by taking $S = T$ in \cref{exm:dR-st} and
+\cref{exm:Dol-st}, respectively.
+Also consider $X_{Hod}$ by taking $S = \bA^1_T$ in
+\cref{exm:Hodge-st}. Then, for any closed point $\lambda : T \to \bA^1_T$,
+the fibre $X_{Hod, \lambda}$ of $X_{Hod} \to \bA^{1}_T$ over $\lambda$ is
+equivalent as a stack to $X_{dR}$ when $\lambda \neq 0$, and is equivalent to
+$X_{Dol}$, when $\lambda = 0$.
+\end{prop}
+\begin{proof}
+\todo[inline]{Complete the proof}
+\end{proof}
+
+We also record here some basic facts about these stacks that make it difficult
+to apply some of the techniques of \cite{ModQuivBun} directly ---
+see \cref{sec:quiv-bun-form-st}.
+
+\begin{cor}\label{prop:dR-st-set-fibres}
+The stack $X_{dR}$ of \cref{exm:dR-st} is a stack whose fibre categories are
+setoids (a groupoid that is also a preorder, and hence a groupoid with
+contractible connected components). That is, it is equivalent to the
+Grothendieck construction of a sheaf of sets.
+\end{cor}
+\begin{proof}
+This follows from the fact that the $\sF_{dR} \to X \times_S X$ is monomorphism
+of sheaves of sets.
+\end{proof}
+
+\begin{prop}\label{prop:Hodge-st-diag-non-rep}
+Taking $T = \Spec(k)$ for some algebraically closed field $k$ in the
+context of \cref{exm:Hodge-st},
+$X_{Hod}$ does not have a diagonal representable
+by algebraic spaces.
+\end{prop}
+\begin{proof}
+We consider a $T= \Spec(k)$--point
+$x \in X_{Hod}(\Spec(k))$ that factors as a map
+$\Spec(k) \to[{(x', 0)}] X \times_k \bA^1_k \to X_{Hod}$,
+and its stabilizer $\stb(x)$. Recalling that the preimage of a point in a
+blow-up is a projective space, we have that the stabilizer
+fits into the following pasting of Cartesian squares:
+\[\begin{tikzcd}
+\stb(x) \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+\bP^n_k \setminus \bP^{n - 1}_k \ar[r] \ar[d]
+  \ar[rd, phantom, "\lrcorner" very near start]&
+\Spec(k) \ar[d, "{(x', x', 0)}"] \\
+\sF_{Hod} \ar[r] & Y \ar[r] & X \times_k X \times_k \bA^1_k
+\end{tikzcd}\]
+Now, $\sF_{Hod}$ is the formal completion of $Y$ along $\Delta'(X)$, while
+the preimage of $\Delta'(X)$ in $\bP^n_k \setminus \bP^{n - 1}_k$
+is a single point $x''$ lying over $(x', x', 0)$. By the compatibility of
+formal completions with fibre products
+\cite[\href{https://stacks.math.columbia.edu/tag/0APV}{Lemma 0APV}]
+{stacks-project}, we have that $\stb(x)$ is the formal completion
+of $\bP^{n}_k \setminus \bP^{n - 1}_k$ along a point, which is just
+the formal completion of an affine chart containing that point along that
+point. That is, up to change of coordinates, we have:
+\[
+\stb(x) = \Spf(k[[x_0, \dots, x_n]])
+\]
+where $\Spf$ denotes the formal spectrum functor. If $\stb(x)$ were
+representable by an algebraic space, then it would have to be a scheme
+by \cite[Corollary 3.1.2]{NagataComp} as the reduction $\stb(x)_{red}$ is
+$\Spec(k)$. $\stb(x)$ would further have to be an affine scheme by
+\cite[\href{https://stacks.math.columbia.edu/tag/06AD}{Lemma 06AD}]
+{stacks-project}.
+However, it is easy to see that
+$\Spf(k[[x_0, \dots, x_n]])$ is not an affine scheme: as a locally
+ringed space, it consists of a single point whose stalk is
+$k[[x_0, \dots, x_n]]$. For any ring $A$ where $|\Spec(A)|$ is a point,
+the stalk at that point must be $A$. If $\stb(x) = \Spec(A)$,
+then we must have $A = k[[x_0, \dots, x_n]]$, but the latter is a DVR
+and hence has two prime ideals: namely $(0)$ and $(x_0, \dots, x_n)$. This is a
+contradiction. Thus, $\stb(x)$ cannot be an algebraic space
+and $X_{Hod}$ cannot have diagonal representable by algebraic spaces.
+\end{proof}
+
+\begin{prop}\label{prop:Dol-st-diag-non-rep}
+In the context of \cref{exm:Dol-st}, taking $S = \Spec(k)$ for some
+algebraically closed field $k$ and $X \to \Spec(k)$ to be smooth,
+the stack $X_{Dol}$ does not have a diagonal representable by algebraic spaces.
+\end{prop}
+\begin{proof}
+Consider a point $x \in X_{Dol}(\Spec(k))$ that factors as
+$\Spec(k) \to[x'] X \to X_{Dol}$.
+\todo[inline]{Complete the proof}
+\end{proof}
+
+\section{Quiver Bundles}
+
+\subsection{Definitions}
+
+\subsection{Quiver Bundles on Formal}
+
+\printbibliography
+
+\end{document}

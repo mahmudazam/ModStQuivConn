@@ -5,6 +5,7 @@
 \usepackage{amsthm}
 \usepackage{bbm}
 \usepackage{enumitem}
+  \setenumerate{label=(\roman*), itemsep=0pt}
 \usepackage[mathscr]{euscript}
 \usepackage{float}
 \usepackage{ifthen}
@@ -68,6 +69,7 @@
 
 \newtheorem{cthm}[thm]{Theorem (under a Conjecture)}
 \newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
 \newtheorem{cnj}[thm]{Conjecture}
 \newtheorem{guess}[thm]{Guess}
 \newtheorem{cor}[thm]{Corollary}
@@ -94,7 +96,9 @@
 \newcommand{\pb}{\mathsfbf}
 \newcommand{\mc}{\mathcal}
 
+\newcommand{\bA}{\bb{A}}
 \newcommand{\bC}{\bb{C}}
+\newcommand{\bP}{\bb{P}}
 \newcommand{\bR}{\bb{R}}
 \newcommand{\bk}{\bbm{k}}
 \newcommand{\one}{\bbm{1}}
@@ -106,6 +110,7 @@
 \newcommand{\sC}{\s{C}}
 \newcommand{\sD}{\s{D}}
 \newcommand{\sE}{\s{E}}
+\newcommand{\sF}{\s{F}}
 \newcommand{\sP}{\s{P}}
 \newcommand{\cP}{\mc{P}}
 \newcommand{\sS}{\s{S}}
@@ -217,8 +222,8 @@
 \newcommand{\Sc}[1][]{\ifthenelse{\equal{#1}{}}{\mathrm{Sch}}{\mathrm{Sch}_{/#1}}}
 \newcommand{\dSc}[1][]{\mathrm{d}\Sc[#1]}
 \newcommand{\ASc}{\mathrm{AffSch}}
-\newcommand{\et}{\mathrm{et}}
 \newcommand{\Spec}{\mathrm{Spec}}
+\newcommand{\Spf}{\mathrm{Spf}}
 \newcommand{\Proj}{\mathrm{Proj\ }}
 \newcommand{\CP}{\mathbb{C}P}
 \newcommand{\Quot}{\mathrm{Quot}}
@@ -231,13 +236,21 @@
 \newcommand{\QCoh}{\mathrm{QCoh}}
 \newcommand{\VecBun}{\mathrm{VecBun}}
 \newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\Higgs}{\mathrm{Higgs}}
+\newcommand{\Conn}{\mathrm{Conn}}
+\newcommand{\Hodge}{\mathrm{Hodge}}
 \newcommand{\Perf}{\mathrm{Perf}}
 \newcommand{\Bun}{\mathrm{Bun}}
 \newcommand{\Sym}{\mathrm{Sym}\xspace}
 \newcommand{\St}{\mathrm{St}}
 \newcommand{\AlgSt}{\mathrm{AlgSt}}
+\newcommand{\Sch}{\mathrm{Sch}}
+\newcommand{\FSch}{\mathbb{F}\mathrm{Sch}}
 \newcommand{\DSt}{\mathrm{DSt}}
 \newcommand{\SpSt}{\mathrm{SpSt}}
+
+\newcommand{\et}{\text{\'et}}
+\newcommand{\fppf}{\text{fppf}}
 
 \newcommand{\Mod}{\mathrm{Mod}}
 \newcommand{\LMod}{\mathrm{LMod}}
@@ -255,4 +268,4 @@
 \newcommand{\ASt}{\mathrm{AlgSt}}
 \newcommand{\str}{\mathrm{str}}
 \newcommand{\unstr}{\mathrm{unstr}}
-\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\stb}{\mathrm{stb}}

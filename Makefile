@@ -1,4 +1,4 @@
-MAIN=QuiverBundlesFormalAlgSt
+MAIN=QuiverBundlesNonAbHodge
 
 .PHONY: all
 all: ${MAIN}.pdf
