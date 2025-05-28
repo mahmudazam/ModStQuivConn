@@ -7,8 +7,8 @@
 \addbibresource{refs.bib}
 \AtNextBibliography{\small}
 
-\title[Morphisms of {$\lambda$}--connections]
-      {Morphisms of {$\lambda$}--connections}
+\title[Quiver Bundles and Non-Abelian Cohomology]
+      {Quiver Bundles and Non-Abelian Cohomology}
 
 \author{Mahmud Azam}
 \email{mahmud.azam@usask.ca}
@@ -64,6 +64,26 @@ schemes over $S$ with respect to the $\fppf$ topology.
 We denote the strict $2$--category of such objects as $\St_{/S}$.
 We denote the category of formal schemes over $S$ as $\FSch_{/S}$, which
 of course embeds fully faithfully into $\St_{/S}$.
+
+As we have already mentioned in the introduction, we use the following
+notation for the moduli stacks (left) of the various parametrized
+objects (right):
+\begin{center}
+\begin{tabular}{c l}
+$\Vect$ & vector bundles over $S$ \\
+$\Vect(\mcX/S)$ & vector bundles over $\mcX$ \\
+$\Vect_1(\mcX/S)$ & vector bundle morphisms over $\mcX$ \\
+$\Higgs(\mcX/S)$ & Higgs bundles over $\mcX$ \\
+$\Higgs_1(\mcX/S)$ & Higgs bundle morphisms over $\mcX$ \\
+$\Conn(\mcX/S)$ & vector bundles with connections over $\mcX$ \\
+$\Conn_1(\mcX/S)$ & morphisms of connections over $\mcX$
+\end{tabular}
+\end{center}
+Note that this is a slight departure from \cite{ModQuivBun}. We follow this
+convention, first, to be consistent with the notation $\Perf(X/S)$
+for the moduli stack of perfect complexes, as used in \cite{GeomNonAbHodgeFilt},
+and, second, because the $\mc{M}$ in $\mc{M}_{\Vect(X)}$, for example,
+seems redundant.
 
 \section{Quotient Stacks of Formal Groupoids}
 
@@ -333,11 +353,105 @@ $\Spec(k) \to[x'] X \to X_{Dol}$.
 \todo[inline]{Complete the proof}
 \end{proof}
 
-\section{Quiver Bundles}
+\section{Arrow Bundles}
 
-\subsection{Definitions}
+In this section we review the moduli stack $\Vect_1(\mcX/S)$ of vector bundle
+morphisms (or triples) as defined in \cite[\S 3]{ModQuivBun}.
+This stack parametrizes triples $(E, F, f)$ consisting of two vector bundles
+$E, F$ and a morphism of vector bundles $f : E \to F$ over a fixed base stack
+$\mcX \in \St_{/S}$. The main purpose of this section is to give a concrete
+description of the fibre categories $\Vect_1(\mcX/S)(U)$ over an scheme
+$U \in \Sch_{/S}$ and the boundary map
+\[
+\Vect_1(\mcX/S) \to[{(s, t)}] \Vect(\mcX/S) \times \Vect(\mcX/S)
+\]
+both of which we mentioned in \cite{ModQuivBun} without precise descriptions
+or proofs.
 
-\subsection{Quiver Bundles on Formal}
+\subsection{The Moduli Stacks}
+
+We first recall the definition of $\Vect_1(\mcX/S)$ and the face maps
+$s, t : \Vect_1(\mcX/S) \to \Vect(\mcX/S)$.
+
+\subsection{The Fibre Categories}
+
+\begin{thm}
+For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
+the category $\Vect_1(\mcX/S)(U)$ has object set:
+\[
+\Ob{\Vect_1(\mcX/S)(U)} = 
+\set[{
+  (\mc{E}_0, \mc{E}_1, f)
+}]{
+  \parbox{0.45\textwidth}{\centering
+    $\mc{E}_0, \mc{E}_1 \to U \times_S \mcX$ are vector bundles and
+    $f : \mc{E}_0 \to \mc{E}_1$ is a morphism of vector bundles
+  }
+}
+\]
+and, for two objects $X_i = (\mc{E}_{0, i}, \mc{E}_{0, i}, f_i)$ where
+$i \in \set{0, 1}$, the morphism sets:
+\[
+\Hom(X_1, X_2) =
+\set[{(\alpha_0, \alpha_1)}]{
+\parbox{0.5\textwidth}{\centering
+  $\alpha_j$ are vector bundle isomorphisms
+  making the following diagram commute:\\
+  \begin{tikzcd}[ampersand replacement=\&]
+    \mc{E}_{0, 0} \ar[r, "\alpha_1"] \ar[d, "f_1" left] \&
+    \mc{E}_{0, 1} \ar[d, "f_2"] \\
+    \mc{E}_{1, 0} \ar[r, "\alpha_2" below] \&
+    \mc{E}_{1, 1}
+  \end{tikzcd}
+}
+}
+\]
+\end{thm}
+\begin{proof}
+\todo[inline]{Complete the proof}
+\end{proof}
+
+\subsection{The Boundary Map}
+
+\begin{defn}
+For any stack $\mcX \in \St_{/S}$, taking $s, t$ to be the source and target
+maps as defined in \cite[\S 3]{ModQuivBun}, we call the morphism of stacks
+$\Vect_1(\mcX/S) \to[{(s, t)}] \Vect(\mcX/S)$, the boundary map.
+\end{defn}
+
+\begin{rmk}
+The name ``boundary map'' is inspired by the map of simplicial sets
+that sends the $1$--simplex to its boundary: that is, the disjoint union
+of its source and target vertices.
+\end{rmk}
+
+\begin{thm}\label{thm:boundary-map-fibre-functor}
+For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
+the functor $\Vect_1(\mcX/S)(U) \to[{(s, t)}] \Vect(\mcX/S)(U)^2$
+is defined by:
+\[\begin{array}{ccc}
+(\mc{E}_1, \mc{E}_2, f : \mc{E}_1 \to \mc{E}_2)
+&\mapsto& (\mc{E}_1, \mc{E}_2) \\
+(\alpha_1, \alpha_2) & \mapsto & (\alpha_1, \alpha_2)
+\end{array}\]
+In particular, the functor if faithful.
+\end{thm}
+\begin{proof}
+\todo[inline]{Complete the proof}
+\end{proof}
+
+\begin{cor}
+For any stack $\mcX \in \St_{/S}$, if $\Vect_1(\mcX/S)$ and $\Vect(\mcX/S)$
+are algebraic, then the morphism of stacks
+$\Vect_1(\mcX/S) \to \Vect(\mcX/S)$ is representable by algebraic spaces.
+\end{cor}
+\begin{proof}
+This follows from \cref{thm:boundary-map-fibre-functor} and
+\cite[\href{https://stacks.math.columbia.edu/tag/04Y5}{Lemma 04Y5}]
+{stacks-project}
+\end{proof}
+
+
 
 \printbibliography
 
