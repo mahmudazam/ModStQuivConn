@@ -29,6 +29,8 @@ Canada~ S7N 5E6}
 
 \tableofcontents
 
+%==============================================================================%
+
 \section{Introduction}
 
 The main aspect of non-Abelian Hodge theory
@@ -84,6 +86,8 @@ convention, first, to be consistent with the notation $\Perf(X/S)$
 for the moduli stack of perfect complexes, as used in \cite{GeomNonAbHodgeFilt},
 and, second, because the $\mc{M}$ in $\mc{M}_{\Vect(X)}$, for example,
 seems redundant.
+
+%==============================================================================%
 
 \section{Quotient Stacks of Formal Groupoids}
 
@@ -353,6 +357,35 @@ $\Spec(k) \to[x'] X \to X_{Dol}$.
 \todo[inline]{Complete the proof}
 \end{proof}
 
+\subsection{Vector Bundles on Formal Stacks}
+
+\todo[inline]{Maybe review the relation with $\Lambda$--modules here
+\cite[30]{NonAbHodgeFilt}}
+
+The following should be well known but we present it here nevertheless
+for completeness.
+
+\begin{thm}\label{thm:Vect-proj-form-st}
+Let $(X, \sF)$ be a smooth formal stack over an algebraically closed field
+$k$ of characteristic $0$ such that the structure maps
+$X \Spec(k)$ are projective morphisms. Then,
+$\Vect(X_\sF/S)$ is algebraic and locally of finite presentation.
+\end{thm}
+\begin{proof}
+We know that:
+\[
+\Vect(X_\sF/S) = \coprod_{n = 0}^\infty \Map(X_\sF, B\Gl_n(k))
+\]
+Then, it is known that $\Map(X_\sF, B\Gl_n(k))$ is algebraic and locally of
+finite type --- see the proof of \cite[Theorem 7.2]{AlgGeom-n-St}.
+Then, $\Vect(X_\sF/S)$ is also an algebraic stack locally of finite
+presentation.
+\todo{Need to check whether ``projective formal groupoid'' really means
+what we described above.}
+\end{proof}
+
+%==============================================================================%
+
 \section{Arrow Bundles}
 
 In this section we review the moduli stack $\Vect_1(\mcX/S)$ of vector bundle
@@ -373,42 +406,72 @@ or proofs.
 We first recall the definition of $\Vect_1(\mcX/S)$ and the face maps
 $s, t : \Vect_1(\mcX/S) \to \Vect(\mcX/S)$.
 
-\subsection{The Fibre Categories}
+\todo[inline]{Recall definitions here}
 
-\begin{thm}
+\subsection{Concrete Descriptions}
+
+\begin{thm}\label{thm:Vect1-psfunctor}
 For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
-the category $\Vect_1(\mcX/S)(U)$ has object set:
+the $2$--sheaf of groupoids associated to $\Vect_1(\mcX/S)$ via the Grothendieck
+construction is defined as follows:
+\begin{itemize}
+\item For any $U \in \Sch_{/S, fppf}$,
+$\Vect_1(\mcX/S)(U)$ is the core (maximal subgroupoid) of the $1$--category of
+vector bundles over $U \times_S \mcX$
+
+\item For any morphism $q : U \to V \in \Sch_{/S, fppf}$, the functor
 \[
-\Ob{\Vect_1(\mcX/S)(U)} = 
-\set[{
-  (\mc{E}_0, \mc{E}_1, f)
-}]{
-  \parbox{0.45\textwidth}{\centering
-    $\mc{E}_0, \mc{E}_1 \to U \times_S \mcX$ are vector bundles and
-    $f : \mc{E}_0 \to \mc{E}_1$ is a morphism of vector bundles
-  }
-}
+\Vect_1(\mcX/S)(V) \to \Vect_1(\mcX/S)(U)
 \]
-and, for two objects $X_i = (\mc{E}_{0, i}, \mc{E}_{0, i}, f_i)$ where
-$i \in \set{0, 1}$, the morphism sets:
-\[
-\Hom(X_1, X_2) =
-\set[{(\alpha_0, \alpha_1)}]{
-\parbox{0.5\textwidth}{\centering
-  $\alpha_j$ are vector bundle isomorphisms
-  making the following diagram commute:\\
-  \begin{tikzcd}[ampersand replacement=\&]
-    \mc{E}_{0, 0} \ar[r, "\alpha_1"] \ar[d, "f_1" left] \&
-    \mc{E}_{0, 1} \ar[d, "f_2"] \\
-    \mc{E}_{1, 0} \ar[r, "\alpha_2" below] \&
-    \mc{E}_{1, 1}
-  \end{tikzcd}
-}
-}
-\]
+is defined by pullback of vector bundles along
+$q \times_S \id_\mcX : U \times_S \mcX \to V \times_S \mcX$.
+\end{itemize}
 \end{thm}
 \begin{proof}
 \todo[inline]{Complete the proof}
+\end{proof}
+
+\begin{thm}
+For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
+the category $\Vect_1(\mcX/S)$ has object set:
+\begin{align*}
+ & \Ob{\Vect_1(\mcX/S)} \\
+=& \set[{
+  (p, \mc{E}_0, \mc{E}_1, f)
+}]{
+  \parbox{0.65\textwidth}{
+    $p : U \to S \in \Ob{(\Sch_{/S})_{fppf}}$, \\
+    $\mc{E}_0, \mc{E}_1 \to U \times_S \mcX$ are vector bundles, \\
+    $f : \mc{E}_0 \to \mc{E}_1$ is a morphism of vector bundles
+  }
+}
+\end{align*}
+and, for two objects $A_i = (p_i, \mc{E}_{0, i}, \mc{E}_{1, i}, f_i)$ where
+$i \in \set{0, 1}$, the morphism sets:
+\begin{align*}
+ & \Hom(A_1, A_2) \\
+=& \set[{(q, \alpha_0, \alpha_1)}]{
+  \parbox{0.65\textwidth}{
+    $q : U_0 \to U_1 \in \Sch_{/S}(p_1, p_2)$, \\
+    $\alpha_j$ are vector bundle isomorphisms, such that\\
+    \begin{center}
+    \begin{tikzcd}[ampersand replacement=\&]
+      q^*\mc{E}_{0, 1} \ar[r, "\alpha_1" above] \ar[d, "q^*f_2" left] \&
+      \mc{E}_{0, 0} \ar[d, "f_1"] \\
+      q^*\mc{E}_{1, 1} \ar[r, "\alpha_2" below] \&
+      \mc{E}_{1, 0} \&
+    \end{tikzcd}
+    \end{center}
+    is commutative
+  }
+}
+\end{align*}
+\end{thm}
+\begin{proof}
+The Grothendieck fibration $\Vect_1(\mcX/S) \to \Sch_{/S, fppf}$ is the
+Grothendieck construction of the pseudofunctor of \cref{thm:Vect1-psfunctor}.
+The result now follows from the concrete description of the Grothendieck
+construction.
 \end{proof}
 
 \subsection{The Boundary Map}
@@ -434,7 +497,7 @@ is defined by:
 &\mapsto& (\mc{E}_1, \mc{E}_2) \\
 (\alpha_1, \alpha_2) & \mapsto & (\alpha_1, \alpha_2)
 \end{array}\]
-In particular, the functor if faithful.
+In particular, the functor is faithful.
 \end{thm}
 \begin{proof}
 \todo[inline]{Complete the proof}
@@ -451,7 +514,144 @@ This follows from \cref{thm:boundary-map-fibre-functor} and
 {stacks-project}
 \end{proof}
 
+%==============================================================================%
 
+\section{Quiver Bundles on Formal Groupoids}
+
+\subsection{Arrow Bundles on Formal Groupoids}
+
+\begin{thm}\label{thm:Vect1-form-grpd-psfunctor}
+Let $(X, \sF)$ be a formal groupoid over $S$ and let
+$\Lambda \in \QCoh(X)$ be the corresponding sheaf of rings of differential
+operators. Then, the pseudofunctor associated to $\Vect_1(X_\sF/S)$ has the
+following concrete description:
+\begin{itemize}
+\item For each scheme $U \in \Sch_{/S, fppf}$, denoting
+the projection $U \times_S X \to X$ by $\pi_U$,
+$\Vect_1(X_\sF/S)(U)$ is the groupoid with object set:
+\[
+\set[{(E_0, \phi_0, E_1, \phi_1, f)}]{
+  \parbox{0.5\textwidth}{
+  $\mc{E}_i$ are vector bundles on $U \times_S X$, \\
+  $\phi_i$ are $\pi_U^*\Lambda$--module structures on $E_i$, \\
+  $f : E_0 \to E_1$ is a morphism of $\pi_U^*\Lambda$--modules
+  }
+}
+\]
+For each pair of objects
+$A_i = (E_{1, i}, \phi_{1, i}, E_{2, i}, \phi_{2, i}, f_i)$, $i \in \set{0, 1}$,
+the morphism set $\Hom(A_0, A_1)$ is:
+\[
+\set[{(\alpha_0, \alpha_1)}]{
+  \parbox{0.55\textwidth}{
+    $\alpha_j$ are isomorphisms of $\pi_U^*\Lambda$--modules, such that\\
+    \begin{center}
+    \begin{tikzcd}[ampersand replacement=\&]
+      \mc{E}_{0, 0} \ar[r, "\alpha_0" above] \ar[d, "f_2" left] \&
+      \mc{E}_{0, 1} \ar[d, "f_1"] \\
+      \mc{E}_{1, 0} \ar[r, "\alpha_1" below] \&
+      \mc{E}_{1, 1} \&
+    \end{tikzcd}
+    \end{center}
+    is commutative
+  }
+}
+\]
+
+\item For each morphism $q : U \to V$, the functor
+\[
+\Vect_1(X_\sF/S)(V) \to \Vect_1(X_\sF/S)(U)
+\]
+is given by pullback along $q \times_S \id_X : U \times_S X \to V \times_S X$
+in the following way:
+$\pi_U^*F = (\pi_V \circ (q \times_S \id_X))^*F
+\simeq (q \times_S \id_X)^*\pi_V^*F$ for all $F \in \QCoh(V \times_S X)$,
+so that for any object $(E_0, \phi_0, E_1, \phi_1, f)$ over $V$,
+$(q \times_S \id_X)^*\phi_i$ are $\pi_U^*\Lambda$--module structures on
+$(q \times_S \id_X)^*E_i$ and $f$ is morphism of $\pi_U^*\Lambda$--modules.
+The function of $\Hom$ sets is defined similarly by pullback.
+\end{itemize}
+\end{thm}
+\begin{proof}
+\todo[inline]{Complete the proof: should be able use \cref{thm:Vect1-psfunctor}
+along with the identification of $\Lambda$--modules with vector bundles on
+$X_\sF$ --- for example, as described in \cite[30]{NonAbHodgeFilt}}
+\end{proof}
+
+\begin{thm}\label{thm:Vect-alg-Vect1-alg}
+For any smooth formal groupoid $(X, \sF)$ over a scheme $S$,
+if $\Vect(X/S), \Vect_1(X/S)$ and $\Vect(X_\sF/S)$ are algebraic stacks, then so
+is $\Vect_1(X_\sF/S)$.
+\end{thm}
+\begin{proof}
+Using the concrete description of
+$\Vect_1(\mcX_\sF/S)$ and $\Vect(X/S)$, viewed as pseudofunctors,
+from \cref{thm:Vect1-form-grpd-psfunctor} and \cref{thm:Vect1-psfunctor},
+we consider the map of stacks
+$F : \Vect_1(\mcX_\sF/S) \to \Vect_1(X_\sF)$
+defined for the corresponding pseudofunctors as follows.
+For a scheme $U \in \Sch_{/S, fppf}$, the component map --- that is, the
+functor of $U$--points --- is given by:
+\[\begin{array}{ccccc}
+F_U & : & \Vect_1(\mcX_\sF/S)(U) & \to & \Vect_1(X/S)(U) \\
+    & : & (E_0, \phi_0, E_1, \phi_1, f) & \mapsto & (E_0, E_1, f) \\
+    & : & (\alpha_0, \alpha_1) & \mapsto & (\alpha_0, \alpha_1)
+\end{array}\]
+recalling that morphisms of $\pi_U^*\Lambda$--modules are, in particular,
+morphisms of the underlying vector bundles. Naturality of the $F$
+in $U$ is immediate \todo{How?}.
+
+We then compose with $B := (s, t) : \Vect_1(X/S) \to \Vect(X/S)^2$, the boundary
+map, to obtain a map $F' : \Vect_1(X_\sF/S) \to \Vect(X/S)^2$. We claim that
+$F'$ is representable by algebraic spaces. For this, we will show, for
+some arbitrary scheme $U \in \Sch_{/S, fppf}$ and a map
+$u = (u_0, u_1) : U \to \Vect(X/S)^2$, that the fibre product
+stack/pseudofunctor $U \times_{\Vect(X/S)^2, F', u} \Vect_1(X_\sF/S)$ is
+representable by an algebraic space. Let $E_i'$ be the vector bundle
+on $U \times_S X$ corresponding to the map $u_i : U \to \Vect(X/S)$.
+We then compute the groupoid of
+$V$--points for a scheme $V \in \Sch_{/S, fppf}$ as follows:
+\begin{itemize}
+\item The objects are triples
+$(q, E_0, \phi_0, E_1, \phi_1, f, \beta_0, \beta_1)$ where:
+  \begin{itemize}[itemsep=0pt]
+  \item $q : V \to U$ is a morphism in $Sch_{/S, fppf}$,
+  \item $E_i$ are vector bundles on $V \times_S X$,
+  \item $\phi_i$ is a $\pi_V^*\Lambda$--module structure on $E_i$,
+  \item $f : E_0 \to E_1$ is a morphism of $\pi_V^*\Lambda$--modules,
+  \item $\beta_i$ is an isomorphism of vector bundles
+  $q^*E_i' \to E_i$ such that the following diagram commutes:
+  \[\begin{tikzcd}
+  q^*E_0' \ar[r, "\beta_0"] \ar[d, "q^*(f)" left] &
+  E_0 \ar[d, "f"] \\
+  q^*E_1' \ar[r, "\beta_1" below] & E_1
+  \end{tikzcd}\]
+  \end{itemize}
+
+\item For objects
+$A_i = (q_i, E_{0, i}, \phi_{0, i}, E_{1, i}, \phi_{1, i}, f_i,
+\beta_{0, i}, \beta_{1, i})$, $i \in \set{0, 1}$, a morphism
+$A_0 \to A_1$ is simply a pair of vector bundle morphisms
+$\alpha_{i} : E_{i, }$ ...... such that the following diagram commutes:
+\[\begin{tikzcd}
+  q_0^*E_0' \ar[rr] \ar[rd] \ar[dd] & &
+  E_{0, 0} \ar[dd] \ar[rd] & \\
+  & q_1^*E_{0}' \ar[rr, crossing over] & & E_{0, 1} \ar[dd] \\
+  q_0^*E_1' \ar[rr] \ar[rd] & & E_{1, 0} \ar[rd] & \\
+  & q_1^*E_1' \ar[rr] \ar[from=uu, crossing over] & & E_{1, 1}
+\end{tikzcd}\]
+\end{itemize}
+\end{proof}
+
+\begin{cor}
+For any smooth formal groupoid $(X, \sF)$ over an algebraically closed field
+$k$ of characteristic zero, where $X$ is a projective variety $k$,
+the stack $\Vect_1(X_\sF/S)$ is algebraic.
+\end{cor}
+\begin{proof}
+The stack $\Vect(X_\sF/S)$ is algebraic by \cref{thm:Vect-proj-form-st},
+and the result follows from \cref{thm:Vect-alg-Vect1-alg}.
+\end{proof}
 
 \printbibliography
 
