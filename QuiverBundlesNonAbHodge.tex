@@ -1,29 +1,35 @@
 \documentclass[11pt]{amsart}
 
+\usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
+  \hypersetup{
+    colorlinks,
+    linkcolor={red!55!black},
+    urlcolor={blue!55!black},
+    citecolor={green!55!black}
+  }
+
 \input{./preamble}
+
+\setenumerate{itemsep=1pt, label=(\roman*)}
+\setitemize{itemsep=1pt, leftmargin=1.5em}
 
 \usepackage[style=alphabetic]{biblatex}
 \renewcommand{\subtitlepunct}{: }
 \addbibresource{refs.bib}
 \AtNextBibliography{\small}
 
-\title[Quiver Bundles and Non-Abelian Cohomology]
-      {Quiver Bundles and Non-Abelian Cohomology}
+\usepackage[margin=1.05in]{geometry}
+
+\title[Quiver Bundles and non-Abelian Hodge theory]
+      {Quiver Bundles and non-Abelian Hodge theory}
 
 \author{Mahmud Azam}
 \email{mahmud.azam@usask.ca}
 
-\author{Steven Rayan}
-\email{rayan@math.usask.ca}
-
-\address{Centre for Quantum Topology and Its Applications (quanTA) and
-Department of Mathematics and Statistics, University of Saskatchewan, SK,
-Canada~ S7N 5E6}
+\address{Department of Mathematics and Statistics, University of Saskatchewan,
+SK, Canada~ S7N 5E6}
 
 \begin{document}
-
-\begin{abstract}
-\end{abstract}
 
 \maketitle
 
@@ -33,77 +39,1951 @@ Canada~ S7N 5E6}
 
 \section{Introduction}
 
-The main aspect of non-Abelian Hodge theory
-is a homeomorphism between the moduli spaces of polystable Higgs bundles
-with vanishing rational Chern classes and semisimiple flat connections over
-a smooth projective variety $X$. We may wonder:
-if ``continuous'' families of Higgs bundles are equivalent to those of flat
-connections, then families of morphisms of Higgs bundles should have some close
-relation to families of morphisms of flat connections.
-As a first step towards formalizing this idea, in \cite{ModQuivBun}
-in \cite{ModQuivBun}, we constructed a moduli stack parametrizing tuples
-$(E, \phi, F, \psi, f)$, where $E, F$ are vector bundles on $X$,
-$\phi, \psi$ are Higgs fields on $E, F$ respectively, and $f : E \to F$
-is a morphism of Higgs bundles. We showed that with fairly mild constraints
-on an algebraic stack $X$ over an algebraically closed field $k$, which includes
-all projective varieties, this moduli stack is algebraic.
-Denote this moduli stack as $\Higgs_1(X)$. A natural next step is
-to construct an algebraic stack parametrizing tuples $(E, \phi, F, \psi, f)$,
-where $E, F$ are again vector bundles on $X$, $\phi, \psi$ are flat connections
-on $E, F$ respectively, and $f : E \to F$ is morphism of connections.
-In the present work, we construct this stack --- call it $\Conn_1(X)$ ---
-along with a stack, denoted $\Hodge_1(X)$ over the affine line whose fibres over
-non-zero points are copies of $\Vect_1(X_{dR})$ and the fibre over $0$ is
-$\Higgs_1(X)$. Of course, taking the fibre over $0$ gives an alternate
-construction of $\Higgs_1(X)$. We show that $\Conn_1(X)$ is algebraic
-which implies that $\Conn_1(X)$ is algebraic. Again, this gives an alternate
-proof of the algebraicity of $\Higgs_1(X)$.
+\subsection{Motivation}
 
-\subsection{Notation and Conventions}
+Representations of the fundamental group of various algebraic varieties make
+prominent appearances in various areas of mathematics and physics. A few
+examples are in order:
 
-We fix a base scheme $S$ and consider stacks on the category $\Sch_{/S}$ of
-schemes over $S$ with respect to the $\fppf$ topology.
-We denote the strict $2$--category of such objects as $\St_{/S}$.
-We denote the category of formal schemes over $S$ as $\FSch_{/S}$, which
-of course embeds fully faithfully into $\St_{/S}$.
+\begin{itemize}
+\item We recall that the fundamental group of the configuration space of $n$
+points on the plane is the Artin braid group. Representations of this
+group characterize solutions to the quantum Yang-Baxter equations
+\cite{BirmanKnotThry} and they govern the statistics of anyon exchanges
+\cite{GoldinAnyons}. This makes them important in topological quantum computing
+\cite{KauffmanBraidRepQGates} in the sense of \cite{TopPhasesQC}.
 
-As we have already mentioned in the introduction, we use the following
-notation for the moduli stacks (left) of the various parametrized
-objects (right):
-\begin{center}
-\begin{tabular}{c l}
-$\Vect$ & vector bundles over $S$ \\
-$\Vect(\mcX/S)$ & vector bundles over $\mcX$ \\
-$\Vect_1(\mcX/S)$ & vector bundle morphisms over $\mcX$ \\
-$\Higgs(\mcX/S)$ & Higgs bundles over $\mcX$ \\
-$\Higgs_1(\mcX/S)$ & Higgs bundle morphisms over $\mcX$ \\
-$\Conn(\mcX/S)$ & vector bundles with connections over $\mcX$ \\
-$\Conn_1(\mcX/S)$ & morphisms of connections over $\mcX$
-\end{tabular}
-\end{center}
-Note that this is a slight departure from \cite{ModQuivBun}. We follow this
-convention, first, to be consistent with the notation $\Perf(X/S)$
-for the moduli stack of perfect complexes, as used in \cite{GeomNonAbHodgeFilt},
-and, second, because the $\mc{M}$ in $\mc{M}_{\Vect(X)}$, for example,
-seems redundant.
+\item Some recent advances in condensed matter physics, namely hyperbolic band
+theory \cites{HyperbolicBandTheory, HypBloch}, are centred around
+representations of some choice of discrete translation group acting on the
+hyperbolic plane. In turn, these translation groups are the fundamental groups
+of the Riemann surfaces obtained by quotienting the hyperbolic plane by the
+translation group.
+
+\item A large class of $d = 4, n = 2$ field theories called ``class S''
+\cite{ClassS} obtained by a specific compactification method applied to
+$d = 6, N = (2, 0)$ superconformal field theories, are controlled by
+choices of representations of the fundmanetal group of the surface
+parametrizing the ``compactified'' dimensions.
+\end{itemize}
+
+A series of equivalences, then, allows us to address representations of
+fundamental groups in terms of vector bundles and connections as we briefly
+discuss now.  There is a well-known equivalence of categories between the
+category of representations of the fundamental group of a ``nice enough''
+topological space, such as a smooth manifold, and the category of locally
+constant sheaves over the space. This equivalence restricts to an equivalence
+between linear representations of the fundamental group on one side and locally
+constant sheaves of vector spaces on the other. Then, the Riemann-Hilbert
+correspondence (see, for example, \cite[35]{LanglandsIntro}) gives an
+equivalence of categories between the category of locally constant sheaves and
+the category of vector bundles with flat connections.  On the other hand, there
+is an equivalence between the category of vector bundles with flat connections
+on a base complex manifold and the category of what are called Higgs bundles on
+the base. This was first shown by Hitchin in \cite{SelfDualityEqn} as an
+isomorphism of the moduli spaces of the respective objects when the base is a
+curve, and was a generalization of the Narasimhan-Seshadri theorem. It was then
+generalized to arbitrary compact K\"ahler manifolds by Simpson in
+\cite{HiggsLocSys}. This equivalence is called the Corelette-Simpson
+correspondence or the non-Abelian Hodge correspondence. For convenience, we will
+call the study of these equivalences as non-Abelian Hodge theory, even though
+the term is generally used only in association with the Corlette-Simpson
+correspondence.
+
+We can thus argue that
+understanding categories and moduli spaces of flat connections and those of
+Higgs bundles are of importance simultaneously to geometry, physics and
+quantum computing. This work is a contribution in this general endeavour in
+that it is a first step in unifying the moduli theoretic and the
+categorical perspectives of the above discussed correspondences in a very
+specific manner.
+The moduli spaces allow us to vary the objects in some geometric way, but one
+should be able to do the same with the morphisms, and the categorical
+equivalences should be ``geometric'' in some good sense. Once we try to make
+this idea precise, we arrive at the following situation:
+we should have moduli spaces of objects and moduli spaces of morphisms
+forming category objects internal to some geometric category, and the
+equivalences should be equivalences of internal categories in the geometric
+category, instead of isomorphisms of moduli spaces and equivalences of
+categories running in parallel, apparently unaware of each other.
+We can begin to visualize the situation as follows:
+\begin{figure}[H]
+\centering
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,313); %set diagram left start at 0, and has height of 313
+
+%Curve Lines [id:da1148800457594148]
+\draw    (100,123) .. controls (166.25,172) and (30.25,200) .. (129.25,239) ;
+%Curve Lines [id:da7590525553599522]
+\draw    (233,133) .. controls (299.25,182) and (262,212) .. (261,249) ;
+%Straight Lines [id:da5070827337199633]
+\draw    (100,123) -- (231.01,132.85) ;
+\draw [shift={(233,133)}, rotate = 184.3] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da6573613387170965]
+\draw    (106,180) -- (270.42,193.09) ;
+\draw [shift={(272.42,193.25)}, rotate = 184.55] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da6160734956005596]
+\draw    (119,156) -- (264.26,167.84) ;
+\draw [shift={(266.25,168)}, rotate = 184.66] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da10872217517266392]
+\draw    (117,140) -- (251.26,150.84) ;
+\draw [shift={(253.25,151)}, rotate = 184.62] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da18226736975715663]
+\draw    (93,199) -- (266.09,214.08) ;
+\draw [shift={(268.08,214.25)}, rotate = 184.98] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9292769821638345]
+\draw    (99,221) -- (262.26,234.83) ;
+\draw [shift={(264.25,235)}, rotate = 184.84] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da6241057084291257]
+\draw    (128,239) -- (259.01,248.85) ;
+\draw [shift={(261,249)}, rotate = 184.3] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (76.92,159.07) node [anchor=north west][inner sep=0.75pt]    {$x( t)$};
+% Text Node
+\draw (279.58,172.07) node [anchor=north west][inner sep=0.75pt]    {$y( t)$};
+% Text Node
+\draw (158.25,101.07) node [anchor=north west][inner sep=0.75pt]    {$f( t)$};
+\end{tikzpicture}
+\end{figure}
+\noindent Here, $x(t)$ and $y(t)$ are two paths in the moduli space of objects
+and $f(t)$ is a path in the moduli space of morphisms, such that
+for each $t$, $f(t)$ has source $x(t)$ and target $y(t)$. At this point,
+it is imaginable to have not just moduli spaces of morphisms but those
+parametrizing diagrams of any shape. We may draw the situation for a diagram
+of the shape $\Delta^2$ --- the commuting triangle --- as:
+\begin{figure}[H]
+\centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,439); %set diagram left start at 0, and has height of 439
+
+%Straight Lines [id:da031783799821766046]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (246,64) -- (338.23,112.32) ;
+\draw [shift={(340,113.25)}, rotate = 207.65] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9260042609530404]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (203,133.25) -- (338.02,113.54) ;
+\draw [shift={(340,113.25)}, rotate = 171.69] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8713546687877546]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (203,133.25) -- (243.96,65.96) ;
+\draw [shift={(245,64.25)}, rotate = 121.33] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Circle [id:dp28357723713465766]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (336.25,113.25) .. controls (336.25,111.18) and (337.93,109.5) .. (340,109.5) .. controls (342.07,109.5) and (343.75,111.18) .. (343.75,113.25) .. controls (343.75,115.32) and (342.07,117) .. (340,117) .. controls (337.93,117) and (336.25,115.32) .. (336.25,113.25) -- cycle ;
+%Shape: Circle [id:dp09099039468018699]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (241.25,64.25) .. controls (241.25,62.18) and (242.93,60.5) .. (245,60.5) .. controls (247.07,60.5) and (248.75,62.18) .. (248.75,64.25) .. controls (248.75,66.32) and (247.07,68) .. (245,68) .. controls (242.93,68) and (241.25,66.32) .. (241.25,64.25) -- cycle ;
+%Shape: Circle [id:dp2526131777974173]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (199.25,133.25) .. controls (199.25,131.18) and (200.93,129.5) .. (203,129.5) .. controls (205.07,129.5) and (206.75,131.18) .. (206.75,133.25) .. controls (206.75,135.32) and (205.07,137) .. (203,137) .. controls (200.93,137) and (199.25,135.32) .. (199.25,133.25) -- cycle ;
+%Straight Lines [id:da09735891322092871]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (225,154) -- (317.23,202.32) ;
+\draw [shift={(319,203.25)}, rotate = 207.65] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8403069270710872]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (182,223.25) -- (317.02,203.54) ;
+\draw [shift={(319,203.25)}, rotate = 171.69] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da4775153693227635]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (182,223.25) -- (222.96,155.96) ;
+\draw [shift={(224,154.25)}, rotate = 121.33] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Circle [id:dp22060668741503753]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (315.25,203.25) .. controls (315.25,201.18) and (316.93,199.5) .. (319,199.5) .. controls (321.07,199.5) and (322.75,201.18) .. (322.75,203.25) .. controls (322.75,205.32) and (321.07,207) .. (319,207) .. controls (316.93,207) and (315.25,205.32) .. (315.25,203.25) -- cycle ;
+%Shape: Circle [id:dp9846615185838024]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (220.25,154.25) .. controls (220.25,152.18) and (221.93,150.5) .. (224,150.5) .. controls (226.07,150.5) and (227.75,152.18) .. (227.75,154.25) .. controls (227.75,156.32) and (226.07,158) .. (224,158) .. controls (221.93,158) and (220.25,156.32) .. (220.25,154.25) -- cycle ;
+%Shape: Circle [id:dp7025379879718762]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (178.25,223.25) .. controls (178.25,221.18) and (179.93,219.5) .. (182,219.5) .. controls (184.07,219.5) and (185.75,221.18) .. (185.75,223.25) .. controls (185.75,225.32) and (184.07,227) .. (182,227) .. controls (179.93,227) and (178.25,225.32) .. (178.25,223.25) -- cycle ;
+%Curve Lines [id:da5797114344250976]
+\draw    (228,294.25) .. controls (256,231.25) and (119.25,263) .. (203,133.25) ;
+%Straight Lines [id:da639186651750952]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (271,225) -- (363.23,273.32) ;
+\draw [shift={(365,274.25)}, rotate = 207.65] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da31669383873821966]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (228,294.25) -- (363.02,274.54) ;
+\draw [shift={(365,274.25)}, rotate = 171.69] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9245276938968721]
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (228,294.25) -- (268.96,226.96) ;
+\draw [shift={(270,225.25)}, rotate = 121.33] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Circle [id:dp14279740317062584]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (361.25,274.25) .. controls (361.25,272.18) and (362.93,270.5) .. (365,270.5) .. controls (367.07,270.5) and (368.75,272.18) .. (368.75,274.25) .. controls (368.75,276.32) and (367.07,278) .. (365,278) .. controls (362.93,278) and (361.25,276.32) .. (361.25,274.25) -- cycle ;
+%Shape: Circle [id:dp5008646457343823]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (266.25,225.25) .. controls (266.25,223.18) and (267.93,221.5) .. (270,221.5) .. controls (272.07,221.5) and (273.75,223.18) .. (273.75,225.25) .. controls (273.75,227.32) and (272.07,229) .. (270,229) .. controls (267.93,229) and (266.25,227.32) .. (266.25,225.25) -- cycle ;
+%Shape: Circle [id:dp924595121557407]
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (224.25,294.25) .. controls (224.25,292.18) and (225.93,290.5) .. (228,290.5) .. controls (230.07,290.5) and (231.75,292.18) .. (231.75,294.25) .. controls (231.75,296.32) and (230.07,298) .. (228,298) .. controls (225.93,298) and (224.25,296.32) .. (224.25,294.25) -- cycle ;
+%Curve Lines [id:da35266794821922065]
+\draw    (366,274.25) .. controls (394,211.25) and (257.25,243) .. (341,113.25) ;
+%Curve Lines [id:da8445693879391196]
+\draw    (270,225.25) .. controls (298,162.25) and (177.25,232) .. (245,64.25) ;
+
+\end{tikzpicture}
+\end{figure}
+
+In this work, we make these ideas precise: we construct and establish
+the ``geometricity'' of the respective moduli spaces of diagrams of vector
+bundles with connection. Previously, we constructed and studied similar moduli
+spaces of diagrams of vector bundles and Higgs bundles \cite{ModQuivBun}.
+In combination with the current work, this gives a unification of the moduli
+theory and the category theory of all sides involved in non-Abelian Hodge
+theory.
+The diagrams we are considering can be thought of as representations of quivers
+in the sense of \cite{QuivRepKirillov} but in the categories of vector bundles,
+Higgs bundles, connections or $\lambda$--connections over a fixed base,
+as opposed to the category of vector spaces --- hence, the term ``quiver
+bundle''.
+At the same time, we provide ``face'' and ``degeneracy'' maps, in the same sense
+as in the context of simplicial sets. That is, a face map sends a diagram to one
+of its lower dimensional faces, while a degeneracy map sends a diagram to a
+higher dimensional diagram obtained by adding identity edges. The collection
+of these results should be thought of as the beginnings of a form of
+categorification of non-Abelian Hodge theory.
+
+\subsection{Overview}
+
+Strictly speaking, we will be working with moduli stacks in the context of
+algebraic geometry, as opposed to moduli spaces, and hence the concept of paths
+will not be as straightforward as in the case of honest topological spaces or
+manifolds. Instead, we will deal with all possible families  parametrized by
+affine schemes.  Hence, we will work in the setting of prestacks over a base
+affine scheme $S$ over an algebraically closed field $k$ of characteristic zero.
+We set up the basic notation and conventions in \cref{sec:Prelim}. Here, we will
+also prove some basic results in the theory of prestacks and stacks that should
+be known to experts but are difficult to find references for. In
+\cref{sec:RelSpec}, we will give a detailed description of the relative spectrum
+construction for prestacks and show that it is given by a certain Grothendieck
+construction or unstraightening. Again, it is difficult to find this exact
+description in the literature but will be a technical requirement for proving
+our main results in the next sections.
+
+In \cref{sec:ArrowBun}, For a prestack $\mcX$
+over $S$, we define a prestack $\sM_1(\mcX)$ whose objects over an $S$--scheme
+$U$ are triples $(E, F, s)$ where $E, F$ are vector bundles, or equivalently,
+finite locally free sheaves on $U \times_S \mcX$ and $s : E \to F$ is a morphism
+of vector bundles. This already appeared in our previous work
+\cite{ModQuivBun} but in the present paper, we give a fully concrete description
+of this prestack. We call this prestack the moduli prestack of arrow bundles
+on $\mcX$. From our definitions, it will follow that when $\mcX$ is
+a stack, so is $\sM_1(\mcX)$. It will also follow that when $\mcX$ is
+algebraic and satisfies some mild conditions, then $\sM_1(\mcX)$ is also
+algebraic and satisfies similar conditions. From this, it is possible
+to define similarly ``nice'' algebraic stacks parametrizing diagrams
+of vector bundles of any fixed finite shape --- that is, indexed by a finite
+simplicial set. The construction of these stacks is given in \cite{ModQuivBun}
+and hence we will not discuss the construction in detail in the present paper
+but it will appear in the thesis.
+
+The main results towards a categorification of non-Abelian Hodge theory are in
+\cref{sec:ArrowBunFormalGrpd}. Here, for a scheme $X$ over $S$, we construct a
+moduli stack $\sM_1(X_\sF)$ --- we will explain the meaning of ``$\sF$'' in that
+subsection --- whose objects over an $S$--scheme $U$ are
+``connection'' triples $(E, \phi, F, \psi, s)$, where $E, F$ are
+vector bundles on $U \times_S X$; $\phi, \psi$ are connections on $E, F$
+respectively, and $s : E \to F$ is a morphism of connections in the sense that
+it is a morphism of vector bundles commuting with the connection maps.
+Strictly speaking, we will be dealing with an equivalent formulation of
+connections: a module over a sheaf of rings of differential operators
+\cite[\S 2]{ModRepFunGrpI}.
+One of the main result of this section, and
+indeed of the thesis, is that as long as the moduli stack $\sM_1(X)$, the
+moduli stack $\sM(X)$ of vector bundles on $X$ and the moduli stacks constructed
+in \cite[31---33]{NonAbHodgeFilt} are algebraic, then so is $\sM_1(X_\sF)$.
+This is a simultaneous categorification of the moduli stacks of Higgs bundles
+and connections and of the so called ``non-Abelian Hodge filtration'' given in
+\cite[31---33]{NonAbHodgeFilt}, and whose ``geometricity'' is proved in
+\cite[Theorem 6.13]{GeomNonAbHodgeFilt}.
+
+We explore the categorification aspect in \cref{sec:QuivBun} in greater
+generality, by recalling the definition of moduli stacks of quiver bundles from
+\cite{ModQuivBun} and exploring what this means for connections.
+We also discuss some results from \cite{ModQuivBun} about
+transporting linear algebraic operations such as direct sums and tensor
+products of vector bundles to the the setting of moduli stacks.
+
+In \cref{sec:Future}, we discuss work that remains to be done for the thesis
+and beyond. We discuss the next steps towards a categorified
+non-Abelian Hodge theory by giving an outline to prove a version
+of the non-Abelian Hodge correspondence in the categorified setting.
+Finally, we speculate on some potential applications of our
+work to hyperbolic band theory.
 
 %==============================================================================%
 
-\section{Quotient Stacks of Formal Groupoids}
+\section{Preliminaries}\label{sec:Prelim}
 
-In this subsection we review formal groupoids and the stacks associated
-to them as described in \cite[\S 3.1]{GeomNonAbHodgeFilt}. These are central
-to the stack-based formulation of non-Abelian Hodge theory. Specifically,
-the stacks of Higgs bundles and connections and deformations thereof
-are all defined as mapping stacks out of stacks associated to formal
-groupoids.
+\subsection{Category Theory}
 
-\subsection{Definitions}
+For category theoretic notation, we try to stay as close to \cite{HTT} as
+possible. For example, we write $\Delta^n$ for the poset of natural numbers
+$\set{0 < \dots < n}$ which we consider as a category. We will also write
+$\Delta^n$ to denote its nerve or the standard $n$--dimensional
+simplicial set, when needed.
+For two categories $C, D$, we write $\Fun(C, D)$ for the
+category of functors $C \to D$, and $C^\simeq$ for the core or maximal
+subgroupoid of $C$. For a category $C$ and two objects
+$c, d \in C$, we will write $\Hom_C(c, d)$ or $C(c, d)$ to denote
+the set of morphisms $c \to d$ in $C$.
+We will write an category object internal to a category $C$
+as a tuples $(O, M, s, t, c, i)$, where $O$ is the object of objects,
+$M$ is the object of morphisms, $s, t, c, i$ are the source, target,
+composition and identity maps respectively.
+
+That said, we will use the following notation for $2$--categorical notions.
+Given a pair of objects $a, b$ and $1$--morphisms $f, g : a \to b$ in a
+$2$--category, we will denote a $2$--morphism $\alpha$ from $f$ to $g$ as
+$\alpha : f \To g : a \to b$. We will denote by $- \circ -$, composition of
+$1$--morphisms as usual but also vertical composition. We will denote
+horizontal composition by $- \star -$. We will denote the identity $2$--morphism
+of a $1$--morphism $f$ as $e_f$, but in the case that $f = \id_a$ for some
+object, we will simply write $e_a$.
+
+\subsection{Prestacks and Stacks}
+
+Throughout this work, we will fix an algebraically closed field $k$.
+Let $\Sch$ denote the $1$--category of schemes over $k$ and $\Aff$ denote the
+full subcategory of affine schemes over $k$.
+We will denote by $\PSt$ the $2$--category of
+prestacks or categories fibred in groupoids over $\Aff$, and by
+$\St$, the full sub-$2$-category thereof consisting of stacks with respect
+to the \'etale topology.
+We recall that \'etale stacks are also fppf stacks so that it
+makes sense to speak of Artin \'etale stacks, which we will simply refer to as
+algebraic stacks. We denote the $2$--category of Artin \'etale stacks
+or algebraic stacks as $\AlgSt$ which is a full sub-$2$-category of the
+$2$--category of all Artin fppf stacks over $k$.
+For a scheme $S \in \Sch$, we will write $S$ for
+both the scheme and its image in $\PSt$ or $\St$ under the fully faithful Yoneda
+embedding $\Sch \to \St \to \PSt$ --- recall that the embedding factors through
+$\St$ since the \'etale topology is subcanonical.
+For most of this work, we will fix a scheme $S$ and work
+in the slice $2$--categories $\PSt_{/S}$ and $\St_{/S}$.
+
+Since the Yoneda embedding for stacks and the embedding of stacks in prestacks
+preserves limits, we will simply write the word ``limit'' for both
+the $1$--limit of schemes and the $2$--limit of (pre)stacks, and similarly for
+fibre products. By ``colimit'' of prestacks, we will generally mean the
+$2$--colimit. We denote the fibre product functor over a prestack $\mcW$ as
+$- \times_W -$, but $- \times -$, suppressing $\mcW$, when $\mcW = S$.
+Given prestacks $\mcY_1, \dots, \mcY_n \in \PSt_{/S}$, we write
+$pr_i : \mcY_1 \times \cdots \times \mcY_n \to \mcY_i$ to denote the
+projection of the iterated fibre product onto the $i$--th factor.
+We will write $\mcY^n$ for the $n$--fold fibre product of $\mcY$ with itself $n$
+times.
+
+\begin{notn}
+For two prestacks $\mcX, \mcY \in \PSt_{/S}$, we will use the following
+notation:
+\begin{figure}[H]
+\begin{tabularx}{\textwidth}{l c l}
+$p_\mcX$ & : & the structure $1$--morphism $\mcX \to \Aff_{/S}$ \\
+$\Map_S(\mcX, \mcY)$ & : & the mapping prestack relative to $S$ \\
+$\Gl_{n}$ & : & the general linear group scheme over $k$ of degree $n$ \\
+$\Gl_{n, S}$ & : & the fibre product $\Gl_{n} \times_k S$ \\
+$\sM$ & : & the prestack $\coprod_{n = 0}^\infty B\Gl_{n, S}$ \\
+$\sM(\mcX)$ & : & the prestack
+  $\Map_S(\mcX, \sM) \cong \coprod_{n = 0}^\infty \Map_S(\mcX, B\Gl_{n, S})$ \\
+$\sM^n(\mcX)$ & : & $\Map_S(\mcX, B\Gl_{n, S})$ \\
+$\sB(\mcX)$ & : & the prestack $\sM(\mcX) \times_S \mcX$ \\
+$\sB^n(\mcX)$ & : & $\sM^n(\mcX) \times_S \mcX$ \\
+\end{tabularx}
+\end{figure}
+\end{notn}
+
+\begin{prop}\label{prop:prest-prod-strict}
+For a diagram $\mcY \to[p] S \ot[q] \mcZ$ in $\PSt$,
+the underlying category of the fibre product $\mcY \times_S \mcZ$ is strictly
+isomorphic to the strict fibre product of categories $\mcY \times_S^{str} \mcZ$.
+\end{prop}
+\begin{proof}
+By \cite[\href{https://stacks.math.columbia.edu/tag/0040}{Lemma 0040}]
+{stacks-project},
+an object of $\mcY \times_S \mcZ$ is a tuple $(U, y, z, f)$ where
+$U \in \Ob{\Aff}$, $y \in \Ob{\mcY_U}, z \in \Ob{\mcZ_U}$,
+$f$ is an isomorphism $p(y) \to[\sim] q(z)$ in $S_U$.
+However, since the fibre category $S_U$ is discrete --- that is, the set
+of morphisms of $k$--schemes $U \to S$ --- $f$ must be
+the identity $\id_u$ for some $u : U \to S$ and, we must have
+$p(y) = u = q(z)$.
+
+The morphism sets $(\mcY \times_S \mcZ)((U, y, z, f), (U', y', z', f))$
+consist of tuples $(a, b)$ where $a : y \to y', b : z \to z'$ are morphisms
+in $\mcY, \mcZ$ respectively such that $p(a), q(b) : U \to U'$ are the same
+morphism of $k$--schemes and the following diagram commutes:
+\[\begin{tikzcd}
+p(y) \ar[r, "p(a)"] \ar[d, "f" left] & p(y') \ar[d, "f'"] \\
+q(z) \ar[r, "q(b)" below] & q(z')
+\end{tikzcd}\]
+which is equivalent to the first condition since $f = \id_U, f' = \id_{U'}$
+by the previous paragraph. This gives an equality of sets:
+\[
+(\mcY \times_S \mcZ)((U, y, z, f), (U', y', z' f'))
+= (\mcY \times_S^{str} \mcZ)((y, z), (y', z'))
+\]
+
+From this description, we can see that the mappings
+$(U, y, z, f) \mapsto (y, z)$ and $(a, b) \mapsto (a, b)$ are bijections, and it is
+straightforward to check that they assemble to a functor
+$\mcY \times_S \mcZ \to \mcY \times_S^{str} \mcZ$, which must be
+a strict isomorphism, as it induces bijections of object and morphism sets.
+\end{proof}
+
+\begin{prop}\label{prop:prest-prod-strict-nat}
+In the context \cref{prop:prest-prod-strict}, if we have two $2$--morphisms in
+$\PSt_{/S}$ $\alpha, \beta : f \To g : \mcW \to \mcY \times_S \mcZ$, then,
+$\alpha = \beta$ if and only if $pr_i \star \alpha = pr_i \star \beta$ for both
+$i = 1, 2$.
+\end{prop}
+\begin{proof}
+We observe that for an object $w \in \mcW$,
+$\alpha_w = (\alpha_{w, 1}, \alpha_{w, 2})$ for two morphisms
+$\alpha_{w, i} : pr_i(f(w)) \to pr_i(g(w))$ for $i = 1, 2$ in $\mcY, \mcZ$
+respectively. Similarly $\beta_w = (\beta_{w, 1}, \beta_{w, 2})$
+for morphisms $\beta_{w, i} : pr_i(f(w)) \to pr_i(g(w)), i = 1, 2$.
+Then, $\alpha_w = \beta_w$ if and only if
+$(pr_i \star \alpha)_w = pr_i(\alpha_w) = \alpha_{w, i}
+= \beta_{w, i} = pr_i(\beta_w) = (pr_i \star \beta)_w$.
+\end{proof}
+
+\subsection{Sheaves on Prestacks}
+
+For every $\mcX \in \PSt_{/S}$, we will consider $\mcX$ equipped with
+the \'etale topology inherited from $\Aff_{/S}$ in the sense of
+\cite[\href{https://stacks.math.columbia.edu/tag/06NV}{Definition 06NV}]
+{stacks-project}. This is generally referred to as the large \'etale site of
+$\mcX$. By a sheaf on $\mcX$, we will mean a functor
+$X^\op \to \Set$ that satisfies the sheaf condition with respect to this
+inherited \'etale topology. By the $2$--Yoneda lemma, this site is equivalent
+to the site $\Aff_{/S/\mcX}$ whose objects are morphisms of prestacks
+$U \to \mcX$ over $S$, where $U$ is an affine scheme over $S$,
+and coverings are \'etale coverings.
+
+\begin{notn}
+For any two prestacks $\mcX$, $\mcY, \mcZ$, any morphism of prestacks
+$r = (f, g) : \mcY \to \mcZ^2$, and any presheaves $A, E, F$ on $\mcX$, which
+may be (pre)sheaves of Abelian groups, rings or modules, depending
+on context, we will use the following notation:
+\begin{figure}[H]
+\begin{tabularx}{\textwidth}{l c l}
+$\mcO_{\mcX}$ & : & the structure sheaf of $\mcX$ defined by the composite
+  $\mcX \to[p_\mcX] \Aff_{/S} \to[\Gamma] \Set$ \\
+$E|_x$ & : & the composite $\mcX_{/x}^\op \to \mcX^\op \to[E] \Set$ for
+  $x \in \Ob{\mcX}$ \\
+$\LMod(A)$ & : & category of left $A$--modules \\
+$\RMod(A)$ & : & category of right $A$--modules \\
+$\Mod(A)$ & : & category of $A$--bimodules \\
+$\QCoh(\mcX)$ & : & category of quasicoherent $\mcO_\mcX$--modules \\
+$\Vect(\mcX)$ & : & category of finite locally free $\mcO_\mcX$--modules \\
+$\Nat(E, F)$ & : & set of natural transformations $E \to F$ \\
+$\HHom(E, F)$ & : & the internal $\Hom$ object in the topos $\PSh(\mcX)$ \\
+$\Hom_{\mcO_\mcX}(E, F)$ & : & set of $\mcO_\mcX$--module maps $E \to F$ \\
+$\Gamma(E)$ & : & alternate notation for $\Hom_{\mcO_\mcX}(\mcO_\mcX, E)$ \\
+$\HHom_{\mcO_\mcX}(E, F)$ & : & the internal $\Hom$ object in the Abelian
+  category $\Mod(\mcO_\mcX)$ \\
+$[E, F]$ & : & notation for $\HHom_{\mcO_\mcX}(E, F)$ \\
+$E^\vee$ & : & notation for $\HHom_{\mcO_\mcX}(E, \mcO_\mcX)$
+\end{tabularx}
+\end{figure}
+\end{notn}
+
+\begin{warn}
+In many references, such as \cite{Champs-Alg}, \cite{AlperModuli} or
+\cite{AG-Olsson}, sheaves on an algebraic stack $\mcX$, not general prestacks,
+are defined to be sheaves on the full subcategory of $\Aff_{/S/\mcX}$ consisting
+of the smooth morphisms $U \to \mcX$, equipped with the \'etale topology.
+This is called the lisse-\'etale site of $\mcX$, and we will denote it as
+$\mcX_{\text{lis-\'et}}$.
+There is a functor $\Sh(\mcX) \to \Sh(\mcX_{\text{lis-\'et}})$ given by
+pre-composing with the inclusion
+$\mcX_{\text{lis-\'et}} \to \Aff_{/S/\mcX} \simeq \mcX$, and this
+functor is not an equivalence in general, but it restricts to an equivalence
+$\QCoh(\mcX_{\text{lis-\'et}}) \to \QCoh(\mcX)$
+\cite[\href{https://stacks.math.columbia.edu/tag/07B1}{Lemma 07B1}]
+{stacks-project}. Hence, when dealing with quasi-coherent
+sheaves, most results and techniques are readily transferrable between the two
+approaches but some care might be necessary.
+\end{warn}
+
+\begin{rmk}
+We recall that for a morphism of prestacks $f : \mcX \to \mcY$, the pullback
+functor $f^* : \PSh(\mcY) \to \PSh(\mcX)$ is simply the functor
+$\Fun(\mcY^\op, \Set) \to \Fun(\mcX^\op, \Set)$ defined by precomposition with
+$f$. The key fact is that, since we are dealing with the large \'etale site,
+this precomposition functor restricts to a functor on sheaves
+$f^* : \Sh(\mcY) \to \Sh(\mcX)$
+\cite[\href{https://stacks.math.columbia.edu/tag/06TS}{Lemma 06TS}]
+{stacks-project} --- no sheafification is required.
+It is easy to check that this makes
+the functor $f^* : \Sh(\mcY) \to \Sh(\mcX)$ preserve all limits and
+colimits (set-theoretic considerations aside).
+Furthermore, since $f^*\mcO_{\mcX} = \Gamma \circ p_\mcX \circ f
+= \Gamma \circ p_\mcY = \mcO_{\mcY}$, $f^*$ also restricts to the usual pullback
+of modules $f^* : \Mod(\mcO_\mcX) \to \Mod(\mcO_\mcY)$, which in turn preserves
+quasicoherent modules.
+\end{rmk}
+
+We now record some basic facts about sheaves on prestacks that should be well
+known, will be necessary for proving our results but are difficult to find
+references for.
+
+\begin{prop}\label{prop:pullback-nat-OX-alg}
+Let $f, g : \mcY \to \mcX$ be $1$--morphisms and $\alpha : f \To g$ a
+$2$--morphism in $\PSt_{/S}$, and $A : \mcY^\op \to \Set$ a presheaf of
+$\mcO_\mcX$--modules. Then,
+$A \star \alpha^\op : g^*A \To f^*A : \mcX^\op \to \Set$ is a morphism of
+$\mcO_\mcY$--modules. If $A$ is an $\mcO_\mcX$--algebra, then
+$A \star \alpha^\op$ is a map of $\mcO_\mcY$--algebras.
+\end{prop}
+\begin{proof}
+For any object $y \in \mcY$,
+we first recall that $\mcO_\mcX$ is the composite
+$\mcX \to[p_Y] \Aff_{/S} \to[\Gamma] \Set$ so that
+\[
+f^*\mcO_\mcX(y) = \mcO_\mcX(f(y)) = \Gamma(p_\mcX(f(y))) = \Gamma(p_\mcY(y))
+  = \mcO_\mcY(y)
+\]
+The same holds for $g^*\mcO_\mcX(y)$ so that it is also equal to
+$\mcO_\mcY(y)$. Next, since $\alpha$ is a $2$--morphism of $\PSt_{/S}$,
+by definition, we have $p_\mcX(\alpha_y) = \id_{p_\mcY(y)}$
+so that
+\[
+(\mcO_\mcX \star \alpha^\op)_y
+= \mcO_\mcX(\alpha_y^\op)
+= \Gamma(p_\mcX(\alpha_y^\op))
+= \Gamma(\id_{p_\mcY(y)}^\op)
+= \id_{\Gamma(p_\mcY(y))}
+= \id_{\mcO_\mcY(y)}
+\]
+
+Let $s : \mcO_\mcX \times A \to A$ be the structure map. Then, the component
+$(f^*s)_y : f^*\mcO_\mcX(y) \times f^*A(y) \to f^*A(y)$ is the map
+$s_{f(y)} : \mcO_\mcX(f(y)) \times A(f(y)) \to A(f(y))$, and similarly
+for $(g^*s)_y$.
+By the naturality of $s$, the following diagram commutes:
+\[\begin{tikzcd}[row sep=large, column sep=huge]
+\mcO_\mcX(g(y)) \times A(g(y))
+  \ar[r, "s_{g(y)}"]
+  \ar[d, "\mcO_\mcX(\alpha_y^\op) \times A(\alpha_y^\op)" left] &
+A(g(y)) \ar[d, "A(\alpha^\op_y)"] \\
+\mcO_\mcX(f(y)) \times A(f(y)) \ar[r, "s_{f(y)}" below] &
+A(f(y))
+\end{tikzcd}\]
+However, by the previous paragraph,
+$\mcO_\mcX(\alpha_y^\op) = \id_{\mcO_\mcY(y)}$, and, on the other hand,
+$A(\alpha_y^\op) = (A \star \alpha^\op)_y$. Thus, the above diagram is:
+\[\begin{tikzcd}[row sep=large, column sep=huge]
+\mcO_\mcY(y) \times g^*A(y)
+  \ar[r, "(g^*s)_y"]
+  \ar[d, "\id_{\mcO_\mcY, y} \times (A \star \alpha^\op)_y" left] &
+g^*A(y) \ar[d, "(A \star \alpha^\op)_y"] \\
+\mcO_\mcY(y) \times f^*A(y) \ar[r, "(f^*s)_y" below] &
+f^*A(y)
+\end{tikzcd}\]
+and its commutativity along with the observation that $A(\alpha_y^\op)$ is a
+morphism of Abelian groups shows that $A \star \alpha^\op$ is morphism of
+$\mcO_\mcY$--modules. Furthermore, when $A$ is, in addition, a sheaf
+of commutative rings, $A(\alpha_y^\op)$ is a morphism of commutative rings
+and, $A \star \alpha^\op$ is a morphism of $\mcO_\mcY$--algebras.
+\end{proof}
+
+\begin{cns}\label{cns:pullback-Hom}
+For a morphism of prestacks $f : \mcY \to \mcZ$ and two
+$E, F$ on $\mcZ$, we have a map of presheaves:
+\[
+\xi_f : f^*\HHom(E, F) \to[] \HHom(f^*E, f^*F)
+\]
+defined as follows. Let $y \in \Ob{\mcY}$ and
+$s \in f^*\HHom(E, F)(y)$.
+Then, $f^*\HHom(E, F)(y) = \Hom(E|_{f(y)}, F|_{f(y)})$ and $s$ is a natural
+transformation of functors
+$E|_{f(y)} \To F|_{f(y)} : \mcZ_{/f(y)} \to \Set$. This, then, yields
+a horizontal composite $s \star f_{/y}$, where
+$f_{/y} : \mcY_{/y} \to \mcZ_{/f(y)}$ is the functor induced by $f$.
+This is shown below:
+\[\begin{tikzcd}[row sep=small]
+& &
+\mcZ
+    \ar[rd, "E" above right]
+    \ar[dd, Rightarrow, "s", shorten=0.5em] & \\
+\mcY_{/y}
+    \ar[r, "f_{/y}"] &
+\mcZ_{/f(y)}
+    \ar[ru, "F_{f(y)}" above left]
+    \ar[rd, "F_{f(y)}" below left] & &
+\Set \\ & &
+\mcZ
+    \ar[ru, "F" below right] & \\
+\end{tikzcd}\]
+This is a map of presheaves $f^*E|_y \to f^*F|_y$ and we denote this by
+$f^*_{/y}(s)$ --- noting that it is precisely the pullback of the morphism
+$s$ under $f_{/y}$.
+\end{cns}
+
+\begin{prop}
+In the context of \cref{cns:pullback-Hom}, if $E, F$ are $\mcO_\mcZ$--modules,
+then $\xi_f$ restricts to a morphism of sheaves:
+\[
+\xi_f : f^*\HHom_{\mcO_\mcZ}(E, F) \to[] \HHom_{\mcO_\mcY}(f^*E, f^*F)
+\]
+\end{prop}
+\begin{proof}
+This follows from the fact that pullbacks of morphisms of module presheaves
+are morphisms of module presheaves, so that $f^*_{/y}(s)$ is a morphism
+of modules whenever $s$ is.
+\end{proof}
+
+\begin{prop}\label{prop:pullback-Hom}
+In the context of \cref{cns:pullback-Hom}, if $E, F$ are $\mcO_\mcZ$--module
+sheaves and if $E$ is finite locally free, then $\xi_f$ is an isomorphism:
+\[
+\xi_f : f^*\HHom_{\mcO_\mcZ}(E, F) \to[\cong] \HHom_{\mcO_\mcY}(f^*E, f^*F)
+\]
+\end{prop}
+\begin{proof}
+Let $y \in \Ob{\mcY}$. We wish to show that the component $\xi_{f, y}$
+is an isomorphism.
+Since $\xi_f$ is a morphism of sheaves, it suffices to produce a cover of
+$\set{y_i \to y}_{i \in I}$ and show that
+$\xi_{f, y_i}$ is an isomorphism for each $i \in I$.
+For this, we first choose a covering $\set{c_i : z_i \to f(y)}_{i \in I}$
+such that $t_i : E|_{z_i} \to[\cong] \mcO_{\mcZ}|_{z_i}^{\oplus n_i}$ for
+some finite integer $n_i$. This means
+$\set{p_\mcZ(c_i) : p_\mcZ(z_i) \to p_\mcZ(f(y))}_{i \in I}$
+is a cover of $U := p_\mcZ(f(y)) = p_\mcY(y)$ in $\Aff_{/S}$.
+Now, $y$ corresponds to a map $m_y : U \to \mcY$ satisfying $m_y(\id_U) = y$,
+so that $f(y) = f(m_y(\id_U))$. Letting $U_i := p_\mcZ(z_i)$, we get objects
+$y_i := f(m_y(p_\mcZ(c_i)(\id_{U_i})))$. Then,
+$d_i := p_\mcZ(c_i) : U_i \to U$ is a morphism in $\Aff_{/S/U}$ yielding
+morphisms $m_y(d_i) : y_i \to y$ in $\mcY$ over $d_i : U_i \to U$, which form a
+cover of $U$. This shows that $m_y(d_i) : y_i \to y$ form a cover of $y$.
+
+Now, $\xi_{f, y_i}$ is a function:
+\[
+\xi_{f, y_i} : \Hom_{\mcO_\mcZ|_{f(y_i)}}(E|_{f(y_i)}, F|_{f(y_i)}) \to
+\Hom_{\mcO_\mcY|_{y_i}}(f^*E|_{y_i}, f^*F|_{y_i})
+\]
+By construction, $f(y_i) = z_i$. We then observe that we have strict equalities
+\[
+f^*(E|_{y_i}) = f^*_{/y_i}(E|_{f(y_i)}) = f^*_{/y_i}(E|_{z_i}),
+f^*(F|_{y_i}) = f^*_{/y_i}(F|_{f(y_i)}) = f^*_{/y_i}(F|_{z_i})
+\]
+and noticing that $\xi_{f, y_i}$ is given by pullback of morphisms of
+presheaves along $f_{/u_i}$, we have a commutative diagram as follow, by
+the functoriality of $f_{/y_i}^*$:
+\[\begin{tikzcd}
+\Hom_{\mcO_\mcZ|_{z_i}}(E|_{z_i}, F|_{z_i})
+    \ar[r, "\xi_{f, y_i} = f_{/y_i}^*"]
+    \ar[d, "- \circ t_i^{-1}" left] &
+\Hom_{\mcO_\mcY|_{y_i}}(f^*_{/y_i}(E|_{z_i}), f_{/y_i}^*(F|_{z_i}))
+    \ar[d, "- \circ f^*_{/y_i}(t_i^{-1})"] \\
+\Hom_{\mcO_\mcZ|_{z_i}}(\mcO_\mcZ|_{z_i}^{\oplus n_i}, F|_{z_i})
+    \ar[r, "f_{/y_i}^*" below] &
+\Hom_{\mcO_\mcY|_{y_i}}(f^*_{/y_i}(\mcO_\mcZ|_{z_i}^{\oplus n_i}),
+    f_{/y_i}^*(F|_{z_i}))
+\end{tikzcd}\]
+where the vertical maps are isomorphisms.
+Hence, it suffices to show that the bottom horizontal map is a bijection.
+
+Let $e_1, \dots, e_{n_i}$ be the standard generators of the free module
+$\mcO_{\mcZ}(z_i)$--modules
+$\mcO_{\mcZ}|_{z_i}^{\oplus n_i}(\id_{z_i}) = \mcO_\mcZ(z_i)^{\oplus n_i}$.
+Then, the mapping
+\[
+\gamma : \Hom_{\mcO_\mcZ|_{z_i}}(\mcO_\mcZ|_{z_i}^{\oplus n_i}, F|_{z_i})
+    \to F(z_i)^{\oplus n_i} :
+s \mapsto (s_{\id_{z_i}}(e_1), \dots, s_{\id_{z_i}}(e_{n_i}))
+\]
+can be verified to be an isomorphism of $\mcO_{\mcZ}(z_i)$--modules. To
+see this, we can produce a map in the reverse direction as follows.
+Let $(r_1, \dots, r_{n_i}) \in F(z_i)^{\oplus n_i}$. Then, this provides
+a map $\mcO_\mcZ|_{z_i}^{\oplus n_i} \to F|_{z_i}$ as follows: for each
+object $z \to z_i$ in $\mcZ_{/z_i}$, we send
+$(e_1, \dots, e_n)|_z$ to $(r_1, \dots, r_n)|_z$.
+It is not hard to verify that this is natural in $z$, and is an
+inverse to $\gamma$. We have a similar isomorphism:
+\[
+\gamma' :
+\Hom_{\mcO_\mcY|_{y_i}}(f^*_{/y_i}(\mcO_\mcZ|_{z_i}^{\oplus n_i}),
+    f_{/y_i}^*(F|_{z_i})) \to
+f^*_{/y_i}(F|_{z_i})(\id_{y_i})
+\]
+We notice that $f^*_{/y_i}(F|_{z_i})(\id_{y_i}) = F(f(y_i)) = F(z_i)$,
+and $f^*_{/y_i}(\mcO_\mcZ|_{z_i})(\id_{y_i}) = \mcO_\mcZ(f(y_i))
+= \mcO_\mcZ(z_i)$.
+We then observe that
+\[
+(f_{/y_i}^*s)_{\id_{y_i}}
+= (s \star f_{/y_i})_{\id_{y_i}}
+= s_{f_{/y_i}^*(\id_{z_i})}
+= s_{\id_{z_i}}
+\]
+Together, these show that the following diagram commutes:
+\[\begin{tikzcd}
+\Hom_{\mcO_\mcZ|_{z_i}}(\mcO_\mcZ|_{z_i}^{\oplus n_i}, F|_{z_i})
+    \ar[rr, "f_{/y_i}^*" above]
+    \ar[rd, "\gamma" below left] & &
+\Hom_{\mcO_\mcY|_{y_i}}(f^*_{/y_i}(\mcO_\mcZ|_{z_i}^{\oplus n_i}),
+        f_{/y_i}^*(F|_{z_i}))
+    \ar[ld, "\gamma'" below right] \\ &
+F(z_i)^{\oplus n_i} &
+\end{tikzcd}\]
+which shows that horizontal map is an isomorphism, as required.
+\end{proof}
+
+%==============================================================================%
+
+\section{Relative Spectrum for Prestacks}\label{sec:RelSpec}
+
+We define a relative spectrum for sheaves of algebras over prestacks using the
+same formula used for sheaves on the lisse-\'etale of an algebraic stack
+in \cite[\S 10.2.1]{AG-Olsson}. This is the main tool used in our construction
+and study of the relevant moduli stacks.
+
+\begin{defn}[Relative Spectrum For Prestacks]
+\label{defn:rel-spec}
+For a prestack $\mcX \in \PSt_{/S}$, and any presheaf $A : \mcX^\op \to \Set$ of
+$\mcO_\mcX$--algebras, we define a category $\ul\Spec_\mcX(A)$ as follows:
+\begin{itemize}
+\item Objects are tuples $(u, \sigma)$ where:
+  \begin{itemize}
+  \item $u : U \to \mcX$ is a morphism in $\PSt_{/S}$ with $U \in \Aff_{/S}$
+  \item $\sigma : u^*A \to \mcO_U$ is a morphism of
+    $\mcO_\mcX|_x$--algebras
+  \end{itemize}
+\item Morphisms $(u, s) \to (u', s')$ are morphisms
+  $a : u(\id_U) \to u'(\id_{U'})$ in $\mcX$
+  such that, if $f := p_\mcX(a)$ and the natural transformation
+  $u' \circ f \To u$ corresponding to $a$ is $\tilde{a}$, the following diagram
+  of $\mcO_U$--algebras commutes:
+  \[\begin{tikzcd}
+  (u' \circ f)^*A = f^*(u')^*A
+    \ar[from=rr, "A \star \tilde{a}^\op" above]
+    \ar[rd, "f^*s'" below left] & &
+  u^*A \ar[ld, "s" below right] \\ &
+  (u' \circ f)^*\mcO_\mcY = \mcO_U &
+  \end{tikzcd}\]
+\end{itemize}
+This category comes equipped with a functor
+$\pi_A : \ul\Spec_\mcX(A) \to \mcX$ defined by sending $(u, s)$ to $u(\id_U)$
+and $a$ to $a$.
+The category $\ul\Spec_\mcX(A)$ will be called the relative
+spectrum of $A$ over $\mcX$ and $\pi_A$ will be called its projection.
+We will suppress mention of $\mcX$ when it is clear from context, in which
+case, we will simply write $\ul\Spec(A)$ for $\ul\Spec_\mcX(A)$.
+When $A$ is clear from context, we will write $\pi$ instead of $\pi_A$
+\end{defn}
+
+\begin{warn}
+$\ul\Spec(A)$ is originally defined only for the case where $\mcX$ is an
+algebraic stack and $A$ is a sheaf of $\mcO_{\mcX_{\text{lis-\'et}}}$--modules
+on the lisse-\'etale site of $\mcX$. Our definition should subsume this
+by the equivalence of the categories of quasicoherent sheaves on the large
+\'etale site and those on the lisse-\'etale site
+\cite[\href{https://stacks.math.columbia.edu/tag/07B1}{Lemma 07B1}]
+{stacks-project}, but we will not address this point in this work as
+we will directly show that our construction has some of the same properties
+that we will need.
+\end{warn}
+
+We proceed to show that the relative spectrum is the Grothendieck
+construction of the following functor.
+
+\begin{cns}
+Given a prestack $\mcX \in \PSt_{/S}$, and two presheaves $A, B$ of
+$\mcO_\mcX$--algebras, we define the internal Hom object
+$\CCAlg_{\mcO_\mcX}(A, B)$ in the category of $\mcO_\mcX$--algebras as follows.
+We set
+\[
+\CCAlg_{\mcO_\mcX}(A, B)(x) := \CAlg_{\mcO_\mcX|_x}(A|_x, B|_x)
+\]
+where the right hand side is the $\mcO_\mcX(x)$--algebra of
+$\mcO_\mcX|_x$--algebra morphisms $A|_x \to B|_x$.
+
+Given a morphism $\phi : x \to x'$ in $\mcX$, we have a functor
+$\ol\phi : \mcX_{/x} \to \mcX_{x'}$ sending $f : y \to x$ to
+$\phi \circ f : y \to x'$, and commuting with the forgetful functors
+$F_x : \mcX_{/x} \to \mcX, F_{x'} : \mcX_{/x'} \to \mcX$.
+Consider an element $s : A|_{x'} \to B|_{x'}$ of
+$\CAlg_{\mcO_\mcX|_{x'}}(A|_{x'}, B|_{x'})$. We define
+$\CCAlg_{\mcO_\mcX}(A, B)(\phi)$ to be the pullback $\ol\phi^*(s)$ which is
+a morphism of $\mcO_{\mcX}|_{x}$--algebras. Concretely, it is the
+horizontal composite $s \star \ol\phi$:
+\[\begin{tikzcd}[column sep=huge]
+(\mcX_{/x})^\op \ar[r, "\ol\phi"] &
+(\mcX_{/x'})^\op
+  \ar[r, bend left=3em, ""{name=U, below}, "A|_{x'} = A \circ F_{x'}"]
+  \ar[r, bend right=3em, ""{name=D, above}, "B|_{x'} = B \circ F_{x}" below]
+  \ar[from=U, to=D, Rightarrow, "s'" description] &
+\Set
+\end{tikzcd}\]
+noting that $A|_{x'} \circ \ol\phi = A \circ F_x \circ \ol\phi = A|_x$
+and similarly for $B|_x$. This gives a presheaf of $\mcO_\mcX$--algebras:
+\[
+\CCAlg_{\mcO_\mcX}(A, B) : \mcX^\op \to \Set
+\]
+\end{cns}
+
+\begin{prop}\label{prop:rel-spec-Gr-cons}
+In the context of \cref{defn:rel-spec}, $\pi : \ul\Spec(A) \to \mcX$
+is the Grothendieck construction
+$\int \CCAlg_{\mcO_\mcX}(A, \mcO_\mcX) \to \mcX$.
+\end{prop}
+\begin{proof}
+We let $P$ denote $\CCAlg_{\mcO_\mcX}(A, \mcO_\mcX)$.
+Let $(x, s)$ be an object of $\int P$ so that $x \in \Ob{\mcX}$,
+$s \in P(x) = \CAlg_{\mcO_\mcX|_x}(A|_x, \mcO_\mcX|_x)$. That is,
+$s : A|_x \to \mcO_\mcX|_x$ is a map of $\mcO_\mcX|_x$--algebras.
+Let $U := p_\mcX(x)$, for any $v : V \to U \in \Aff_{/S}$, choose a Cartesian
+lift $\wh{x}(v) : \tilde{x}(v) \to x$ in $\mcX$ of $v$ with target $x$.
+By the universal property of Cartesian morphisms, for morphisms
+$v : V \to U, v' : V' \to U$ and $g : V \to V'$ with $v' \circ g = v$,
+we get a unique morphism $\wh{x}(g) : \tilde{x}(v) \to \tilde{x}(v')$
+commuting with the maps $\wh{x}(v), \wh{x}(v')$. It is straightforward to verify
+that the $\wh{x}(v)$ and $\wh{x}(g)$ assemble to a functor
+$\wh{x} : \Aff_{/S/U} \to \mcX_{/x}$ over $\Aff/S$. This provides a map
+of prestacks: $\tilde{x} := F_x \circ \wh{x} : U \to \mcX$, where
+$F_x$ is the forgetful functor.
+By pulling back, we get a map of $\mcO_U$--algebras
+$\tilde{s} := \wh{x}^*s : \wh{x}^*A|_x = \tilde{x}^*A \to
+\wh{x}^*\mcO_\mcX|_x = \mcO_U$, which is an object of $\ul\Spec(A)$ over $x$.
+
+Now, consider a morphism $\phi : (x, s) \to (x', s')$ in $\int P$, so that
+$\phi : x \to x'$ is a morphism in $\mcX$ such that $P(\phi)(s') = s$.
+Let $U := p_\mcX(x), U' = p_\mcX(x'), f = p_\mcX(\phi) : U \to U'$.
+We get maps $\tilde{x} : U \to \mcX, \tilde{x'} : U' \to \mcX$ as in the
+previous paragraph, and $\phi$ gives a $2$--morphism of prestacks
+$\tilde{\phi} : \tilde{x'} \circ f \To \tilde{x} : U \to \mcX$, by
+the universal properties of the Cartesian lifts chosen.
+We then have the following pasting of $2$--cells:
+\begin{equation}
+\begin{tikzcd}[column sep=huge]
+U^\op
+  \ar[dd, "f" left]
+  \ar[rd, "\tilde{x}" above right, ""{below left, name={x}}]
+  \ar[rrd, bend left, "A|_x", ""{name=AU, below left}] & & \\ &
+|[alias=X]|\mcX^\op
+  \ar[r, "\mcO_\mcX" description]
+  \ar[from=AU, Rightarrow, "s", shorten=0.5em] &
+\Set \\
+(U')^\op
+  \ar[ru, "\tilde{x'}" below right]
+  \ar[rru, bend right, "A|_{x'}" below right, ""{name=AD, above left}]
+  \ar[from=AD, to=X, Rightarrow, "s'", shorten=0.5em]
+  \ar[to=x, Rightarrow, shorten=0.75em, "\tilde{\phi}"] & &
+\end{tikzcd}
+\end{equation}
+which along with the hypothesis that $P(\phi)(s') = s$ shows the commutativity
+of the diagram:
+\begin{equation}\label{eqn:rel-spec-Gro-cons-1}
+\begin{tikzcd}
+\tilde{x}^*A
+  \ar[rd, "\tilde{s}" below left]
+  \ar[from=rr, "A \star \tilde{\phi}^\op" above] & &
+f^*\tilde{x'}^*A \ar[ld, "\tilde{s'}" below right] \\
+& \mcO_U &
+\end{tikzcd}
+\end{equation}
+That is, $(f, \phi)$ is a morphism in $\ul\Spec(A)$.
+The assignments:
+\[
+(x, s) \mapsto (\tilde{x}, \tilde{s}),
+\phi \mapsto \phi
+\]
+assemble to a functor $\Psi_A : \int P \to \ul\Spec(A)$. To see this, we first
+observe that for any two objects $(x, s), (x', s') \in \int P$ with
+$\Psi_A(x, s) = (\tilde{x}, \tilde{s}),
+\Psi_A(x', s') = (\tilde{x}, \tilde{s'})$, and $U = \dom(u), U' = \dom(u')$, we
+have $x = \tilde{x}(\id_U), x' \cong \tilde{x'}(\id_{U'})$ by construction.
+Then, by construction $\Hom_{\int P}((x, s), (x', s'))$ and
+$\Hom_{\ul\Spec(A)}((\tilde{x}, \tilde{s}), (\tilde{x'}, \tilde{s'}))$ are both
+subsets of $\Hom_\mcX(x, x')$ defined by the equivalent conditions
+$P(\phi)(s') = s$ and \ref{eqn:rel-spec-Gro-cons-1}, and are hence
+equal, while the mapping of morphisms induced by $\Psi_A$ is just the identity
+on this subset. Thus, $\Psi_A$ respects composition and identities, and is, at
+the same time, fully faithful.
+This functor commutes with the maps to $\mcX$ by construction.
+
+We will now see that this functor is essentially surjective.
+Let $(u, \sigma)$ be an object of $\ul\Spec(A)$.
+Then, we get an object
+$x_u := u(\id_U) \in \Ob{\mcX}$ over $U$ and we have a functor
+$p_{\mcX/x} : \mcX_{/x} \to \Aff_{/S/U} = U$ obtained by taking the slice of
+$p_\mcX$ over $x$ --- it is defined by sending
+$b : y \to x$ to $p_\mcX(b) : p_\mcX(y) \to U$ --- such that
+$F_x = u \circ p_{\mcX/x}$. We then get a morphism of $\mcO_{\mcX}|_x$--algebras
+$s_{u, \sigma} := p_{\mcX/x}^*\sigma = \sigma \star p_{\mcX/x} :
+A|_x = p_{\mcX/x}^*u^*A \to \mcO_\mcX|_x = p_{\mcX/x}^*\mcO_U$.
+Thus, $(x_u, s_{u, \sigma})$ is an object of $\int P$.
+Now, $\tilde{x_u}(\id_U)$ is the domain of a Cartesian lift
+$\wh{x_u}(\id_U) : \tilde{x_u}(\id_U) \to x_u$ over $\id_U : U \to U$,
+which is an isomorphism since the fibre categories of $\mcX$ are groupoids.
+However, since this was a choice of Cartesian lift to begin with, we could take
+this choice to be $\id_{x_u}$. Then, letting
+$\phi := \wh{x_u}(\id_U) = \id_{x_u} = \id_{u(\id_U)}$, we see from the
+definition of the relative spectrum, that $\phi$ is the identity morphism
+$\Psi_A(x_u, s_{u, \sigma}) \to (u, \sigma)$, showing that
+$\Psi_A$ is strictly surjective objects.
+\end{proof}
+
+We will now focus on the properties of the relative spectrum that will be
+necessary to prove our results.
+
+\begin{prop}\label{prop:vec-bun-proj-affine}
+In the context of \cref{defn:rel-spec}, $\pi_A$ is an affine morphism.
+\end{prop}
+\begin{proof}
+Let $f : U \to \mcX$ be any morphism where $U \in \Aff_{/S}$.
+We note that the $2$--fibre
+product of prestacks is simply the $2$--fibre product in the slice $2$--category
+$\Cat_{/\Aff_{/S}}$
+\cite[\href{https://stacks.math.columbia.edu/tag/0041}{Lemma 0041}]
+{stacks-project}, which is, in turn, just the $2$--fibre product in $\Cat$.
+Since the Grothendieck construction is compatible with $2$--pullback in $\Cat$,
+$\int A \circ f$ is equivalent as a category to the $2$--fibre product
+of categories $\int A \times^{\Cat}_\mcX \Aff_{/S/U}$.
+By \cref{prop:rel-spec-Gr-cons}, $\ul\Spec(A) = \int A$ and thus, the fibre
+product of prestacks $\ul\Spec(A) \times_\mcX U = \int A \times_\mcX U$
+is, in fact, $\int A \circ f$. We can then unwrap the definition of
+$\int A \circ f$ to see that it is the usual relative spectrum defined for
+schemes in
+\cite[\href{https://stacks.math.columbia.edu/tag/01LQ}{Section 01LQ}]
+{stacks-project}, which is an affine scheme over $U$ and hence an affine scheme
+over $S$.
+\end{proof}
+
+\begin{prop}\label{prop:geom-vec-bun-Gro-cons}
+In the context of \cref{defn:rel-spec}, for any finite locally free
+$\mcO_\mcX$--module $M$, $\pi : \ul\Spec(\Sym(M^\vee)) \to \mcX$ is the
+Grothendieck construction $\int M \to \mcX$ of the functor
+$M : \mcX^\op \to \Set$.
+\end{prop}
+\begin{proof}
+We notice that since pullbacks for large \'etale sites are exact, they commute
+with direct sums. They also commute with tensor products and colimits. Hence,
+they commute with taking the symmetric algebra of a sheaf of modules over the
+structure sheaf. The finite locally free hypothesis ensures
+$(M^\vee)^\vee \cong M$. Thus, we have:
+\begin{align*}
+     & \CAlg_{\mcO_\mcX|_x}(\Sym(M^\vee)|_x, \mcO_\mcX|_x) \\
+\cong& \CAlg_{\mcO_\mcX|_x}(\Sym(M^\vee|_x), \mcO_\mcX|_x) \\
+\cong& \Hom_{\mcO_\mcX|_x}(M^\vee|_x, \mcO_\mcX|_x) \\
+\cong& (M^\vee)^\vee(x) \\
+\cong& M(x)
+\end{align*}
+This along with \cref{prop:rel-spec-Gr-cons} now yields the result.
+\end{proof}
+
+\begin{notn}
+For any $\mcX \in \PSt_{/S}$ and any $\mcO_\mcX$--module $M$, we denote
+$\ul\Spec_\mcX(\Sym(M^\vee))$ by $\bV M$.
+\end{notn}
+
+\begin{cns}\label{cns:sec-to-morphism}
+For any morphism of prestacks $f : \mcY \to \mcZ$ in $\PSt_{/S}$, any
+$\mcO_\mcZ$--modules $E, F$, consider
+a strict factorization of $f$ as $\mcY \to[t] \bV[E, F] \to[\pi] \mcZ$, that is
+$f = \pi \circ t$.
+For any object $y \in \mcY$,
+$t(y) = (f(y), s(y))$ for some
+$s(y) \in [E, F](f(y)) = \Hom_{\mcO_\mcX|_{f(y)}}(E|_{f(y)}, F|_{f(y)})$ by
+\cref{prop:geom-vec-bun-Gro-cons}.
+We then observe that $f^*E(y) = E(f(y)) = E|_{f(y)}(\id_y)$ and, similarly,
+for $F$ and $\mcO_\mcX|_{f(y)}$ so that
+$s(y)_{\id_y}$ is an $\mcO_\mcY(y) = \mcO_\mcX|_{f(y)}(\id_y)$--linear map
+$f^*E(y) \to f^*F(y)$.
+We denote the collection of morphisms $\set{s(y)_{\id_y}}_{y \in \Ob{\mcY}}$
+as $\sigma(t)$.
+\end{cns}
+
+\begin{prop}\label{prop:sec-to-morphism}
+In the context of \cref{cns:sec-to-morphism}, the collection $\sigma(t)$ constitutes
+a natural transformation of functors and is hence a morphism of
+$\mcO_\mcY$--modules.
+\end{prop}
+\begin{proof}
+For any morphism $b : y \to y'$, the map
+\[
+f^*[E, F](y') = [E, F](f(y')) \to f^*[E, F](y) = [E, F](f(y))
+\]
+is given by sending a natural transformation
+\[
+a : E|_{f(y')} \To F|_{f(y')} : \mcZ_{/f(y')} \to \mcZ \to \Set
+\]
+to the horizontal composite $a \star (f(b) \circ -)$, where $f(b) \circ -$
+is the functor $\mcZ_{/f(y)} \to \mcZ_{/f(y')}$ given by post-composing with the
+morphism $b : y \to y'$. This horizontal composite is shown below:
+\[\begin{tikzcd}[row sep=tiny]
+& &
+\mcZ
+  \ar[rd, "E"]
+  \ar[dd, Rightarrow, "a", shorten=0.5em] & \\
+\mcZ_{/f(y)} \ar[r, "f(b) \circ -"] &
+\mcZ_{/f(y')}
+  \ar[ru, "F_{f(y')}" above left]
+  \ar[rd, "F_{f(y')}" below left] & &
+\Set \\ & &
+\mcZ
+  \ar[ru, "F" below right] & \\
+\end{tikzcd}\]
+Unwrapping the definition for horizontal composition, we see that for an object
+$q : v \to f(y)$ in $\mcZ_{/f(y)}$, the component
+$(s(y') \star (f(b) \circ -))_{q}$
+is $s(y')_{f(b) \circ q}$. Viewing $f(b) : f(y) \to f(y')$ as a morphism
+in $\mcZ_{/f(y')}$ from the object $f(b)$ to $\id_{f(y')}$, we have the
+following commutative diagram by the naturality of $s(y')$:
+\[\begin{tikzcd}[column sep=huge]
+E|_{f(y')}(\id_{f(y')})
+  \ar[r, "s(y')_{\id_{y'}}"]
+  \ar[d, "E|_(f(y'))(f(b))" left] &
+F|_{f(y')}(\id_{f(y')})
+  \ar[d, "F|_{f(y')}(f(b))"] \\
+E|_{f(y')}(f(b))
+  \ar[r, "s(y')_{f(b)}" below] &
+F|_{f(y')}(f(b))
+\end{tikzcd}\]
+We observe that $E|_{f(y')}(f(b)) = E(f(y))$, $F|_{f(y')}(f(b)) = F(f(b))$.
+By the fact that $s(b) : (f(y), s(y)) \to (f(y'), s(y'))$ is a morphism
+in $\int [E, F]$, we obtain that
+$s(y')_{f(b)} = (s(y') \star (f(b) \circ -)) = s(y)_{\id_y}$. Thus, the above
+commutative square becomes:
+\[\begin{tikzcd}
+E(f(y))
+  \ar[r, "s(y')_{\id_{y'}}"]
+  \ar[d, "E|_(f(y'))(f(b))" left] &
+F(f(y'))
+  \ar[d, "F|_{f(y')}(f(b))"] \\
+E(f(y))
+  \ar[r, "s(y)_{\id_{y}}" below] &
+F(f(y))
+\end{tikzcd}\]
+Thus, the collection $\set{s(y)_{\id_{y}}}_{y \in \Ob{\mcY}}$
+form a natural transformation of functors $f^*E \to f^*F$, which is
+$\mcO_{\mcY}$--linear, by construction.
+\end{proof}
+
+%\begin{prop}\label{prop:sec-to-morphism-equiv}
+%In the context of \cref{prop:sec-to-morphism}, the construction
+%$t \mapsto \sigma(t)$, gives a bijection of sets
+%$\set[t]{\pi \circ t = f} \to[\cong] \Hom_{\mcO_\mcY}(f^*E, f^*F)$.
+%\end{prop}
+%\begin{proof}
+%Consider a morphism $\rho : f^*E \to f^*F$ of $\mcO_\mcY$--modules.
+%For each $y \in \Ob{\mcY}$, we have a restriction $f^*E|_y \to f^*F|_{y}$
+%given by horizontal composition $\rho \star F_y$ where $F_y : \mcY_{/y} \to \mcY$
+%is the forgetful functor.
+%\end{proof}
+
+\begin{prop}\label{prop:section-nat}
+In the context of \cref{cns:sec-to-morphism},
+for any two maps $t, t' : \mcY \to \bV[E, F]$ and any $2$--morphism of prestacks
+$\beta : t \To t'$, the following diagram of presheaves commutes:
+\[\begin{tikzcd}[column sep=huge]
+(\pi \circ t)^*E \ar[r, "(E \circ \pi) \star \beta"] \ar[d, "\sigma(t)" left] &
+(\pi \circ t')^*E \ar[d, "\sigma(t')"] \\
+(\pi \circ t)^*F \ar[r, "(F \circ \pi) \star \beta" below] & (\pi \circ t')^*F
+\end{tikzcd}\]
+\end{prop}
+\begin{proof}
+We denote $x := \pi \circ t, x' = \pi \circ t'$.
+Let $y \in \Ob{\mcY}$. Then, $t(y) = (x(y), s(y))$ and $t'(y) = (x'(y), s'(y))$.
+We then have a morphism $\beta_y : (x(y), s(y)) \to (x'(y), s'(y))$
+in $\bV[E, F]$ so that $\beta_y$ is a morphism $x(y) \to x(y')$ in $\mcX$
+such that $s'(y)_{\beta_y} = s'(y) \star (\beta_y \circ -) = s(y)$.
+By considering $\beta_y$ as morphism $\beta_y \to \id_{x'(y)}$ in $\mcX$,
+we obtain the following commutative diagram:
+\[\begin{tikzcd}[column sep=huge]
+E(x'(y)) = E|_{x'(y)}(\id_{x'(y)})
+  \ar[r, "s(y')_{\id_{x'(y)}}"]
+  \ar[d, "E(\pi(\beta_y)) = E|_{x(y)}(\beta_y)" left] &
+F|_{x'(y)}(\id_{x'(y)}) = F(x'(y))
+  \ar[d, "F|_{x'(y)}(\beta_y) = F(\pi(\beta_y))"] \\
+E(x(y)) = E|_{x'(y)}(\beta_y)
+  \ar[r, "s'(y)_{\beta_y} = s(y)_{\id_{x(y)}}" below] &
+F|_{x'(y)}(\beta_y) = F(x(y))
+\end{tikzcd}\]
+which is precisely the diagram whose commutativity we need to show for each such
+$y$.
+\end{proof}
+
+%==============================================================================%
+
+\section{Arrow Bundles}\label{sec:ArrowBun}
+
+We will now revisit the moduli stack of vector bundle triples or
+``arrow bundles'' first constructed in \cite{ModQuivBun},
+and give two concrete descriptions thereof that will be
+used to prove the algebraicity of the moduli stacks of connection triples
+in \cref{sec:ArrowBunFormalGrpd}.
+
+\subsection{Moduli Prestack of Arrow Bundles}
+
+We will define the moduli prestack of arrow bundles first in the intuitive
+way --- that is, as the prestack associated to a functor that assigns
+to a scheme $U$, the groupoid of vector bundles on $U \times \mcX$ and whose
+action on morphisms $U \to U'$ is given by pullback. This is in contrast
+to \cite{ModQuivBun}, where we take the more ``basis-free'' route of using
+mapping stacks. The main point is that the two definitions give equivalent
+prestacks, which we show in the next subsection. To this end, we first fix some
+notation that will be used in the rest of the paper.
+
+\begin{notn}
+Let $\mcX, \mcY$ be prestacks over $S$ and $E, F$, any two
+$\mcO_\mcY$--modules. We will, then, use the following notation:
+\begin{figure}[H]
+\begin{tabularx}{\textwidth}{l c l}
+$[E, F]_\square$ & : & the $\mcO_{\mcY \times \mcY}$--module
+  $\HHom_{\mcO_{\mcY}}(pr_1^*E, pr_2^*F)$ \\
+$\mcE(\mcX)$ & : & the universal locally free sheaf on
+  $\mcY = \sB(\mcX) = \sM(\mcX) \times \mcX$ \\
+$\mcE^n(\mcX)$ & : & the restriction of $\mcE(\mcX)$ to
+  $\mcY = \sB^n(\mcX) = \sM^n(\mcX) \times \mcX$ \\
+$\mcV(\mcX)$ & : & the $\mcO_{\sB(\mcX) \times \sB(\mcX)}$--module
+  $[\mcE(\mcX), \mcE(\mcX)]_\square$ \\
+$\mcV^{n, m}(\mcX)$ & : & the $\mcO_{\sB^n \times \sB(\mcX)^m}$--module
+  $[\mcE^n(\mcX), \mcE^m(\mcX)]_\square$ \\
+$\sV(\mcX)$ & : & $\bV\mcV(\mcX) = \bV [\mcE(\mcX), \mcE(\mcX)]_\square$ \\
+$\sV^{n, m}(\mcX)$ & : &
+  $\bV\mcV^{n, m}(\mcX) = \bV [\mcE^n(\mcX), \mcE^m(\mcX)]_\square$  \\
+$f^<$ & : & the pullback functor $(f \times \id_\mcX)^*$ \\
+$f_>$ & : & the pushforward functor $(f \times \id_\mcX)_*$ \\
+$r^\lhd$ & : & the pullback functor $(r \times \Delta_X)^*$ \\
+$r_\rhd$ & : & the pushforward functor $(r \times \Delta_X)_*$
+\end{tabularx}
+\end{figure}
+\end{notn}
+
+\begin{cns}\label{cns:mod-prest-arr-bun}
+Given any prestack $\mcX \in \PSt_{/S}$, we define a category
+$\sM_1(\mcX)$ with the following data:
+\begin{itemize}
+\item Objects are tuples $(u, E, F, s)$, where:
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$
+  \item $E, F \in \Vect(U \times \mcX)$ are finite locally free
+    $\mcO_\mcX$--modules on $U \times \mcX$
+  \item $s : E \to F \in \Hom_{\mcO_{U \times \mcX}}(E, F)$ is a morphism of
+    $\mcO_\mcX$--modules
+  \end{itemize}
+\item Morphisms $(u, E, F, s) \to (u', E', F', s')$ are tuples
+$(f, a, b)$ where:
+  \begin{itemize}
+  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S}$
+  \item $a : f^<E' \to E, b : f^<F' \to F$ are isomorphisms of
+  $\mcO_{U \times \mcX}$--modules making the following diagram commute in
+  $\Vect(U \times \mcX)$:
+  \[\begin{tikzcd}
+  f^<E' \ar[r, "a"] \ar[d, "f^<s'" left] & E \ar[d, "s"] \\
+  f^<F' \ar[r, "b" below] & F
+  \end{tikzcd}\]
+  \end{itemize}
+\item Given two morphisms
+$(u, E, F, s) \to[{(f, a, b)}] (u', E', F', s') \to[{(g, c, d)}]
+(u'', E'', F'', s'')$, the composite is defined to be
+$(g \circ f, f^<c \circ a, f^< \circ b)$ noticing that the following
+diagram commutes in $\Vect(U \times \mcX)$:
+  \[\begin{tikzcd}
+  (g \circ f)^<E'' = f^<g^<E''
+    \ar[r, "f^<c"]
+    \ar[d, "{(g \circ f)^<s''} = f^<g^<s''" left] &
+  f^<E' \ar[r, "a"] \ar[d, "f^<s'" left] &
+  E \ar[d, "s"] \\
+  (g \circ f)^<F'' = f^<g^<F'' \ar[r, "f^<d" below] &
+  f^<F' \ar[r, "b" below] &
+  F
+  \end{tikzcd}\]
+\item The identity morphism of an object $(u, E, F, s)$ is the tuple
+$(\id_U, \id_E, \id_F)$.
+\end{itemize}
+\end{cns}
+
+\begin{prop}
+The category $\sM_1(\mcX)$ of \cref{cns:mod-prest-arr-bun} has a functor
+to $\Aff_{/S}$ defined by the mapping:
+\[\begin{array}{ccc}
+(u, E, F, s) &\mapsto& (u : U \to S) \\
+(f, a, b) &\mapsto& f : U \to U'
+\end{array}\]
+making it a prestack over $S$.
+\end{prop}
+\begin{proof}
+That the mapping defines a functor is straightforward to check. That
+this defines a prestack over $S$ follows from the observation that it
+is the Grothendieck construction or unstraightening of the contravariant
+functor:
+\[\begin{array}{ccc}
+U &\mapsto& \Fun(\Delta^1, \Vect(U \times \mcX))^\simeq \\
+(U \to[f] U') &\mapsto& f^< \circ -
+\end{array}\]
+We omit the details.
+\end{proof}
+
+\begin{rmk}
+If $\mcX$ is a stack, then so is $\sM_1(\mcX)$, but we will not show this
+directly, although one could argue that this follows from the descent of
+morphisms of sheaves.
+Instead, we will produce an equivalence with another prestack
+whose descent property is easier to show from definitions whenever $\mcX$ is
+a stack. The reason for this
+indirection is that this equivalence will be necessary in proving our
+main results, so we address it first.
+\end{rmk}
+
+\begin{defn}[Moduli Prestack of Arrow Bundles]
+We will call the prestack $\sM_1(\mcX)$ of \cref{cns:mod-prest-arr-bun},
+the moduli prestack of arrow bundles on $\mcX$.
+\end{defn}
+
+\subsection{Definition via Mapping Stacks}
+
+We now revisit the definition of the moduli of arrow bundles given in
+\cite{ModQuivBun} and show that it gives a prestack equivalent to
+\cref{cns:mod-prest-arr-bun}. To achieve this, we will give a concrete
+description of this prestack that was not given before. There are two
+main purposes of this definition. First, it is easier to show the algebraicity
+of this stack using results about the algebraicity of mapping stacks. Second,
+it can be easily generalized to the setting
+of derived stacks, where we eventually wish to work,
+without having to explicitly define the functor of points.
+The work in this subsection should be considered as evidence for the soundness
+of the definition as well as a proof of algebraicity of the slightly more
+intuitive definition (\cref{cns:mod-prest-arr-bun}) via the functor of points.
+At the same time, as we will discuss in \cref{sec:Future}
+it proves some of the claims made in that paper with only sketches of proofs,
+We begin by recalling the definition of mapping prestacks.
+
+\begin{defn}[Mapping Prestacks {\cite[\S 3]{Wang-BunG}}]
+Given two prestacks $\mcY, \mcZ \in \PSt_{/S}$, we define the category
+$\Map_S(\mcY, \mcZ)$ as follows:
+\begin{itemize}
+\item Objects are tuples $(u, f)$ where:
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$
+  \item $f : U \times_S \mcY \to \mcZ$ is a $1$--morphism in $\PSt_{/S}$
+  \end{itemize}
+\item Morphisms $(u, f) \to (u', f')$ are tuples $(g, a)$ where:
+  \begin{itemize}
+  \item $g : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S}$
+  \item $a : f' \circ (g \times \id_\mcY) \To f : U \times_S \mcY \to \mcZ$
+    is a $2$--morphism in $\PSt_{/S}$
+  \end{itemize}
+\item Composition is given by pasting $2$--cells.
+\item The identity morphism of $(u, f)$ is $(\id_u, \id_f)$.
+\end{itemize}
+This category has a functor to $\Aff_{/S}$ making it a prestack over $S$.
+We call it the mapping prestack with domain $\mcY$ and codomain $\mcZ$.
+\end{defn}
+
+\begin{prop}
+Mapping prestacks are internal Hom objects in the $2$--category $\PSt_{/S}$
+with respect to the product $- \times_S -$.
+\end{prop}
+\begin{proof}
+This is well-known and we omit the proof.
+\end{proof}
+
+\begin{cns}[Moduli Prestack of Arrow Bundles]
+\label{cns:mod-prest-arr-sec}
+For any prestack $\mcX \in \PSt_{/S}$, we consider the following maps:
+\begin{itemize}
+\item $\ol{\Delta_\mcX} : S \to \Map_S(\mcX, \mcX \times \mcX)$
+  corresponding to the diagonal map $\Delta_\mcX : \mcX \to \mcX \times \mcX$
+  which sends a map $U \to S$ to the composite
+  $U \times \mcX \to[pr_2] \mcX \to[\Delta_\mcX] \mcX \times \mcX$
+\item $- \circ p_\mcX : \sM(\mcX)^2 \simeq \Map_S(S, \sM(\mcX)^2)
+  \to \Map_S(\mcX, \sM(\mcX)^2)$, which sends a morphism
+  $(v, w) : U \to \sM(\mcX)^2$ to the composite
+  $U \times \mcX \to[pr_1] U \to[{(v, w)}] \sM(\mcX)^2$
+\end{itemize}
+We then define the prestack $\sM_1'(\mcX)$ by the following fibre product
+of prestacks:
+\[\begin{tikzcd}[column sep=huge]
+\sM_1'(\mcX)
+  \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+\Map_S(\mcX, \sV(\mcX))
+  \ar[d, "\pi_{\sV(\mcX)} \circ -"] \\
+\sM(\mcX)^2 \simeq \sM(\mcX)^2 \times S
+  \ar[r, "{(- \circ p_{\mcX}) \times \ol{\Delta_\mcX}}" below] &
+\Map_S(\mcX, \sM(\mcX)^2) \times \Map_S(\mcX, \mcX^2) \simeq
+\Map_S(\mcX, \sB(\mcX)^2)
+\end{tikzcd}\]
+where the right vertical map is induced by the bundle projection of
+$\sH(\mcX)$.
+\end{cns}
+
+\begin{prop}\label{prop:M1'-concrete}
+For any prestack $\mcX \in \PSt_{/S}$, the underlying category
+of the prestack $\sM_1'(\mcX)$ of \cref{cns:mod-prest-arr-sec} admits the
+following concrete description:
+\begin{itemize}
+\item Objects are tuples $(u, s, v, w, \phi)$, where:
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$,
+  \item $s : U \times \mcX \to \sV(\mcX)$ is a $1$--morphism in $\PSt_{/S}$,
+  \item $v, w : U \to \sM(\mcX)$ are $1$--morphisms in $\PSt_{/S}$, and
+  \item $\phi : p \circ s \To (v \times \id_\mcX, w \times \id_\mcX) :
+    U \times \mcX \to \sB(\mcX)^2$ is a $2$--morphism in $\PSt_{/S}$
+  \end{itemize}
+\item Morphisms $(u, s, v, w, \phi) \to (u', s', v', w', \phi')$ are tuples
+  $(f, a, b, c)$ where:
+  \begin{itemize}
+  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S}$,
+  \item $a : s' \circ (f \times \id_\mcX) \To s : U \times \mcX \to \sV(\mcX)$
+    is a $2$--morphism in $\PSt_{/S}$, and
+  \item $b : v' \circ f \To v, c : w' \circ f \To w : U \to \sM(\mcX)$
+    are $2$--morphisms in $\PSt_{/S}$,
+  \end{itemize}
+  such that the following diagram of natural transformations commutes:
+  \[\begin{tikzcd}[column sep=huge]
+  \pi_{\sV(\mcX)} \circ s' \circ (f \times \id_\mcX)
+    \ar[r, "\phi' \star (f \times \id_\mcX)"]
+    \ar[dd, "\pi_{\sV(\mcX)} \star a" left] &
+  (v' \times \id_\mcX, w' \times \id_\mcX) \circ (f \times \id_\mcX)
+    \ar[d, equal] \\ &
+  ((v' \circ f) \times \id_\mcX, (w' \circ f) \times \id_\mcX)
+    \ar[d, "{(b \times e_\mcX, c \times e_\mcX)}"] \\
+  \pi_{\sV(\mcX)} \circ s \ar[r, "\phi" below] &
+  (v \times \id_\mcX, w \times \mcX)
+  \end{tikzcd}\]
+  where $e_\mcX$ is the identity $2$--morphism of $\id_\mcX$.
+\end{itemize}
+\end{prop}
+\begin{proof}
+We will unwrap the limit defining $\sM_1'(\mcX)$.
+An object of $\Map_S(\mcX, \sV(\mcX))$ consists of a tuple
+$(u, s)$, where $u : U \to S \in \Aff_{/S}$ and
+$s : U \times \mcX \to \sV(\mcX)$. A  morphism $(u, s) \to (u', s')$
+is a tuple $(f, a)$, where $f : U = \dom(u) \to U' = \dom(u') \in \Aff_{/S}$
+and $a : s' \circ (f \times \id_\mcX) \To s$ is a $2$--morphism in $\PSt_{/S}$.
+The projection to $\PSt_{/S}$ is given by
+$(u, s) \mapsto u, (f, a) \mapsto f$.
+The morphism of prestacks
+\[
+\pi_{\sV(\mcX)} \circ - :
+    \Map_S(\mcX, \sH(\mcX)) \to \Map_S(\mcX, \sB(\mcX)^2)
+\]
+is given by
+\[
+(u, s) \mapsto (u, \pi_{\sV(\mcX)} \circ s),
+(f, a) \mapsto (f \circ u, \pi_{\sV(\mcX)} \star a)
+    = (u', \pi_{\sV(\mcX)} \star a)
+\]
+
+An object of
+$\sM(\mcX)^2 \simeq \Map_S(S, \sM(\mcX)^2) \simeq \Map_S(S, \sM(\mcX))^2$
+is a tuple $(u, v, w)$, where $u : U \to S \in \Aff_{/S}$ and
+$(v, w) : U \times S \simeq U \to \sM(\mcX)^2$ is a $1$--morphism
+in $\PSt_{/S}$ --- note that every morphism $U \to \sM(\mcX)^2$ is of this
+form by \cref{prop:prest-prod-strict}. Similarly, a morphism
+$(u, v, w) \to (u', v', w')$ is a tuple $(f, b, c)$ where
+$f : U = \dom(U) \to U' = \dom(u')$ is a morphism in $\Aff_{/S}$,
+$b : v' \circ f \To v, c : w' \circ f \To w : U \to \sM(\mcX)$
+are $2$--morphisms in $\PSt_{/S}$. The structure map to $\Aff_{/S}$
+is given by:
+\[
+(u, v, w) \mapsto u, (f, b, c) \mapsto f
+\]
+Now, consider the map
+$- \circ p_\mcX : \Map_S(S, \sM(\mcX)) \to \Map_S(\mcX, \sM(\mcX))$ given
+by precomposition with the structure map $p_\mcX : \mcX \to S$. We observe that
+on an object $(u, v) \in \Map_S(S, \sM(\mcX))$, the map has value:
+\[
+(u, U \times \mcX
+      \to[\id_U \times p_\mcX] U \times S
+      \to[\simeq] U
+      \to[v] \sM(\mcX))
+\]
+Then, $\id_U \times p_\mcX$ composed with the equivalence $U \times S \simeq S$
+is just the projection $U \times \mcX \to U$. On a morphism
+$(f, b) : (u, v) \to (u', v')$ in $\Map_S(S, \sM(\mcX))$, the map
+$- \circ p_\mcX$ has value:
+\[
+(f : U \to U',
+b \times e_\mcX
+  : (v' \circ f) \times \id_\mcX \To v \times \id_\mcX
+  : U \times \mcX \to \sB(\mcX))
+\]
+Then, using \cref{prop:prest-prod-strict}, the map
+$- \circ p_\mcX : \Map_S(S, \sM(\mcX)^2) \to \Map_S(\mcX, \sM(\mcX))$
+is given by:
+\[\begin{array}{ccc}
+(u, v, w) & \mapsto &
+  (u, U \times \mcX \to[pr_1] U \to[v] \sB(\mcX),
+      U \times \mcX \to[pr_2] U \to[w] \sB(\mcX)) \\
+(u, b, c) & \mapsto & (u, b \times e_\mcX, c \times e_\mcX)
+\end{array}\]
+
+These descriptions along with the concrete description of fibre products
+of prestacks given in
+\cite[\href{https://stacks.math.columbia.edu/tag/0040}{Lemma 0040}]
+{stacks-project} prove the result.
+\end{proof}
+
+\begin{rmk}\label{rmk:mod-prest-arr-sec}
+An object of the underlying category of $\sM_1'(\mcX)$
+consists of maps
+$U \to S, s : U \times_S \mcX \to \sH(\mcX),
+r = (v, w) : U \to \sM(\mcX)^2$, such that following diagrams $2$--commute:
+\[\begin{tikzcd}
+U \times_S \mcX \ar[r, "s"] \ar[d, "pr_1" left] & \sH(\mcX) \ar[d] \\
+U \ar[r, "r" below] & \sM(\mcX) \times_S \sM(\mcX)
+\end{tikzcd}\hspace{3.5em}
+\begin{tikzcd}
+U \times_S \mcX \ar[r, "s"] \ar[d, "pr_2" left] & \sH(\mcX) \ar[d] \\
+\mcX \ar[r, "\Delta_\mcX" below] & \mcX \times_S \mcX
+\end{tikzcd}\]
+The $2$--commutativity above means that the map
+$U \times_S \mcX \to[s] \sV(\mcX) \to[\pi_{\sV(\mcX)}] \sB(\mcX)^2$
+is of the form $(v \times_S \id_\mcX, w \times_S \id_\mcX)$
+which is the same as $(v, w) \times \Delta_X$ by the identification
+$\Map_S(\mcX, \sB(X)^2) \simeq
+\Map_S(\mcX, \sM(\mcX)^2) \times \Map_S(\mcX, \mcX^2)$.
+That is, the object is a $2$--categorical diagram in $\PSt_{/S}$ of the form:
+\[\begin{tikzcd}[row sep={huge}, column sep=huge]
+& \sV(\mcX) \ar[d, "\pi_{\sV(\mcX)}"] \\
+U \times \mcX
+  \ar[r, bend left, ""{below, name=U},
+    "\pi_{\sV(\mcX)} \circ s" above]
+  \ar[r, bend right, ""{above, name=D},
+    "{(v \times \id_\mcX, w \times \id_\mcX)}" below]
+  \ar[ru, bend left, "s" above left]
+  \ar[from=U, to=D, Rightarrow, "\phi"] &
+\sB(X)^2
+\end{tikzcd}\]
+Roughly speaking, this data corresponds to a ``global section''
+of $(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)]_{\square}$, where
+$pr_i : \sB(\mcX)^2 \to \sB(\mcX)$ are the projections onto the two factors
+of $\sB(\mcX)$ and not $\sM(\mcX)$ or $\mcX$ separately.
+Now, $(v, w)$ factors through
+$\sM^n(\mcX) \times_S \mcX \times_S \sM^m(\mcX) \times_S \mcX$ for some $n, m$
+so that $(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)]_{\square}$
+is isomorphic to the following by \cref{prop:pullback-Hom}:
+\begin{align*}
+ & (v, w)^\lhd[pr_1^*\mcE(\mcX), pr_2^*\mcE(\mcX)] \\
+=& [(v, w)^\lhd pr_1^*\mcE(\mcX), (v, w)^\lhd pr_2^*\mcE(\mcX)] \\
+=& [v^< \mcE(\mcX), w^< \mcE(\mcX)] \\
+=& [E, F]
+\end{align*}
+for two finite locally free sheaves
+$E := v^<\mcE(\mcX), F := w^<\mcE(\mcX)$ on $U \times \mcX$, corresponding to
+the maps $v, w$ respectively.
+Thus, an object of $\sM_1'(\mcX)$ consists of
+two finite locally free sheaves $E, F$ on $U \times \mcX$ and a global
+section of $[E, F]$ which is a morphism of $\mcO_{U \times \mcX}$--modules
+$E \to F$, much like $\sM_1(\mcX)$.
+\end{rmk}
+
+We will now see that this remark can be made precise into an
+equivalence of prestacks $\sM_1'(\mcX) \simeq \sM_1(\mcX)$.
+
+\begin{thm}\label{thm:arr-bun-arr-sec-equiv}
+For any prestack $\mcX \in \PSt_{/S}$, we have an equivalence of prestacks
+$\sM_1'(\mcX) \simeq \sM_1(\mcX)$.
+\end{thm}
+\begin{proof}
+We will define a morphism of prestacks
+$\Psi : \sM_1'(\mcX) \to \sM_1(\mcX)$ and show that it is fully faithful
+and essentially surjective.
+For an object $(u, s, v, w, \phi) \in \Ob{\sM(\mcX)}$, we obtain finite locally
+free sheaves $E_0 = (pr_1 \circ \pi_{\sV(\mcX)} \circ s)^*\mcE(\mcX),
+F_0 = (pr_2 \circ \pi_{\sV(\mcX)} \circ s)^*\mcE(\mcX),
+E_1 := v^<\mcE(\mcX),
+F_1 := w^<\mcE(\mcX)$ on
+$U \times \mcX$, where $U = \dom(u)$. Then, \cref{prop:sec-to-morphism} gives us
+a morphism of $\mcO_{U \times \mcX}$--modules $s_0 : E_0 \to F_0$. Next, $\phi$
+gives us isomorphisms of $\mcO_{U \times \mcX}$--moduels
+$\phi_1 := (pr_1 \circ \pi_{\sV(\mcX)}) \star \phi : E_0 \to E_1,
+\phi_2 := (pr_2 \circ \pi_{\sV(\mcX)}) \star \phi : F_0 \to F_1$, hence a unique
+morphism of $\mcO_{U \times \mcX}$--moduels $s_1 : E \to F$ making the following
+diagram commute:
+\[\begin{tikzcd}
+E_0 \ar[r, "\phi_1"] \ar[d, "s_0" left] & E_1 \ar[d, "s_1"] \\
+F_0 \ar[r, "\phi_2" below] & F_1
+\end{tikzcd}\]
+Thus, we have a triple $(E_1, F_1, s_1)$ constituting an object --- call it
+$\Psi(u, s, v, w, \phi)$ --- of $\sM_1(\mcX)$.
+
+Let $(f, a, b, c) : (u, s, v, w, \phi) \to (u', s', v', w', \phi')$
+be a morphism of $\sM_1'(\mcX)$. We denote the sheaves and morphisms associate
+to the codomain object as in the previous paragaph by $E_0', E_1', F_0', F_1',
+s_0', s_1', \phi_0', \phi_1'$. We obtain, by pasting arrows, a cube as follows:
+\begin{equation}\label{eqn:arr-bun-arr-sec-equiv-cube}
+\begin{tikzcd}[row sep=huge, column sep=huge]
+f^<E_0'
+  \ar[rr, "f^<\phi_0'"]
+  \ar[dd, "f^<s_0'" left]
+  \ar[rd, "(pr_1 \circ \pi_{\sV(\mcX)}) \star a" description] & &
+f^<E_1'
+  \ar[rd, "b \times e_\mcX" description]
+  \ar[dd, "f^<s_1'" near end] & \\ &
+E_0
+  \ar[dd, "s_0" left, near start]
+  \ar[rr, crossing over, "\phi_0" near start] & &
+E_1
+  \ar[dd, "s_1"] \\
+f^<F_0'
+  \ar[rd, "(pr_2 \circ \pi_{\sV(\mcX)}) \star a" description]
+  \ar[rr, "f^<\phi_1'" below, near end] & &
+f^<F_1'
+  \ar[rd, "c \times e_\mcX" description] & \\ &
+F_0
+  \ar[rr, "\phi_1" below] & &
+F_1
+\end{tikzcd}
+\end{equation}
+where all arrows, except possibly the vertical ones, are isomorphisms.
+The front and back faces commute by the previous paragraph. The left face commutes
+by \cref{prop:section-nat}. Noticing that
+$(pr_i \circ \pi_{\sV(\mcX)}) \star (b \times e_\mcX, c \times \mcX) = b$
+when $i = 1$ and $c$ when $i = 2$, the top and bottom faces commute by the
+commutativity constraint in the description of morphisms of $\sM_1'(\mcX)$ given in
+\cref{prop:M1'-concrete}. These imply that the right face commutes.
+Hence, the map $f : U \to U'$ along with the right face of the above
+cube provides a morphism
+$(b, c) : (E_1, F_1, s_1) \to (E_1', F_1', s_1')$ in $\sM_1(\mcX)$
+--- call it $\Psi(f, a, b, c)$.
+It is straightforward to show that the assignment $\Psi$ constitutes a functor
+$\sM_1'(\mcX) \to \sM_1(\mcX)$, which commutes with the projections to
+$\Aff_{/S}$ by construction, and is, hence a morphism of prestacks.
+
+The Gorthendieck construction gives an equivlance between categories fibred in
+groupoids over $\Aff_{/S}$ and pseudofunctors $\Aff_{/S} \to \Grpd$. Therefore,
+it suffices to check that the morphism
+of prestacks is an equivalence when restricted to the fibre categories --- this
+is the analogue, in the context of prestacks, of the pointwise criterion for
+equivalence of pseudofunctors.
+For any $U \to S$ in $\Aff_{/S}$, consider two morphisms
+$(\id_U, a, b, c), (\id_U, \alpha, \beta, \gamma) : (u, s, v, w, \phi) \to
+(u', s', v', w', \phi')$ that map to the same morphism under $\Psi$.
+Then, we have an equality as follows, by hypothesis:
+\begin{align*}
+b \times e_\mcX &= \beta \times e_\mcX \iff b = \beta \\
+c \times e_\mcX &= \gamma \times e_\mcX \iff c = \gamma
+\end{align*}
+By the observation that all morphisms in \cref{eqn:arr-bun-arr-sec-equiv-cube}
+except the vertical ones are isomorphisms, we then have equalities:
+\[\begin{array}{ccc}
+(pr_1 \circ \pi_{\sV(\mcX)}) \star a &= b \times e_\mcX =& (pr_1 \circ \pi_{\sV(\mcX)}) \star \alpha \\
+(pr_2 \circ \pi_{\sV(\mcX)}) \star a &= c \times e_\mcX =& (pr_2 \circ \pi_{\sV(\mcX)}) \star \alpha
+\end{array}\]
+Then, by \cref{prop:prest-prod-strict-nat}, we have $a = \alpha$. This shows
+that $\Psi$ is fully faithful on fibre categories.
+
+Consider an object $(E, F, f)$ of $\sM_1(\mcX)$ over $u : U \to S$.
+Then, by the universal property
+of the prestack $\sM(\mcX)$, we obtain two morphisms of prestacks
+$v, w : U \to \sM(\mcX)$ and two isomorphisms of $\mcO_{U \times \mcX}$--modules
+$\phi_E : v^<\mcE(\mcX) \to E, \phi_F : w^<\mcE(\mcX) \to F$. Thus, we have a
+unique morphism $f' : v^<\mcE(\mcX) \to w^<\mcE(\mcX)$ of
+$\mcO_{U \times \mcX}$--modules making the following diagram commute:
+\[\begin{tikzcd}
+v^<\mcE(\mcX) \ar[r, "\phi_E"] \ar[d, "f'" left] & E \ar[d, "f"] \\
+w^<\mcE(\mcX) \ar[r, "\phi_F" below] & F
+\end{tikzcd}\]
+By \cref{prop:sec-to-morphism}, $f'$ gives a section of
+$s'' : U \times \mcX \to \bV[v^<\mcE(\mcX), w^<\mcE(\mcX)]$.
+However, by \cref{cns:pullback-Hom}, we have an isomorphism
+\[
+\xi_{(v \times \id_\mcX, w \times \id_\mcX)} :
+(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)] \to[] [v^<\mcE(\mcX), w^<\mcE(\mcX)]
+\]
+This gives an equivalence of categories over $\mcX$:
+\[
+\int (\xi_{v \times \id_\mcX, w \times \id_\mcX)}):
+\bV(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)] \to[] \bV[v^<\mcE(\mcX), w^<\mcE(\mcX)]
+\]
+which composed with $s''$ gives a section of
+$s' : U \times \mcX \to \bV(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)]$.
+In turn, since $\int \bV(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)]$
+is the fibre product $(U \times \mcX) \times_{\sB(\mcX)^2} \sV(\mcX)$,
+we have a canonical map
+$\int \bV(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)] \to \sV(\mcX)$ which which by
+composing with $s'$ gives a map $s : U \times \mcX \to \sV(\mcX)$. By
+the universal property of $2$--fibre products, we get a $2$--morphism
+\[
+\phi : \pi_{\sV(\mcX)} \circ s \To (v \times \id_\mcX, w \times \id_\mcX)
+: U \times \mcX \to \sB(\mcX)^2
+\]
+That is, $(u, s, v, w, \phi)$ is an object of $\sM_1'(\mcX)$. By construction,
+under $\Psi$, this object maps to
+$(v^<\mcE(\mcX), w^<\mcE(\mcX), f')$, which is isomorphic
+to $(E, F, f)$ in $\sM_1(\mcX)$. Thus, $\Psi$ is essentially surjective on
+fibre categories, as required.
+\end{proof}
+
+\begin{notn}
+In light of the previous theorem, from this point onwards,
+we will write $\sM_1(\mcX)$ for $\sM_1'(\mcX)$ as well, unless there is a need
+to distinguish them.
+\end{notn}
+
+We now address the descent and algebaicity properties of the prestacks
+constructed so far.
+
+\begin{thm}
+When $\mcX \in \PSt_{/S}$ is a stack, then so is $\sM_1(\mcX)$.
+\end{thm}
+\begin{proof}
+If $\mcX$ is a stack, then so is $\sM(\mcX)$. Hence,
+$\sB(\mcX)^2 = (\sM(\mcX) \times \mcX)^2$ is a stack.
+Since $\sV(\mcX) \to \sB(X)^2$ is the Grothendieck construction
+of a sheaf on $\sB(\mcX)^2$, it is a stack on the underlying category of
+$\sB(\mcX)^2$, and from this, it can be shown that it satisfies the descent
+property over $\Aff_{/S}$.
+%\todo[inline]{Check this descent more carefully, perhaps}
+Thus, $\sM(\mcX)^2, \Map_S(\mcX, \sV(\mcX)), \Map_S(\mcX, \sB(\mcX)^2)$
+are all stacks. Since the fibre product of a span of stacks is a stack,
+$\sM_1(\mcX)$ is a stack by \cref{thm:arr-bun-arr-sec-equiv}.
+\end{proof}
+
+\begin{thm}\label{thm:mod-st-arr-bun-alg}
+If $X$ is a scheme that is projective, flat and of finite presentation over $k$,
+then $\sM_1(X)$:
+\begin{enumerate}
+\item is Artin,
+\item is locally of finite presentation, and
+\item has affine diagonal (in particular, is quasi-separated).
+\end{enumerate}
+\end{thm}
+\begin{proof}
+We observe that $\sM(X) = \coprod_{n = 0}^\infty \Map(X, B\Gl_n)$
+is quasi-separated, locally of finite presentation, and has an affine diagonal by
+\cite[Theorem 1.0.1.]{Wang-BunG}. The projection
+$\sV(\mcX) \to \sB(\mcX)^2$ being affine allows us to conclude
+that $\sV(\mcX)$ is a quasi-separated algebraic stack with affine stabilizers and
+locally of finite presentation.
+As a result, \cite[Theorem 1.2]{HR19} applies, and we can conclude that the
+mapping stacks involved in \cref{cns:mod-prest-arr-sec} are algebraic, locally
+of finite presentation and has affine diagonal. This shows that
+$\sM_1'(X)$ is algebraic and hence \cref{thm:arr-bun-arr-sec-equiv} yields
+the result. For a more elaborate argument, see \cite[\S 4]{ModQuivBun}.
+\end{proof}
+
+\begin{rmk}
+We note that this algebraicity result holds much more generally. For this, we
+refer to our result \cite[Theorem 4.10]{ModQuivBun}.
+\end{rmk}
+
+\subsection{The Boundary Map}
+
+An important component of the proof of algebraicity of the moduli stack
+of connection triples will will be the map $\sM'_1(\mcX) \to \sM(\mcX)^2$
+that sends a morphism of vector bundles over $\mcX$ to the pair consisting
+of the source and target of the morphism. We will record some properties
+of this map for use in \cref{sec:ArrowBunFormalGrpd}. This will be called the
+``boundary map'' as it sends a $1$--simplex in the category vector bundles
+to the pair of vertices forming its boundary.
+
+\begin{cns}\label{defn:bndry-map}
+We define a morphism of prestacks $\partial_\mcX : \sM_1(\mcX) \to \sM(\mcX)^2$
+as follows.
+For an object $(u, E, F, s)$ of $\sM_1(\mcX)$ over $u : U \to S$, we define
+\[
+\partial_\mcX(u, E, F, s) := ((u, E), (u, F))
+\]
+noting that $E, F$ are finite locally free sheaves on $U \times \mcX$.
+For a morphism $(f, a, b) : (u, E, F, s) \to (u', E', F', s')$, we define:
+\[
+\partial_\mcX(f, a, b) := ((f, a), (f, b))
+\]
+noting that $a : f^<E' \to E, b : f^<F' \to F$ are morphisms
+in $\sM(\mcX)$ over $f$.
+\end{cns}
+
+\begin{prop}
+For a prestack $\mcX \in \PSt_{/S}$,
+the map $\partial_\mcX$ of \cref{defn:bndry-map} is a morphism of prestacks.
+Let $\Psi$ again be the equivalence
+$\sM_1'(\mcX) \to[\simeq] \sM_1(\mcX)$ of \cref{thm:arr-bun-arr-sec-equiv}.
+Let $\partial_\mcX' : \sM_1'(\mcX) \to \sM(\mcX)^2$ be the projection of
+of the fibre product defining $\sM_1'(\mcX)$.
+Then, $\partial_\mcX \circ \Psi = \partial_\mcX'$ as $1$--morphisms.
+\end{prop}
+\begin{proof}
+That $\partial_\mcX$ is a functor and commutes with the projections
+to $\Aff_{/S}$ is immediate. For the second claim, we first notice that
+the map $\partial_\mcX' : \sM_1(\mcX) \to \sM(\mcX)^2$ factors through
+the equivalence
+$\Map_S(S, \sM(\mcX))^2 \to[\simeq] \Map_S(S, \sM(\mcX)^2) \to[\simeq]
+\sM(\mcX)^2$ sending
+an object $(v, w) : U \simeq U \times S \to \sM(\mcX)^2$ to
+the object $(v(\id_{U}), w(\id_U))$. The fibre product projection
+$\sM_1(\mcX) \to \Map_S(S, \sM_1(\mcX))^2$ sends an object
+$(u, s, v, w, \phi)$ to $(v, w)$. Hence, the map
+$\sM_1(\mcX) \to \sM(\mcX)^2$ is given by sending $(v, w)$ to
+$(v(\id_U), w(\id_U)) = (v^<\mcE(\mcX), w^<\mcE(\mcX))$. From the construction
+of the map $\Psi$, we see that this is precisely
+$\partial_\mcX(\Psi(u, s, v, w, \phi))$.
+
+Now, let $(f, a, b, c) : (u, s, v, w, \phi) \to (u', s', v', w', \phi')$
+be a morphism in $\sM_1'(\mcX)$. $\Psi$ sends this to
+$(b \times e_\mcX, c \times e_\mcX)$, which is then send by $\partial_\mcX$
+to itself, noting that the morphisms in $\sM_1(\mcX)$ are morphisms
+in $\sM(\mcX)$ satisfying a commutativity constraint. Then, $\partial_\mcX'$
+sends it to the $2$--morphism $(b, c) : (v, w) \To (v', w') : U \to \sM(\mcX)^2$.
+The map $\Map_S(S, \sM(\mcX))^2 \to[\simeq] \sM(\mcX)^2$ sends it to
+$(b \times e_\mcX, c \times e_\mcX)$. This shows that
+$\partial_\mcX(\Psi(f, a, b, c)) = \partial_\mcX'(f, a, b, c)$, as required.
+
+%Then, by the universal property
+%of $\sM(\mcX)$, we obtain two maps $v, w : U = \dom(u) \to \sM(\mcX)$ and two
+%isomorphisms of finite locally free sheaves $\phi_v : v^<\mcE(\mcX) \to E$ and
+%$\phi_w : w^<\mcE(\mcX) \to F$, giving a unique morphism
+%$\ol{s} : v^<\mcE(\mcX) \to w^<\mcE(\mcX)$ making the following
+%diagram commute:
+%\[\begin{tikzcd}
+%v^<\mcE(\mcX) \ar[r, "\phi_v"] \ar[d, "\ol{s}" left] & E \ar[d, "s"] \\
+%w^<\mcE(\mcX) \ar[r, "\phi_w" below] & F
+%\end{tikzcd}\]
+%We define
+%\[
+%\partial_\mcX(u, E, F, s) := (v(\id_U), w(\id_U))
+%\]
+%
+%Let $(f, a, b) : (u, E, F, s) \to (u', E', F', s')$ be a morphism in $\sM_1(\mcX)$.
+%We get a commutative diagram of finite locally free sheaves as follows:
+%\[\begin{tikzcd}
+%{(v' \circ f)^<\mathcal{E}(\mathcal{X})} && {v^<\mathcal{E}(\mathcal{X})} \\
+%& {f^<E'} && E \\
+%{(w' \circ f)^<\mathcal{E}(\mathcal{X})} && {w^<\mathcal{E}(\mathcal{X})} \\
+%& {f^<F'} && F
+%\arrow[from=1-1, to=1-3, "\ol{a}"]
+%\arrow["{f^<\phi_{v'}}"{description}, from=1-1, to=2-2]
+%\arrow["{f^<\overline{s'}}"{description}, from=1-1, to=3-1]
+%\arrow["{\phi_v}"{description}, from=1-3, to=2-4]
+%\arrow["{\overline{s}}"{description, near end}, from=1-3, to=3-3]
+%\arrow["a"{description, near start}, from=2-2, to=2-4, crossing over]
+%\arrow["{f^<s'}"{description, near end}, from=2-2, to=4-2, crossing over]
+%\arrow["s"{description}, from=2-4, to=4-4]
+%\arrow[from=3-1, to=3-3, "\ol{b}" description, near end]
+%\arrow["{f^<\phi_{w'}}"{description}, from=3-1, to=4-2]
+%\arrow["{\phi_w}"{description}, from=3-3, to=4-4]
+%\arrow["b"{description}, from=4-2, to=4-4]
+%\end{tikzcd}\]
+%We then observe that $\ol{a} : f^<(v')^<\mcE(\mcX) \to v^<\mcE(\mcX)$
+%corresponds to a $2$--morphism $v' \circ f \To v : U \to \sM(\mcX)$, by the
+%$2$--Yoneda lemma and the universal property of $\sM(\mcX)$. The same holds
+%with $b$ in place of $a$, $w$ in place of $v$ and $w'$ in place of $v'$. Thus,
+%$(a, b)_{\id_U} : \partial_\mcX(u, E, F, s) \to \partial_\mcX(u', E', F', s')$
+%is a morphism in $\sM(\mcX)$.
+\end{proof}
+
+\begin{prop}\label{prop:bndry-map-fully-faithful}
+The map $\partial_\mcX$ of \cref{defn:bndry-map} is a faithful functor.
+\end{prop}
+\begin{proof}
+We begin by observing that the Hom sets of $\sM_1(\mcX)$ are subsets
+of the corresponding Hom sets of $\sM(\mcX)^2$ consisting of elements
+satisfying a commutativity constraint. Also, the functions of Hom sets induced
+by the morphism $\partial_\mcX : \sM_1(\mcX) \to \sM(\mcX)^2$ are the
+inclusions of these subsets. Hence, $\partial_\mcX$ is faithful.
+\end{proof}
+
+\begin{defn}\label{defn:arr-bun-fixed-src-trgt}
+For any prestack $\mcY \in \PSt_{/S}$, any affine scheme $U \in \Aff_{/S}$ and any
+morphism $(v, w) : U \to \sM(\mcY)^2$, we denote by $P^{\mcY}_{v, w}$,
+the following fibre product:
+\[\begin{tikzcd}
+P^\mcY_{v, w} \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+\sM_1(\mcY) \ar[d] \\
+U \ar[r, "{(v, w)}" below] &
+\sM(\mcY)^2
+\end{tikzcd}\]
+where the right vertical map is projection of the fibre product defining
+$\sM_1(\mcX)$, in light of \cref{thm:arr-bun-arr-sec-equiv}.
+\end{defn}
+
+\begin{prop}\label{prop:bndry-map-fibre-concrete}
+In the context of \cref{defn:arr-bun-fixed-src-trgt},
+if we denote $E := v^<\mcE(\mcX), F := w^<\mcE(\mcX)$, the underlying category of
+$P^\mcY_{v, w}$ has the following concrete description:
+\begin{itemize}
+\item Objects are tuples $(r, H, K, s, \phi_{H}, \phi_{K})$ where:
+  \begin{itemize}
+  \item $r : V \to U$ is a morphism in $\Aff_{/S}$
+  \item $H, K \in \Vect(V \times \mcX)$
+  \item $s : H \to K$ is a morphism of locally free sheaves over $V \times \mcX$
+  \item $\phi_{H} : H \to r^<E, \phi_{K} : K \to r^<F$ are isomorphisms of
+    locally free sheaves over $V \times \mcX$
+  \end{itemize}
+\item Morphisms $(r, H, K, s, \phi_{H}, \phi_{K}) \to
+  (r', H', K', s', \phi_{H'}, \phi_{K'})$ are tuples
+  $(f, a, b)$ where:
+  \begin{itemize}
+  \item $f : V = \dom(r) \to V' = \dom(r')$ is a morphism in $\Aff_{/S/U}$
+  \item $a : f^<H' \to H, b : f^<K' \to K$ are isomorphisms of locally free sheaves
+    over $V \times \mcX$ making the following diagrams commute:
+    \[\begin{tikzcd}
+    f^<H' \ar[r, "a"] \ar[d, "f^<s'" left] & H \ar[d, "s"] \\
+    f^<K' \ar[r, "b" below] & K
+    \end{tikzcd}\hspace{1.5em}
+    \begin{tikzcd}
+    f^<H' \ar[r, "a"] \ar[d, "f^<\phi_{H'}" left] & H \ar[d, "\phi_H"] \\
+    f^<(r')^<E = r^<E \ar[r, "\id_{r^<E}" below] & r^<E
+    \end{tikzcd}\hspace{1.5em}
+    \begin{tikzcd}
+    f^<K' \ar[r, "b"] \ar[d, "f^<\phi_{K'}" left] & K \ar[d, "\phi_K"] \\
+    f^<(r')^<F = r^<F \ar[r, "\id_{r^<F}" below] & r^<F
+    \end{tikzcd}\]
+  \end{itemize}
+\end{itemize}
+\end{prop}
+\begin{proof}
+This follows from the definition of $\sM_1(\mcX)$ given in
+\cref{cns:mod-prest-arr-bun}, the observation that the map $(v, w)$
+has the values $(r^<E, r^<F)$ on objects $r : V \to U$ of $\Aff_{/S/U}$ and
+$(\id_{(r' \circ f)^<E}, \id_{(r' \circ f)^<F})$ on morphisms $f : V \to V'$ in
+$\Aff_{/S/U}$, and then computing the explicit description of the fibre product
+\cite[\href{https://stacks.math.columbia.edu/tag/0040}{Lemma 0040}]
+{stacks-project}.
+\end{proof}
+
+\begin{prop}\label{prop:bndry-map-fibre-simple}
+In the context of \cref{defn:arr-bun-fixed-src-trgt}, let
+$E = v^<\mcE(\mcX), F := w^<\mcE(\mcX)$, and consider the category
+$Q^\mcY_{v, w}$ defined by the following data:
+\begin{itemize}
+\item Objects are tuples $(r, \sigma)$ where:
+  \begin{itemize}
+  \item $r : V \to U$ is a morphism in $\Aff_{/S}$
+  \item $s : r^<E \to r^<F$ is a morphism of finite locally free sheaves on
+    $V \times \mcX$
+  \end{itemize}
+\item Morphisms $(r, s) \to (r' s')$ are morphisms
+    $f : V = \dom(r) \to V' = \dom(r')$ in $\Aff_{/S/U}$ such that
+    $r' \circ f = r$ and $f^<s' = s$.
+\end{itemize}
+We have an equivalence of prestacks
+$\Psi_{v, w}^\mcY : Q^\mcY_{v, w} \to P^\mcY_{v, w}$.
+\end{prop}
+\begin{proof}
+We observe that for any object $(r, s) \in Q^\mcY_{v, w}$, we have the object
+\[
+\Psi^\mcY_{v, w}(r, s) := (r, r^<E, r^<F, s, \id_{r^<E}, \id_{r^<F})
+\]
+in $P^\mcY_{v, w}$. For two objects $(r, s), (r', s')$, consider
+a morphism $(f, a, b) : \Psi^\mcY_{v, w}(r, s) \to \Psi^\mcY_{v, w}(r', s')$.
+Then, the commutativity constraint in the description of morphisms
+in \cref{prop:bndry-map-fibre-concrete}, we have the following commutative
+diagrams:
+\[\begin{tikzcd}
+f^<(r')^<E \ar[r, "a"] \ar[d, "f^<s'" left] & r^<E \ar[d, "s"] \\
+f^<(r')^<F \ar[r, "b" below] & r^<F
+\end{tikzcd}\hspace{1.5em}
+\begin{tikzcd}
+f^<(r')^<E  = r^<E\ar[r, "a"] \ar[d, "f^<(\id_{(r)'^<E}) = \id_{r^<E}" left] &
+r^<E \ar[d, "\id_{r^<E}"] \\
+f^<(r')^<E = r^<E \ar[r, "\id_{r^<E}" below] &
+r^<E
+\end{tikzcd}\]\[
+\begin{tikzcd}
+f^<(r')^<F  = r^<F\ar[r, "b"] \ar[d, "f^<(\id_{(r)'^<F}) = \id_{r^<F}" left] &
+r^<F \ar[d, "\id_{r^<F}"] \\
+f^<(r')^<F = r^<F \ar[r, "\id_{r^<F}" below] &
+r^<F
+\end{tikzcd}\]
+showing that $a = \id_{r^<E}$, $b= \id_{r^<F}$, and
+that $f^<s' = s$ so that $f$ is a morphism in $Q^\mcY_{v, w}$. Hence, we can
+set $\Psi^\mcY_{v, w}(f) := (f, \id_{r^<E}, \id_{r^<F})$. It is not hard to show
+that $\Psi^\mcY_{v, w}$ is a morphism of prestacks. That it is fully faithful is
+evident from the construction. Suppose, now, that we have an object
+$q = (r, H, K, s, \phi_H, \phi_K)$ of $P^\mcY_{v, w}$. This gives us a unique
+map $t : r^<E \to r^<F$ making the following diagram commute:
+\[\begin{tikzcd}
+H \ar[r, "\phi_H"] \ar[d, "s" left] & r^<E \ar[d, "t"] \\
+K \ar[r, "\phi_K" below] & r^<F
+\end{tikzcd}\]
+It is, then, easy to see that $(\id_{\dom(r)}, \phi_H, \phi_K)$ is an
+isomorphism of the object $q$ with $\Psi^\mcY_{v, w}(r, t)$. This shows that
+$\Psi^\mcY_{v, w}$ is essentially surjective.
+\end{proof}
+
+\begin{notn}
+In light of \cref{prop:bndry-map-fibre-simple},
+when the maps $v, w$ are not important, we will sometimes write
+$Q^\mcY_{E, F} \simeq P^\mcY_{E, F}$.
+\end{notn}
+
+\begin{prop}\label{prop:bndry-map-repr-alg-sp}
+In the context of \cref{defn:arr-bun-fixed-src-trgt}, if
+$\sM_1(\mcX)$ and $\sM(\mcX)$ are algebraic, then $P^\mcY_{v, w}$
+is an algebraic space.
+\end{prop}
+\begin{proof}
+This follows from \cref{prop:bndry-map-fully-faithful} and
+\cite[\href{https://stacks.math.columbia.edu/tag/04Y5}{Lemma 04Y5}]
+{stacks-project}.
+\end{proof}
+
+\begin{warn}
+In \cref{prop:bndry-map-repr-alg-sp}, the algebraicity of $\sM_1(\mcX)$
+is a requirement and not a consequence.
+\end{warn}
+
+We will now see that in the case that $\mcY$ is a scheme $X$ flat, finitely
+presented and projective over $S$, the boundary map is ``well-behaved''.
+
+\begin{thm}\label{thm:X-fppf-proj-bndry-map-aff-fp}
+Let $X \to S$ be a finitely presented, flat and projective morphism of schemes.
+Then, $\partial_X : \sM_1(X) \to \sM(X)^2$ affine and of finite presentation.
+\end{thm}
+\begin{proof}
+We have to show that for any morphism $(v, w) : U \to \sM(X)^2$ where
+$U \in \Aff_{/S}$, the map $P^X_{v, w} \to U$ is affine and of finite
+presentation.
+We obtain the following pasting of Cartesian squares by
+\cref{thm:arr-bun-arr-sec-equiv} and the definition
+(\ref{defn:arr-bun-fixed-src-trgt}) of $P^X_{v, w}$:
+\[\begin{tikzcd}
+P^X_{v, w} \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+\sM_1(X) \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+\Map_S(X, \sV(X)) \ar[d] \\
+U \ar[r, "{(v, w)}" below] &
+\sM(X)^2 \ar[r] &
+\Map_S(X, \sB(X)^2)
+\end{tikzcd}\]
+The same argument as in the proof of theorem \cite[Lemma 3.2.1]{Wang-BunG}
+shows that $P^X_{v, w}$ is equivalent to the stack
+$\Map_U(U \times X, \sV(X) \times_{\sB(X)^2} (U \times X))$. However,
+by \cref{prop:geom-vec-bun-Gro-cons}, $\sV(X) \times_{\sB(X)^2} (U \times X)$
+is equivalent to $\int [E, F]$, where $E = v^<\mcE(X), F = w^<\mcE(X)$.
+Furthermore, since $[E, F]$ is a finite locally free $\mcO_{U \times X}$--module
+$\pi_A : \int [E, F] \to U \times X$ is affine by
+\cref{prop:vec-bun-proj-affine}. By passing to charts, we can also show that
+$\pi_A$ is of finite presentation. Finally, the projection
+$pr_1 : U \times X \to U$ is finitely presented, flat and projective,
+as it is a base change of the finitely presented, flat and projective morphism
+$X \to S$. Lemma 3.1.4 of \cite{Wang-BunG} now applies and we can conclude that
+the map $P^X_{v, w} \simeq \Map_U(U \times X, \int [E, F]) \to U$ is an affine
+morphism of finite presentation, as required.
+\end{proof}
+
+%==============================================================================%
+
+\section{Arrow Bundles on Formal Groupoids}\label{sec:ArrowBunFormalGrpd}
+
+We now have all the machinery we need to construct and study the moduli
+stack of connection triples. We will address this in some generality: we will
+take the approach of \cites{NonAbHodgeFilt} in constructing the stack
+representing the non-Abelian Hodge filtration. Just like the moduli stack
+of vector bundles on certain formal groupoids recover the moduli stacks
+of connections, Higgs bundles, etc., we will consider
+the moduli stack of vector bundle triples on those same formal groupoids
+and show that they recover the desired moduli stacks of morphisms
+of the respective objects: namely, $\lambda$--connections for a varying
+parameter $\lambda$, usual connections (or, $1$--connections) and
+Higgs bundles (or, $0$--connections).
+
+\subsection{Review of Formal Groupoids}
+
+We begin by reviewing formal groupoids both for the convenience of the reader
+and to illustrate the difficulty in proving the algebraicity of the moduli
+stack of connection triples using the same approach for the moduli stack
+of vector bundle triples.
+
+\begin{notn}
+We will write $\FSch$ for the category of formal schemes over $k$.
+\end{notn}
 
 \begin{defn}[Formal Groupoid]
 \label{defn:form-cat}
-A formal category over $S$ is an internal category $(X, \sF, s, t, c, i)$ in
-$\FSch_{/S}$ such that
+A formal category over $S$ is a tuple $(X, \sF, s, t, c, i)$ forming an
+internal category in $\FSch_{/S}$, and satisfying:
 \begin{enumerate}
 \item $X$ is a scheme in $\Sch_{/S}$,
 \item $i : X \to \sF$ is a closed immersion realizing $X$ as the underlying
@@ -156,8 +2036,6 @@ In the context of the above definition, if the formal groupoid $(X, \sF)$
 is clear from context, then we write $\mathcal{X}$ as $X_\sF$.
 \end{notn}
 
-\subsection{Main Examples}
-
 There are three main examples of interest to us \cite[31---33]{NonAbHodgeFilt}.
 The rough idea behind all of these is that a quasicoherent sheaf on
 a formal stack is $(X, \sF)$ is a quasicoherent sheaf on $X$ along with
@@ -171,8 +2049,8 @@ If $X \to S$ is separated, then the diagonal $\Delta_{X/S} : X \to X \times_S X$
 is a closed immersion and we take $\sF \to[{(s, t)}] X \times_S X$ to be the
 formal completion of $X \times_S X$ along the set theoretic image
 $\Delta_{X/S}(X)$. The composition morphisms $c : \sF \times_X \sF \to \sF$
-is the one induced by the map 
-\todo{Make this more precise.}
+is the one induced by the map
+%\todo[inline]{Make this more precise.}
 $(X \times_S X) \times_X (X \times_S X) \to X$.
 The identity morphism $i : X \to \sF$
 is simply the closed immersion into the formal completion.
@@ -184,7 +2062,7 @@ $X_{dR} \to S$, in this case.
 \label{exm:Dol-st}
 If $X \to S$ is again separated, then the diagonal
 $\Delta_{X/S} : X \to X \times_S X$ is again a closed immersion. Furthermore,
-any section of a separated morphism is a closed immersions. Since the
+any section of a separated morphism is a closed immersion. Since the
 projection $T(X \times_S X) \to X \times_S X$ of the tangent bundle of
 $X \times_S X$ is affine and hence separated, the zero section
 $0_X : X \to T(X \times_S X)$ is a closed immersion. Therefore, the composite
@@ -198,7 +2076,8 @@ $\Delta'(X)$.
 Then, the map $\sF \to[{(s, t)}] X \times_S X$ is obtained by
 composing with the bundle projection.
 The composition morphism $c : \sF \times_X \sF \to \sF$ is induced by
-the addition morphism \todo{Make this more precise.}
+the addition morphism
+%\todo[inline]{Make this more precise.}
 \[
 + : T(X \times_S X) \times_{X \times_S X} T(X \times_S X) \to T(X \times_S X)
 \]
@@ -210,10 +2089,11 @@ $X_{Dol} \to S$, in this case.
 
 \begin{exm}[Hodge Stack]
 \label{exm:Hodge-st}
-Take a separated morphism of schemes $X \to T$ over $\bZ$,
+Take a separated morphism of schemes $X \to T$ (for us, $T$ will
+mainly be $\Spec(k)$),
 consider a formal groupoid over $S := \bA^1_T = \bA^1_\bZ \times_\bZ T$
 whose scheme of objects
-is $X \times_T \bA^1_T \to \bA^1_T$. The formal scheme of morphisms is
+is $pr_2 : X \times_T \bA^1_T \to \bA^1_T$. The formal scheme of morphisms is
 defined as follows. We take the blow up $B \to X \times_T X \times_T \bA^1_T$ of
 $(X \times_T \bA^1_T) \times_{\bA^1_T} (X \times_T \bA^1_T)
 \cong (X \times_T X \times_T \bA^1_T)$ along the set theoretic image of the
@@ -232,7 +2112,7 @@ B \ar[d] \\
 X \times_T X  \ar[r, "{(\id, 0)}"] & X \times_T X \times \bA^1_T
 \end{tikzcd}\]
 where the top and bottom arrows are both closed embeddings.
-\todo{Provide reference --- Annala's notes: an option}
+%\todo[inline]{Provide reference --- Annala's notes: an option}
 Then, $B'$ is the strict transform of $\im(\id_{X \times_T X}, 0)$
 in the blow up of $X \times_T X \times_s \bA^1_T$ along
 $\im(\Delta_{X/T} \times_T 0)$ by
@@ -254,12 +2134,12 @@ $\sF \to Y$ of $Y$ along $\Delta'(X)$. The map
 $\sF \to[{(s, t)}] X \times_T X \times_T \bA^1_T$ is given by the two
 projections $Y \to X \times_T X \times_T \bA^1_T \to X \times_T \bA^1_T$.
 The composition map $c : \sF \times_{X \times_T \bA^1_T} \sF \to \sF$
-is induced by the map:
+is given by composition with the map:
 \[
 (X \times_T X \times_T \bA^1_T) \times_{X \times_T \bA^1_T}
 (X \times_T X \times_T \bA^1_T) \to (X \times_T X \times_T \bA^1_T)
 \]
-The identity morphism $i : X \times_T \bA^1 \to \sF$
+The identity morphism $i : X \times_T \bA^1_T \to \sF$
 is again the closed immersion into the formal completion.
 We will write $\sF$ as $\sF_{Hod}$ and the associated stack over $S = \bA^1_T$
 as $X_{Hod} \to \bA^1_T$, in this case.
@@ -268,7 +2148,7 @@ as $X_{Hod} \to \bA^1_T$, in this case.
 These stacks are related to each other by the following well known fact which
 is the main connection with non-Abelian Hodge theory.
 
-\begin{prop}
+\begin{prop}[{\cite[33]{NonAbHodgeFilt}}]
 Let $X \to T$ be a separated morphism of schemes and consider
 $X_{dR}$ and $X_{Dol}$ by taking $S = T$ in \cref{exm:dR-st} and
 \cref{exm:Dol-st}, respectively.
@@ -278,30 +2158,15 @@ the fibre $X_{Hod, \lambda}$ of $X_{Hod} \to \bA^{1}_T$ over $\lambda$ is
 equivalent as a stack to $X_{dR}$ when $\lambda \neq 0$, and is equivalent to
 $X_{Dol}$, when $\lambda = 0$.
 \end{prop}
-\begin{proof}
-\todo[inline]{Complete the proof}
-\end{proof}
 
 We also record here some basic facts about these stacks that make it difficult
-to apply some of the techniques of \cite{ModQuivBun} directly ---
-see \cref{sec:quiv-bun-form-st}.
-
-\begin{cor}\label{prop:dR-st-set-fibres}
-The stack $X_{dR}$ of \cref{exm:dR-st} is a stack whose fibre categories are
-setoids (a groupoid that is also a preorder, and hence a groupoid with
-contractible connected components). That is, it is equivalent to the
-Grothendieck construction of a sheaf of sets.
-\end{cor}
-\begin{proof}
-This follows from the fact that the $\sF_{dR} \to X \times_S X$ is monomorphism
-of sheaves of sets.
-\end{proof}
+to apply some of the techniques of \cite{ModQuivBun} directly.
 
 \begin{prop}\label{prop:Hodge-st-diag-non-rep}
 Taking $T = \Spec(k)$ for some algebraically closed field $k$ in the
 context of \cref{exm:Hodge-st},
 $X_{Hod}$ does not have a diagonal representable
-by algebraic spaces.
+by algebraic spaces, and is, hence, not a formal algebraic stack.
 \end{prop}
 \begin{proof}
 We consider a $T= \Spec(k)$--point
@@ -349,309 +2214,924 @@ and $X_{Hod}$ cannot have diagonal representable by algebraic spaces.
 \begin{prop}\label{prop:Dol-st-diag-non-rep}
 In the context of \cref{exm:Dol-st}, taking $S = \Spec(k)$ for some
 algebraically closed field $k$ and $X \to \Spec(k)$ to be smooth,
-the stack $X_{Dol}$ does not have a diagonal representable by algebraic spaces.
+the stack $X_{Dol}$ does not have a diagonal representable by algebraic spaces,
+and is, hence, not a formal algebraic stack.
 \end{prop}
 \begin{proof}
-Consider a point $x \in X_{Dol}(\Spec(k))$ that factors as
-$\Spec(k) \to[x'] X \to X_{Dol}$.
-\todo[inline]{Complete the proof}
+Consider a point $x \in X_{Dol}(\Spec(k))$. This gives a point
+$\iota \circ x : \Spec(k) \to X_{Dol} \hto X_{Hod}$, where the second map
+is the closed immersion including $X_{Dol}$ as the fibre over $0 \in \bA^1_k$
+in $X_{Hod}$.
+We then observe that for any pair of morphisms $f, g : Y \to \Spec(k)$,
+$\iota \circ x \circ f = \iota \circ x \circ g$ implies $x \circ f = x \circ g$,
+since $\iota$ is a monomorphism
+\cite[\href{https://stacks.math.columbia.edu/tag/0504}{Lemma 0504}]
+{stacks-project}. Thus, we must have a unique map
+$h : Y \to \stb(x)$ such that the two composites
+$Y \to[h] \stb(x) \to \Spec(k)$ are equal. That $\iota$ is a monomorphism
+also gurantees $h$ is the unique map satisfying this. This shows that
+$\stb(x)$ satisfies the same universal property as $\stb(\iota \circ x)$.
+Hence, by the computation of the stabilizers of $X_{Hod}$ in
+\cref{prop:Hodge-st-diag-non-rep},
+we have that $\stb(x) \cong \Spf(k[[x_0, \dots, x_n]])$. Thus,
+$X_{Dol}$ cannot have a diagonal representable by algebraic spaces.
 \end{proof}
 
-\subsection{Vector Bundles on Formal Stacks}
+\begin{rmk}\label{rmk:dR-st-set-fibres}
+The stack $X_{dR}$ of \cref{exm:dR-st} is a stack whose fibre categories are
+setoids (a groupoid that is also a preorder, and hence a groupoid with
+contractible connected components). That is, it is equivalent to the
+Grothendieck construction of a sheaf of sets on $\Aff_{/S}$.
+This follows from the fact that the $\sF_{dR} \to X \times_S X$ is
+a monomorphism of sheaves of sets. Thus, $X_{dR}$ has trivial stabilizers but
+it is still not algebraic, in general.
+\end{rmk}
 
-\todo[inline]{Maybe review the relation with $\Lambda$--modules here
-\cite[30]{NonAbHodgeFilt}}
+\begin{rmk}
+The lack of algebraicity of $X_{dR}, X_{Dol}, X_{Hod}$ prevent us from
+concluding that $\sV(X_{dR}), \sV(X_{Dol}), \sV(X_{Hod})$ are algebraic.
+Together, these prevents us from using \cite[Theorem 1.2]{HR19} (or, even more
+general results such as \cite[Theorem 5.1.1]{HP23}) to conclude that
+the mapping stacks involved in the definition of
+$\sM_1(X_{dR}), \sM_1(X_{Dol}), \sM_1(X_{Hod})$ are algebraic.
+Nevertheless, we will see that there is an alternate
+route to proving their algebraicity.
+\end{rmk}
 
-The following should be well known but we present it here nevertheless
-for completeness.
+\subsection{Moduli Stacks of Vector Bundles and Arrow Bundles}
 
-\begin{thm}\label{thm:Vect-proj-form-st}
-Let $(X, \sF)$ be a smooth formal stack over an algebraically closed field
-$k$ of characteristic $0$ such that the structure maps
-$X \Spec(k)$ are projective morphisms. Then,
-$\Vect(X_\sF/S)$ is algebraic and locally of finite presentation.
-\end{thm}
-\begin{proof}
-We know that:
+We now proceed to show the main results on this paper. For this, we first
+recall that ($\lambda$--)connections, connections and Higgs bundles can
+all be formulated as modules over certain sheaves of algebras of differential
+operators \cite[\S 2]{ModRepFunGrpI}. This formulation allows us to connect
+vector bundles on formal groupoids with connections via
+Simpson's crystallization functors which we now discuss.
+
+\begin{prop}[{\cite[Theorem 5.1]{GeomNonAbHodgeFilt}}]\label{prop:diff-op-ring}
+Let $(X, \sF)$ be a smooth formal category. Then, there exists
+a filtered $\mcO_X$--algebra $\Lambda_\sF$ such that there is an equivalence
+of categories:
 \[
-\Vect(X_\sF/S) = \coprod_{n = 0}^\infty \Map(X_\sF, B\Gl_n(k))
+\Diamond_{X, \sF} : \LMod_{flf}(\Lambda_\sF) \to[\simeq] \Vect(X_\sF)
 \]
-Then, it is known that $\Map(X_\sF, B\Gl_n(k))$ is algebraic and locally of
-finite type --- see the proof of \cite[Theorem 7.2]{AlgGeom-n-St}.
-Then, $\Vect(X_\sF/S)$ is also an algebraic stack locally of finite
-presentation.
-\todo{Need to check whether ``projective formal groupoid'' really means
-what we described above.}
-\end{proof}
-
-%==============================================================================%
-
-\section{Arrow Bundles}
-
-In this section we review the moduli stack $\Vect_1(\mcX/S)$ of vector bundle
-morphisms (or triples) as defined in \cite[\S 3]{ModQuivBun}.
-This stack parametrizes triples $(E, F, f)$ consisting of two vector bundles
-$E, F$ and a morphism of vector bundles $f : E \to F$ over a fixed base stack
-$\mcX \in \St_{/S}$. The main purpose of this section is to give a concrete
-description of the fibre categories $\Vect_1(\mcX/S)(U)$ over an scheme
-$U \in \Sch_{/S}$ and the boundary map
-\[
-\Vect_1(\mcX/S) \to[{(s, t)}] \Vect(\mcX/S) \times \Vect(\mcX/S)
-\]
-both of which we mentioned in \cite{ModQuivBun} without precise descriptions
-or proofs.
-
-\subsection{The Moduli Stacks}
-
-We first recall the definition of $\Vect_1(\mcX/S)$ and the face maps
-$s, t : \Vect_1(\mcX/S) \to \Vect(\mcX/S)$.
-
-\todo[inline]{Recall definitions here}
-
-\subsection{Concrete Descriptions}
-
-\begin{thm}\label{thm:Vect1-psfunctor}
-For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
-the $2$--sheaf of groupoids associated to $\Vect_1(\mcX/S)$ via the Grothendieck
-construction is defined as follows:
-\begin{itemize}
-\item For any $U \in \Sch_{/S, fppf}$,
-$\Vect_1(\mcX/S)(U)$ is the core (maximal subgroupoid) of the $1$--category of
-vector bundles over $U \times_S \mcX$
-
-\item For any morphism $q : U \to V \in \Sch_{/S, fppf}$, the functor
-\[
-\Vect_1(\mcX/S)(V) \to \Vect_1(\mcX/S)(U)
-\]
-is defined by pullback of vector bundles along
-$q \times_S \id_\mcX : U \times_S \mcX \to V \times_S \mcX$.
-\end{itemize}
-\end{thm}
+where the left side is the category of left $\Lambda_\sF$--modules that is
+finite locally free with respect to the induced $\mcO_X$--module structure.
+\end{prop}
 \begin{proof}
-\todo[inline]{Complete the proof}
+Strictly speaking, Simpson's result gives an $(\infty, 1)$--equivalence:
+\[
+\Perf_{\mcO_X}(\Lambda_\sF) \to[\simeq] \Perf(X_\sF)
+\]
+where the left side is the $(\infty, 1)$--category of complexes of
+$\Lambda_\sF$--modules quasi-isomorphic as complexes of $\mcO_X$--modules
+to complexes whose terms are finite locally free $\mcO_X$--modules.
+To get the equivalence stated above, we first observe that the functor
+realizing this equivalence is first defined for the case of affine $X$
+and $\Lambda_X$--modules on one side, and $\mcO_{X_\sF}$--modules on the other,
+and then observing that applying the functor term-wise gives an extension
+to complexes \cite[\S 3.5, p. 24]{GeomNonAbHodgeFilt}. The global case
+is obtained by taking the limit of the crystallization functors over a Zariski
+cover of $X$ \cite[Proof of Theorem 5.1]{GeomNonAbHodgeFilt}.
+This implies that the functor preserves complexes concentrated in degree zero.
 \end{proof}
 
-\begin{thm}
-For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
-the category $\Vect_1(\mcX/S)$ has object set:
-\begin{align*}
- & \Ob{\Vect_1(\mcX/S)} \\
-=& \set[{
-  (p, \mc{E}_0, \mc{E}_1, f)
-}]{
-  \parbox{0.65\textwidth}{
-    $p : U \to S \in \Ob{(\Sch_{/S})_{fppf}}$, \\
-    $\mc{E}_0, \mc{E}_1 \to U \times_S \mcX$ are vector bundles, \\
-    $f : \mc{E}_0 \to \mc{E}_1$ is a morphism of vector bundles
-  }
-}
-\end{align*}
-and, for two objects $A_i = (p_i, \mc{E}_{0, i}, \mc{E}_{1, i}, f_i)$ where
-$i \in \set{0, 1}$, the morphism sets:
-\begin{align*}
- & \Hom(A_1, A_2) \\
-=& \set[{(q, \alpha_0, \alpha_1)}]{
-  \parbox{0.65\textwidth}{
-    $q : U_0 \to U_1 \in \Sch_{/S}(p_1, p_2)$, \\
-    $\alpha_j$ are vector bundle isomorphisms, such that\\
-    \begin{center}
-    \begin{tikzcd}[ampersand replacement=\&]
-      q^*\mc{E}_{0, 1} \ar[r, "\alpha_1" above] \ar[d, "q^*f_2" left] \&
-      \mc{E}_{0, 0} \ar[d, "f_1"] \\
-      q^*\mc{E}_{1, 1} \ar[r, "\alpha_2" below] \&
-      \mc{E}_{1, 0} \&
-    \end{tikzcd}
-    \end{center}
-    is commutative
-  }
-}
-\end{align*}
-\end{thm}
-\begin{proof}
-The Grothendieck fibration $\Vect_1(\mcX/S) \to \Sch_{/S, fppf}$ is the
-Grothendieck construction of the pseudofunctor of \cref{thm:Vect1-psfunctor}.
-The result now follows from the concrete description of the Grothendieck
-construction.
-\end{proof}
-
-\subsection{The Boundary Map}
-
-\begin{defn}
-For any stack $\mcX \in \St_{/S}$, taking $s, t$ to be the source and target
-maps as defined in \cite[\S 3]{ModQuivBun}, we call the morphism of stacks
-$\Vect_1(\mcX/S) \to[{(s, t)}] \Vect(\mcX/S)$, the boundary map.
+\begin{defn}\label{defn:diff-op-ring}
+We call $\Lambda_\sF$ in \cref{prop:diff-op-ring} the sheaf of rings
+of differential operators associated to $(X, \sF)$. We call $\Diamond_{X, \sF}$
+the crystallization functor.
+We will suppress the subscript of the crystallization functor, when there is
+no confusion.
 \end{defn}
 
 \begin{rmk}
-The name ``boundary map'' is inspired by the map of simplicial sets
-that sends the $1$--simplex to its boundary: that is, the disjoint union
-of its source and target vertices.
+$\Lambda_\sF$ is a sheaf of rings of differential operators as defined in
+\cite[\S 2]{ModRepFunGrpI}.
 \end{rmk}
 
-\begin{thm}\label{thm:boundary-map-fibre-functor}
-For any stack $\mcX \in \St_{/S}$ and any scheme $U \in \Sch_{/S}$,
-the functor $\Vect_1(\mcX/S)(U) \to[{(s, t)}] \Vect(\mcX/S)(U)^2$
-is defined by:
-\[\begin{array}{ccc}
-(\mc{E}_1, \mc{E}_2, f : \mc{E}_1 \to \mc{E}_2)
-&\mapsto& (\mc{E}_1, \mc{E}_2) \\
-(\alpha_1, \alpha_2) & \mapsto & (\alpha_1, \alpha_2)
-\end{array}\]
-In particular, the functor is faithful.
-\end{thm}
+\begin{prop}\label{prop:cryst-pullback-compat}
+In the context of \cref{defn:diff-op-ring}, consider two formal groupoids
+$(X, \sF), (Y, \sG)$ with an internal functor
+$(f_0, f_1) : (X, \sF) \to (Y, \sG)$ giving a morphism of quotient stacks
+$f : X_\sF \to Y_\sG$.
+Then, the following diagram of categories commutes up to natural isomorphism:
+\[\begin{tikzcd}
+\LMod_{flf}(\Lambda_\sG) \ar[r, "\Diamond_{Y, \sG}"] \ar[d, "f_0^*" left] &
+\Vect(Y_\sG) \ar[d, "f^*"] \\
+\LMod_{flf}(\Lambda_\sF) \ar[r, "\Diamond_{X, \sF}" below] &
+\Vect(X_\sF)
+\end{tikzcd}\]
+\end{prop}
 \begin{proof}
-\todo[inline]{Complete the proof}
+We pick a Zariski cover $\set{X_i \to X}_{i \in I}$, and then take
+the formal groupoids $(X_i, \sF_i)$ where
+$\sF_i = X_i \times X_i \times_{X \times X} \sF$. We define
+the formal groupoids $(Y_i, \sG_i)$ analogously.
+Without loss of generality, we can take the $X_i$ to be $X \times_Y Y_i$.
+We get corresponding morphisms of stacks
+$X_{i, \sF_i} \to X_\sF, X_{i, \sF_i} \to[f_i] Y_{i, \sF_i},
+Y_{i, \sG_i} \to Y_{\sG}$.
+Then, for an object $(E, \phi) \in \LMod_{flf}(\Lambda_\sG)$, we have:
+\begin{align*}
+& \Diamond_{X, \sF}(f_0^*(E, \phi)) \\
+=& \lim_{X_i \to X} \Diamond_{X_i, \sF_i}((f_0^*(E, \phi))|_{X_i}) \\
+=& \lim_{X_i \to X} \Diamond_{X_i, \sF_i}(f_0^*((E, \phi)|_{Y_i}))
+\end{align*}
+Let $A_i, B_i$ be the rings of global sections of $X_i, Y_i$ so that
+$X_i = \Spec(A_i), Y_i = \Spec(B_i)$.
+Let $N_i$ denote the $B_i$--module $\Gamma(E|_{Y_i})$, and
+$M_i = A_i \otimes_{B_i} N_i$, the $A_i$--module $\Gamma(f^*_0(E|_{Y_i}))$.
+If we define
+$F_i := \Gamma(\Lambda_{\sF_i})^\vee$
+There is an equivalence
+\cite[\S 3.5]{GeomNonAbHodgeFilt} between
+$\Gamma(\Lambda_{\sF_i})$--modules and connections as defined
+in \cite[\S II.1.2]{CohomCrysCharP} and
+by the definition of base change for connections given in
+\cite[94, \S II.1.2.5]{CohomCrysCharP}, we can deduce:
+\[
+\Diamond_{X_i, \sF_i}(f^*_0((E, \phi)|_{Y_i}))
+\cong f^*_0\br{\Diamond_{X_i, \sF_i}\br{\br{E, \phi}|_{Y_i}}}
+\]
+%\todo[inline]{We should really make this more precise}
+Finally, since limits of functors are defined objectwise and $f^*_0$
+is given by precomposition, $f^*_0$ commutes with limits. Thus, we have:
+\[
+\Diamond_{X, \sF}(f_0^*(E, \phi))
+\cong f_0^*\br{\lim_{X_i \to X} \Diamond_{X_i, \sF_i}((E, \phi)|_{Y_i})}
+\]
+A similar argument applies for morphisms.
 \end{proof}
 
-\begin{cor}
-For any stack $\mcX \in \St_{/S}$, if $\Vect_1(\mcX/S)$ and $\Vect(\mcX/S)$
-are algebraic, then the morphism of stacks
-$\Vect_1(\mcX/S) \to \Vect(\mcX/S)$ is representable by algebraic spaces.
-\end{cor}
+These results allow us to give a concrete description of the moduli prestack
+of arrow bundles on a smooth formal groupoid. At the same time, we get
+a simple description of the fibres of the boundary map as in
+\cref{prop:bndry-map-fibre-simple}.
+
+\begin{thm}\label{thm:mod-arr-bun-formal-grpd-concrete}
+Given a smooth formal groupoid $(X, \sF)$, where the morphism $X \to S$
+is quasi-separated, the underlying category of $\sM_1(X_\sF)$ is equivalent
+to a category defined by the following data:
+\begin{itemize}
+\item Objects are tuples $(u, E, \phi, F, \psi, s)$ where:
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$
+  \item $(E, \phi), (F, \psi)$ are
+  $\Lambda_{\sF, U} := pr_1^*\Lambda_{_\sF}$--modules, where
+  $E, F$ are finite locally free with respect to the induced
+  $\mcO_{U \times \mcX}$--module structure
+  \item $s : E \to F$ is a morphism of $\Lambda_{U \times \mcX}$--modules
+  \end{itemize}
+\item Morphims $(u, E, \phi, F, \psi, s) \to (u', E', \phi', F', \psi', s')$
+  are tuples $(f, a, b)$ where:
+  \begin{itemize}
+  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S}$
+  \item $a : f^<E' \to E, b^<F' \to F$ are morphisms of
+    $\Lambda_{\sF, U}$--modules such that the following diagram commutes:
+    \[\begin{tikzcd}
+    f^<E' \ar[r, "a"] \ar[d, "f^<s'" left] & E \ar[d, "s"] \\
+    f^<F' \ar[r, "b" below] & F'
+    \end{tikzcd}\]
+    noting that $f^<\Lambda_{\sF, U'} = f^<(u')^<\Lambda_{X_\sF} =
+    pr_1^*\Lambda_{X_\sF} = \Lambda_{\sF, U}$.
+  \end{itemize}
+\end{itemize}
+\end{thm}
 \begin{proof}
-This follows from \cref{thm:boundary-map-fibre-functor} and
-\cite[\href{https://stacks.math.columbia.edu/tag/04Y5}{Lemma 04Y5}]
-{stacks-project}
+Let $(u, E_0, F_0, s_0)$ be an object of $\sM_1(X_\sF)$ as defined in
+\cref{cns:mod-prest-arr-bun}. Then, the inverse of the crystallization functor
+for $(U \times X, U \times \sF)$ applied to $s_0$ gives a morphism of
+$\Lambda_{U \times X_\sF}$--modules
+\[
+s = \Diamond_{U \times X, U \times \sF}^{-1}(s_0) :
+(E, \phi) = \Diamond_{U \times X, U \times \sF}^{-1}(E_0)
+\to (F, \psi) = \Diamond_{U \times X, U \times \sF}^{-1}(F_0)
+\]
+where $\phi, \psi$ are the structure maps making the
+$\mcO_{U \times \mcX}$--modules $E, F$ into
+$\Lambda_{U \times X_\sF}$--modules. Thus, $(u, E, \phi, F, \psi, s)$
+is a tuple giving an object as described in the statement of the theorem.
+
+Now, let $(f, a_0, b_0) : (u, E_0, F_0, s_0) \to (u', E_0', F_0', s_0')$
+be a morphism in $\sM_1(X_\sF)$. Then, $a_0 : f^<E_0' \to E_0,
+b_0 : f^<F_0' \to F_0$ are morphisms of $\mcO_{X_\sF}$--modules. Then,
+we get isomorphisms of $\Lambda_{\sF}$--modules:
+\begin{align*}
+a' := \Diamond^{-1}(a_0) :
+E'' = \Diamond^{-1}(f^<E_0') \to E = \Diamond^{-1}(E_0) \\
+b' := \Diamond^{-1}(b_0) :
+F'' = \Diamond^{-1}(f^<F_0')\to F = \Diamond^{-1}(F_0)
+\end{align*}
+We also obtain isomorphisms
+$\psi_E : f^<\Diamond^{-1}(E_0') \to[\cong] \Diamond^{-1}(f^<E_0')$,
+$\psi_F : f^<\Diamond^{-1}(F_0') \to[\cong] \Diamond^{-1}(f^<F_0')$ by
+\cref{prop:cryst-pullback-compat}, giving us isomorphisms
+$a := a_0 \circ \psi_E, b := b_0 \circ \psi_F$. We denote
+$E' := \Diamond^{-1}(E_0'), F' := \Diamond^{-1}(F_0'), s' := \Diamond^{-1}(s_0')$.
+By naturality of the $\psi_E, \psi_F$, we have the following commuting diagram:
+\[\begin{tikzcd}
+f^<E' \ar[r, "\psi_E"] \ar[d, "f^<s'" left] \ar[rr, bend left, "a" above] &
+\Diamond^{-1}(f^<E_0') \ar[r, "a'"] \ar[d,"\Diamond^{-1}(f^<s'_0)" left] &
+E \ar[d, "s"] \\
+f^<F' \ar[r, "\psi_F" below] \ar[rr, bend right, "b" below] &
+\Diamond^{-1}(f^<F_0') \ar[r, "b'"] &
+F
+\end{tikzcd}\]
+This shows that $(f, a, b)$ is a morphism of the form described in the statement.
+
+If we now set $\Psi(u, E_0, F_0, s)$ and $\Psi(f, a_0, b_0) := (f, a, b)$,
+it is not hard to check that $\Psi$ is a functor and it commutes with the
+projections to $\Aff_{/S}$ by construction. It is also not hard to check that
+it is an equivalence by using the fact that on fibre categories, it is simply
+the crystallization functor which is an equivalence by \cref{prop:diff-op-ring}.
+\end{proof}
+
+\begin{prop}
+In the context of \cref{defn:arr-bun-fixed-src-trgt}, setting $\mcY = X_\sF$ for
+a smooth formal groupoid $(X, \sF)$,
+$\Diamond^{-1}(E) = E_\diamond, \Diamond^{-1}(F) = F_\diamond$ and
+$\Lambda_{\sF, U} := pr_1^*\Lambda_{\sF}$, we have that $P^{X_\sF}_{v, w}$
+is equivalent to the category with the following description:
+\begin{itemize}
+\item Objects are tuples $(r, s)$ where:
+\begin{itemize}
+\item $r : V \to U$ is a morphism in $\Aff_{/S}$
+\item $s_\diamond : r^<E_\diamond \to r^<F_\diamond$ is a morphism of
+$r^<\Lambda_{\sF, U}$--modules
+\end{itemize}
+\item Morphisms $(r, s_\diamond) \to (r', s_\diamond')$ are morphisms
+$f : V = \dom(r) \to V' = \dom(r')$ in $\Aff_{/S/U}$ such that
+$f^<s' = s$.
+\end{itemize}
+\end{prop}
+\begin{proof}
+We take $\mcY = X_\sF$ in \cref{prop:bndry-map-fibre-simple}, and consider
+an object $(r, s)$ in $Q^{X_\sF}_{v, w} \simeq P^{X_\sF}_{v, w}$ according to
+the description there. Then,
+$\Diamond^{-1}(s) : \Diamond^{-1}(r^<E) \to \Diamond^{-1}(r^<F)$ is a
+morphism of $r^<\Lambda_{\sF, U}$--modules. Choosing a natural
+isomorphism $\psi$ implementing the $2$--commutativity in
+\cref{prop:cryst-pullback-compat}, we get a unique morphism of
+$r^<\Lambda_{\sF, U}$--modules $s_\diamond$ making the following square commute:
+\[\begin{tikzcd}
+\Diamond^{-1}(r^<E) \ar[r, "\psi_{E}"] \ar[d, "\Diamond^{-1}(s)" left] &
+r^<E_\diamond \ar[d, "s_\diamond"] \\
+\Diamond^{-1}(r^<F) \ar[r, "\psi_{F}" below] &
+r^<F_\diamond
+\end{tikzcd}\]
+Then, $(r, s_\diamond)$ is an object as described in the statement.
+
+Now, consider a morphism $f : (r, s) \to (r', s')$ in $P^{X_\sF}_{v, w}$.
+Then, $f^<s' = s$ implies $\Diamond^{-1}(f^<s') = \Diamond^{-1}(s)$.
+By the uniqueness of $s_\diamond$ and $s_\diamond'$ as in the previous paragraph,
+we must have $f^<s_\diamond' = s_\diamond$.
+
+From this description, it is easy to see that the assignment
+$(r, s) \mapsto (r, s_\diamond), f \mapsto f$ is a fully faithful functor
+from the $P^{X_\sF}_{v, w}$ to the category described in the statement.
+That this functor is also essentially surjective follows from the
+fully faithfulness of the crystallization functors --- note that the fibre
+categories are simply the Hom sets $\Hom_{\mcO_{U \times X_\sF}}(r^<E, r^<F)$
+on one side and $\Hom_{r^<\Lambda_{\sF, U}}(r^<E_\diamond, r^<F_\diamond)$,
+on the other.
+\end{proof}
+
+With this, we can prove the algebraicity of the moduli stack of
+arrow bundles on a smooth formal groupoid whenever the moduli stacks
+vector bundles, $\Lambda_\sF$--modules and arrow bundles on the object
+scheme of the formal groupoid are algebraic.
+
+\begin{thm}\label{thm:mod-st-arr-bun-formal-grpd-alg}
+Let $(X, \sF)$ be a smooth formal groupoid over $S$, where the map $X \to S$ is
+smooth, and such that $\sM(X), \sM_1(X)$ and $\sM(X_\sF)$ are all algebraic.
+Then, the following are true:
+\begin{enumerate}
+\item The boundary map $\partial_{X_\sF} : \sM_1(X_\sF) \to \sM(X_\sF)^2$ is
+representable by algebraic spaces. Therefore, $\sM_1(X_\sF)$ is an algebraic
+stack.
+\end{enumerate}
+If, in addition, $X \to S$ is projective, then
+\begin{enumerate}[resume]
+\item $\partial_{X_\sF}$ is affine and of finite presentation.
+\end{enumerate}
+If, furthermore, $\sM(X_\sF)$ is (locally) of finite presentation, then
+\begin{enumerate}[resume]
+\item $\sM_1(X_\sF)$ is (locally) of finite presentation.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+We will show that the fibre $P^{X_\sF}_{v, w}$ of any map
+$(v, w) : U \to \sB_1(X_\sF)^2$ with $U \in \Aff_{/S}$ is equivalent to an
+equalizer of algebraic spaces and is, hence, an algeraic space. For this, we
+first recall from \cite[\S 2]{ModRepFunGrpI} that for any
+$z : Z \to S$, $\Lambda_{\sF, Z} := pr_1^*\Lambda_{\sF}$ is a filtered
+ring sheaf and from \cite[Lemma 2.2]{ModRepFunGrpI}, that the stages of the
+filtration are coherent. Then, we also know that $\Lambda_{\sF, Z}$ is
+split almost polynomial \cite[\S 3.3, \S 5.1]{GeomNonAbHodgeFilt} so that
+$\Lambda_{\sF, Z, 1}$ is locally free by
+\cite[Theorem 2.11]{ModRepFunGrpI}.
+This means $\Lambda_{\sF, Z, 1}$ is finite locally free.
+At the same time, the split almost polynomial condition implies that
+there is an open cover $\coprod_{j \in J} Z_i \to Z \times X$ such that
+$\Lambda_{\sF, Z}|_{Z_j}$ is generated by $\Lambda_{\sF, U, 1}|_{Z_j}$
+\cite[Proof of Theorem 2.11]{ModRepFunGrpI}. Since morphisms of sheaves
+satisfy descent, we conclude that a morphism $s : (E, \phi) \to (F, \psi)$
+is a morphism of $\Lambda_{\sF, Z}$--modules if and only if the following
+diagram commutes:
+\[\begin{tikzcd}
+\Lambda_{\sF, Z, 1} \oplus E
+\ar[r, "\phi"] \ar[d, "\id_{\Lambda_{\sF, Z, 1}} \oplus s" left] &
+E \ar[d, "s"] \\
+\Lambda_{\sF, Z, 1} \oplus F \ar[r, "\psi" below] & F
+\end{tikzcd}\]
+
+Now, consider the $\Lambda_{\sF, U}$--modules $(E_0, \phi), (F_0, \psi)$
+corresponding to $v, w$ respectively. Then, we define two functors
+$\rho_1, \rho_2 : P^X_{E, F} \to P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$
+as follows. $\rho_1$ sends an object $(r, s)$ to the composite
+\[
+r^<\Lambda_{\sF, Z, 1} \oplus r^<E \to[r<\phi] r^<E \to[s] r^<F
+\]
+Then, given a morphism $f : (r, s) \to (r', s')$, we have $f^<s' = s$, so that
+$f^<(s' \circ (r')^<\phi) = f^<s' \circ f^<(r')^<\phi = s \circ r^<\phi$. This
+shows that $f$ is also a morphism in $P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$.
+We set $\rho_1(f) = f$.
+It is straightforward to verify that these mappings make $\rho_1$ a functor
+commuting with the projection to $\Aff_{/S}$. Thus, it is a morphism of
+prestacks.
+The map $\rho_2$ sends $(r, s)$ to the composite
+\[
+r^<\Lambda_{\sF, Z, 1} \oplus r^<E \to[\id \oplus s]
+r^<\Lambda_{\sF, Z, 1} \oplus r^<F \to[r^<\psi]
+r^<F
+\]
+If $f : (r, s) \to (r', s')$ is a morphism, then $f^<s' = s$ again, and this
+implies:
+\[
+f^<((r')^<\psi \circ (\id \oplus s'))
+= f^<(r')^<\psi \circ f^<(\id \oplus s')
+= f^<(r')^<\psi \circ (f^<\id \oplus f^<s')
+= r^<\psi \circ (\id \oplus s)
+\]
+so that $f$ is again a morphism in $P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$.
+We again set $\rho_2(f) = f$, and can check that this gives a morphism of
+prestacks.
+
+We can then see that $Q^{X_\sF}_{v, w}$ fits into the following
+equalizer diagram:
+\[\begin{tikzcd}
+Q^{X_\sF}_{v, w} \ar[r] &
+P^X_{E, F}
+  \ar[r, shift left, "\rho_1" above]
+  \ar[r, shift right, "\rho_2" below] &
+P^{X}_{\Lambda_{\sF, U, 1} \oplus E, F}
+\end{tikzcd}\]
+where the first map is the forgetful functor sending objects and morphisms
+to themselves. To see this, we notice that the equalizer is strict since
+all prestacks involved are fibred in $\Set$. Then, we observe that
+that the objects and morphisms of $Q^{X_\sF}_{v, w}$ are a subset of those
+of $P^X_{E, F}$ satisfying the commutativity constraint for being module
+homomorphisms. The equality of the maps $\rho_1, \rho_2$ is precisely
+this condition.
+
+Since $P^{X_\sF}_{v, w} \simeq Q^{X_\sF}_{v, w}$ by
+\cref{prop:bndry-map-fibre-simple}, it remains to show that
+$P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$ are algebraic spaces.
+This follows from \cref{prop:bndry-map-repr-alg-sp}. This shows point (i).
+
+In the case that
+$X \to S$ is projective, \cref{thm:X-fppf-proj-bndry-map-aff-fp} applies
+and shows that $P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$ are
+affine and of finite presentation over $U$. Since equalizers over $S$
+are equivalent to equalizers over $U$ and the properties of being affine and of
+finite presentation are preserved under finite limits, we must have that
+$P^{X_\sF}_{v, w} \simeq Q^{X_\sF}_{v, w}$ is affine and of finite presentation
+over $U$. This shows point (ii).
+%\todo[inline]{Recheck the claim about base change of equalizers, and the
+%preservation of the properties of being affine and of finite presentation.}
+
+For (iii), we observe that $\partial_{X_\sF}$ being of finite
+presentation and $\sM(X_\sF)$ being (locally) of finite presentation implies
+that the morphism $\sM_1(X_\sF) \to[\partial_{X_\sF}] \to \sM(X_\sF) \to S$
+is (locally) of finite presentation.
+\end{proof}
+
+\begin{thm}\label{thm:mod-st-conn-alg}
+In the case that $X \to \Spec(k)$ is a smooth and projective morphism,
+the moduli stacks
+$\sM_1(X_{Dol}), \sM_1(X_{dR}), \sM_1(X_{Hod})$ parametrizing
+Higgs bundle morphisms, connection morphisms and $\lambda$--connection
+morphisms respectively over $X$ are all agebraic.
+\end{thm}
+\begin{proof}
+For the first two take $S = \Spec(k)$, and for the third, take
+$S = \bA^1_k$ and apply \cref{thm:mod-st-arr-bun-formal-grpd-alg} in combination
+with \cref{thm:mod-st-arr-bun-alg}, the well known fact that
+$\sM(\mcX)$ is algebraic and \cite[Theorem 6.13]{GeomNonAbHodgeFilt}.
+\end{proof}
+
+\begin{rmk}
+The result \cite[Theorem 6.13]{GeomNonAbHodgeFilt} states that the moduli
+stack of complexes of $\Lambda_\sF$--modules that are perfect as complexes
+of $\mcO_X$--modules is locally geometric $n$--stacks. However, we can unpack
+the meaning of this to discover that this shows the algebraicity of the
+sub--$1$--stack of complexes concentrated in degree $0$.
+\end{rmk}
+
+%\begin{thm}\label{thm:mod-arr-bun-formal-grpd-loc-fin-pre}
+%For any smooth formal groupoid $(X, \sF)$, if the morphism $X \to S$
+%is smooth and projective, there exists an affine, smooth, surjective morphism
+%$a : A \to \sM_1(X_\sF)$ where $A$ is an algebraic space, locally of finite
+%presentation. In particular, $\sM_1(X_\sF)$ is locally of finite presentation.
+%\end{thm}
+%\begin{proof}
+%By \cite[Theorem 1.0.1]{Wang-BunG}, $\sM(X)$ is algebraic, locally of
+%finite presentation and has affine diagonal. By
+%\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma 04YF}]
+%{stacks-project},
+%we can choose a smooth atlas $a : \coprod_{i \in I} U_i \to \sM(X)$ where each
+%$U_i$ is an affine scheme of finite presentation over $S$.
+%Since $\sM(X)$ has an affine diagonal, $a$ is an affine morphism.
+%Hence, $a^2 = (a \times a) : \br{\coprod_{i \in I} U_i}^2
+%\cong \coprod_{i, j \in I} (U_i \times U_j) \to \sM(X)^2$
+%is an affine, smooth, surjective morphism with each $U_i \times U_j$ of finite
+%presentation.
+%We denote $\br{\coprod_{i \in I} U_i}^2$ by $A''$.
+%At the same time, the boundary map
+%$\partial_{X_\sF} : \sM_1(X_\sF) \to \sM(X_\sF)^2$
+%is representable by algebraic spaces by \cref{thm:mod-st-arr-bun-formal-grpd-alg}.
+%Next, we recall from the proof of \cite[Theorem 6.13]{GeomNonAbHodgeFilt} that
+%the forgetful map $\sM(X_\sF) \to \sM(X)$ is geometric, which simply means
+%representable by algebraic spaces in our context.
+%We can thus take the following fibre product:
+%\[\begin{tikzcd}
+%A \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+%A' \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
+%A'' \ar[d, "a^2"] \\
+%\sM_1(X_\sF) \ar[r, "\partial_{X_\sF}" below] &
+%\sM(X_\sF)^2 \ar[r] &
+%\sM(X)^2
+%\end{tikzcd}\]
+%to get an affine, smooth, surjective morphism $A \to \sM_1(X_\sF)$, with $A$
+%an algebraic space.
+%\end{proof}
+
+%==============================================================================%
+
+\section{Quiver Bundles}\label{sec:QuivBun}
+
+After having a moduli stack parametrizing morphisms of vector bundles, Higgs
+bundles, connections or $\lambda$--connections, it is natural to seek a moduli
+stack parametrizing more general diagrams or graphs in the categories of these
+objects. In light of \cref{thm:arr-bun-arr-sec-equiv} and
+\cref{thm:mod-arr-bun-formal-grpd-concrete}, all results of
+\cite[\S 3, \S 4]{ModQuivBun} now apply to $\sM_1(X_\sF)$,
+and we obtain the desired moduli stacks parametrizing finite shape diagrams
+of connections or $\lambda$--connections by varying the formal groupoid
+$(X, \sF)$. At the same, they will all be algebraic whenever
+$\sM_1(X_\sF)$ is.
+Nevertheless, it is still desirable to show that the limits defining
+these moduli stacks are equivalent to the intuitive definitions.
+We will leave some of this work for the thesis but we will record the intuitive
+definitions and statements of results we seek here.
+
+\begin{notn}
+For a prestack $\mcY$, we denote the two maps
+$\sM_1(\mcY) \to[\partial_\mcY] \sM(\mcY)^2 \to[pr_i] \sM(\mcY)$
+for $i = 1, 2$ as $s, t$ (standing for ``source'' and ``target'')
+respectively.
+\end{notn}
+
+\begin{cns}
+Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
+we define a category $\sM_I(\mcY)$ with the following data:
+\begin{itemize}
+\item Objects are tuples $(u, D)$ where
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$
+  \item $D : I \to \Vect(U \times \mcX)$ is a functor: that is, a diagram of
+    finite locally free sheaves over $U \times \mcX$ indexed by $I$
+  \end{itemize}
+\item Morphisms $(u, D) \to (u', D')$ are tuples $(f, \alpha)$ where:
+  \begin{itemize}
+  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S/U}$
+  \item $\alpha : f^< \circ D' \To D$ is a natural isomorphism of functors:
+  \[\begin{tikzcd}
+  I \ar[rr, "D'", ""{below, name=U}] \ar[rd, "D" below left] & &
+  \Vect(U' \times \mcX) \ar[ld, "f^<" below right] \\
+  & \Vect(U \times \mcX) \ar[from=U, Leftarrow, "\alpha", shorten=0.35em] &
+  \end{tikzcd}\]
+  \end{itemize}
+\end{itemize}
+\end{cns}
+
+\begin{thm}\label{thm:mod-quiv-bun-simple}
+Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
+$\sM_1(\mcY)$ is a equivalent as a prestack to the prestack
+$\mcM_{\Vect(\mcY), I}$ of \cite[Definition 4.4]{ModQuivBun}.
+\end{thm}
+\begin{proof}
+Proof left for the thesis.
+\end{proof}
+
+\begin{thm}
+If $X \to S$ is a smooth, projective morphism, then for any finite simplicial
+set $I$, $\sM_I(X)$ is algebraic, locally of finite presentation and has an
+affine diagonal.
+\end{thm}
+\begin{proof}
+This is \cite[Theorem 4.11]{ModQuivBun}.
+\end{proof}
+
+\begin{cns}
+Given a formal groupoid $(X, \sF)$ over $S$ and a finite simplicial set $I$,
+we define a category $\sM_I(X, \sF)$ with the following data:
+\begin{itemize}
+\item Objects are tuples $(u, D)$ where
+  \begin{itemize}
+  \item $u : U \to S$ is an object of $\Aff_{/S}$
+  \item $D : I \to \LMod_{flf}(u^<\Lambda_\sF)$ is a functor: that is, a
+    diagram of $u^<\Lambda_\sF$--modules over $U \times X$, indexed by $I$,
+    whose vertices are finite locally free as $\mcO_{U \times X}$--modules
+  \end{itemize}
+\item Morphisms $(u, D) \to (u', D')$ are tuples $(f, \alpha)$ where:
+  \begin{itemize}
+  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S/U}$
+  \item $\alpha : f^< \circ D' \To D$ is a natural isomorphism of functors:
+  \[\begin{tikzcd}
+  I \ar[rr, "D'", ""{below, name=U}] \ar[rd, "D" below left] & &
+  \LMod_{flf}((u')^<\Lambda_\sF) \ar[ld, "f^<" below right] \\ &
+  \LMod_{flf}(u^<\Lambda_\sF)
+    \ar[from=U, Leftarrow, "\alpha", shorten=0.35em] &
+  \end{tikzcd}\]
+  \end{itemize}
+\end{itemize}
+\end{cns}
+
+\begin{thm}
+Given a formal groupoid $(X, \sF)$ over $S$ and a finite simplicial set $I$,
+$\sM_I(X ,\sF)$ is a equivalent as a prestack to the prestack
+$\mcM_{\Vect(X_\sF), I}$ of \cite[Definition 4.4]{ModQuivBun}.
+\end{thm}
+\begin{proof}
+Proof left for the thesis.
+\end{proof}
+
+\begin{thm}\label{thm:categorification}
+Given a prestack $\mcY \in \PSt_{/S}$ and a morphism of finite simplicial sets
+$F : J \to I$, we have a morphism of prestacks
+$\sM_F(\mcY) : \sM_I(\mcY) \to \sM_J(\mcY)$ defined by:
+\[\begin{array}{ccc}
+(u, D) & \mapsto & (u, D \circ F) \\
+(f, \alpha) & \mapsto & (u, \alpha \star F)
+\end{array}\]
+Furthermore, these maps are the same as the maps
+$\mcM_{\Vect(\mcY), I} \to \mcM_{\Vect(\mcY), J}$ given by the functor
+defined in \cite[Definition 4.4]{ModQuivBun}.
+Finally, the assignment $I \to \sM_I(\mcY)$ is a functor
+$\sSet_{fin}^\op \to \PSt_{/S}$, which factors through $\St_{/S}$
+if $\mcY$ is a stack.
+\end{thm}
+\begin{proof}
+Proof left for the thesis.
+\end{proof}
+
+\begin{rmk}
+For inclusions of simplicial sets $\iota : J \hto I$, the
+map $\sM_\iota(\mcY)$ sends a diagram to the sub-diagram indexed by $J$.
+For a (strict) epimorphism of simplicial sets $\psi : J \to I$, the map
+$\sM_\psi(\mcY)$ sends a diagram $F$ indexed by $I$ to the $J$--indexed diagram
+obtained by replacing each vertex $F(i)$ with the
+constant $\psi^{-1}(i)$--indexed diagram valued at $F(i)$.
+\end{rmk}
+
+\begin{rmk}\label{rmk:smplcl-stacks}
+In the case that $\mcY$ is nice enough --- that is, satisfying the hypotheses
+of \cite[Theorem 4.10]{ModQuivBun} --- \cref{thm:categorification} says, in
+particular that we have a simplicial object $\sM_{\bullet}(\mcY)$
+whose levels are the algebraic moduli stacks of diagrams of vector bundles of
+shape $\Delta^n$, and whose structure maps are given by ``face''
+and ``degeneracy'' maps. Taking $\mcY = X_\sF$ for various formal groupoids
+$(X, \sF) \in \set{(X, \sF_{Dol}), (X, \sF_{dR}), (X, \sF_{Hod})}$ in previous
+statement is what we mean by the categorification of the various sides of
+non-Abelian Hodge theory. In particular, $\sM_\bullet(X_{Hod})$ is the
+categorification of the non-Abelian Hodge filtration. However,
+we note that since there are no higher morphisms in the category of sheaves
+over a prestack, we cannot expect these objects to hold much important
+information beyond simplicial dimension $1$: that is, for sheaves over
+$1$--stacks, $\sM_0(\mcY), \sM_1(\mcY)$ should contain all the important
+information. The full simplicial theory becomes relevant
+when we are dealing with sheaves of simplicial Abelian groups, chain complexes
+or spectra on (derived) stacks, but we will defer any discussion of this point
+to the thesis.
+\end{rmk}
+
+We now observe that $\sM_I(X_\sF)$ is ``well-behaved'' if $\sM(X_\sF)$ is.
+
+\begin{thm}\label{thm:mod-quiv-bun-formal-grpd-loc-fin-pre}
+For any smooth formal groupoid $(X, \sF)$, if the morphism $X \to S$
+is smooth and projective, and $\sM(X_\sF)$ is (locally) of finite presentation,
+then for any finite simplicial set $I$, $\sM_I(X_\sF)$ is (locally) of
+finite presentation.
+\end{thm}
+\begin{proof}
+By \cref{thm:mod-quiv-bun-simple}, $\sM_I(X_\sF)$ is a limit of a finite
+diagram involving $\sM_1(X_\sF)$ and $\sM(X_\sF)$. The claim now follows
+from point (iii) of \cref{thm:mod-st-arr-bun-formal-grpd-alg}, and the fact
+that the property of being (locally) of finite presentation is preserved under
+taking finite limits.
+\end{proof}
+
+We end this section stating some results that transfer linear algebraic
+operations such as direct sums, tensor products and duals to the context
+of moduli stacks of quiver bundles over a prestack.
+
+\begin{thm}
+Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
+we have a morphisms of prestacks
+$- \otimes - : \sM_I(\mcY) \times \sM_I(\mcY) \to \sM_I(\mcY)$
+defined as follows.
+It sends an object $(u, D_1, D_2)$ over $u : U \to S \in \Aff_{/S}$,
+where $D_1, D_2 : I \to \Vect(U \times \mcY)$,
+to the objectwise tensor product $D \otimes D'$ defined by:
+\[
+(D_1 \otimes^I D_2)(i) = D_1(i) \otimes_{\mcO_{U \times \mcY}} D_2(i)
+\]
+A morphism $(f, \alpha_1, \alpha_2) : (u, D_1, D_2) \to (u', D_1', D_2')$,
+where $\alpha : f^<D_1' \To D_1, \alpha_2 : f^<D_2' \To D_2$,
+is sent to the morphism $(f, \alpha_1 \otimes^I \alpha_2)$ where
+$\alpha_1 \otimes^I \alpha_2$ is defined by:
+\[
+(\alpha_1 \otimes^I \alpha_2)_i :=
+\alpha_{1, i} \otimes_{\mcO_{U \times \mcY}} \alpha_{2, i} :
+(f^<D_1' \otimes^I f^<D_2')(i) \cong (f^<(D_1' \otimes^I D_2'))(i) \to
+(D_1 \otimes^I D_2)(i)
+\]
+There is a similarly defined morphism of prestacks
+$- \oplus^I -$ defined with direct sums in place of tensor products.
+\end{thm}
+\begin{proof}
+Proof left for the thesis.
+\end{proof}
+
+\begin{thm}
+Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
+we have a morphism of prestacks
+$(-)^\vee : \sM_I(\mcY) \to \sM_{I^\op}(\mcY)$
+defined as follows.
+It sends an object $(u, D)$ over $u : U \to S \in \Aff_{/S}$,
+where $D : I \to \Vect(U \times \mcY)$,
+to the object $(u, D^\vee)$ where $D^\vee$ is the objectwise dual
+defined as follows:
+\[
+D^\vee(i) := D(i)^\vee
+\]
+noting that $D^\vee$ defines a functor $I^\op \to \Vect(U \times \mcY)$.
+A morphism
+$(f, \alpha) : (u, D) \to (u', D')$,
+where $\alpha : f^<D' \To D$, is sent
+to the morphism $(f, \alpha^\vee)$ where $\alpha^\vee$ is defined by:
+\[
+(\alpha^\vee)_i := (\alpha_i^{-1})^\vee : f^<D'(i)^\vee \to D(i)^\vee
+\]
+In particular, we have also have an analogue of the internal Hom defined
+by
+\[
+[-, -] := (-)^\vee \otimes^I - :
+  \sM_{I^\op}(\mcY) \times \sM_I(\mcY) \to \sM_I(\mcY)
+\]
+\end{thm}
+\begin{proof}
+Proof left for the thesis.
 \end{proof}
 
 %==============================================================================%
 
-\section{Quiver Bundles on Formal Groupoids}
+\section{Looking Ahead}\label{sec:Future}
 
-\subsection{Arrow Bundles on Formal Groupoids}
+\subsection{Non-Abelian Hodge Theory}
 
-\begin{thm}\label{thm:Vect1-form-grpd-psfunctor}
-Let $(X, \sF)$ be a formal groupoid over $S$ and let
-$\Lambda \in \QCoh(X)$ be the corresponding sheaf of rings of differential
-operators. Then, the pseudofunctor associated to $\Vect_1(X_\sF/S)$ has the
-following concrete description:
-\begin{itemize}
-\item For each scheme $U \in \Sch_{/S, fppf}$, denoting
-the projection $U \times_S X \to X$ by $\pi_U$,
-$\Vect_1(X_\sF/S)(U)$ is the groupoid with object set:
-\[
-\set[{(E_0, \phi_0, E_1, \phi_1, f)}]{
-  \parbox{0.5\textwidth}{
-  $\mc{E}_i$ are vector bundles on $U \times_S X$, \\
-  $\phi_i$ are $\pi_U^*\Lambda$--module structures on $E_i$, \\
-  $f : E_0 \to E_1$ is a morphism of $\pi_U^*\Lambda$--modules
-  }
-}
-\]
-For each pair of objects
-$A_i = (E_{1, i}, \phi_{1, i}, E_{2, i}, \phi_{2, i}, f_i)$, $i \in \set{0, 1}$,
-the morphism set $\Hom(A_0, A_1)$ is:
-\[
-\set[{(\alpha_0, \alpha_1)}]{
-  \parbox{0.55\textwidth}{
-    $\alpha_j$ are isomorphisms of $\pi_U^*\Lambda$--modules, such that\\
-    \begin{center}
-    \begin{tikzcd}[ampersand replacement=\&]
-      \mc{E}_{0, 0} \ar[r, "\alpha_0" above] \ar[d, "f_2" left] \&
-      \mc{E}_{0, 1} \ar[d, "f_1"] \\
-      \mc{E}_{1, 0} \ar[r, "\alpha_1" below] \&
-      \mc{E}_{1, 1} \&
-    \end{tikzcd}
-    \end{center}
-    is commutative
-  }
-}
-\]
+What remains is to produce some kind of non-Abelian Hodge correspondence between
+the simplicial stacks $\sM_\bullet(X_{dR})$ and $\sM_\bullet(X_{Dol})$
+described in \cref{sec:QuivBun}. In light of \cref{rmk:smplcl-stacks},
+we will mainly deal with the truncated simplicial objects consisting of
+$\sM_1(-)$ and $\sM(-)$ and the terminal stack $\Aff_{/S}$ in higher degrees,
+as we are focussing on sheaves on $1$--stacks at the moment.
+We first recall that the non-Abelian Hodge correspondence has some
+restrictions. First, it is a bijection between moduli spaces of flat
+connections on one side and Higgs bundles on the other side, which happens to
+be a homeomorphism if we restrict to polystable objects with vanishing
+rational Chern classes on the Higgs bundle side. It is known that
+it cannot be extended
+\cite[Counterexample on pages 38---39]{ModRepFunGrpII}. Furthermore,
+the mapping is neither complex analytic nor smooth even though both sides have
+complex structures. Hence, we need some way to pass from algebraic stacks
+to topological stacks to address non-Abelian Hodge theory.
+For this purpose, let us now suppose $k = \bC$ for simplicity.
+This is possible through analytification of stacks, a simple version of which
+we will now discuss.
 
-\item For each morphism $q : U \to V$, the functor
-\[
-\Vect_1(X_\sF/S)(V) \to \Vect_1(X_\sF/S)(U)
-\]
-is given by pullback along $q \times_S \id_X : U \times_S X \to V \times_S X$
-in the following way:
-$\pi_U^*F = (\pi_V \circ (q \times_S \id_X))^*F
-\simeq (q \times_S \id_X)^*\pi_V^*F$ for all $F \in \QCoh(V \times_S X)$,
-so that for any object $(E_0, \phi_0, E_1, \phi_1, f)$ over $V$,
-$(q \times_S \id_X)^*\phi_i$ are $\pi_U^*\Lambda$--module structures on
-$(q \times_S \id_X)^*E_i$ and $f$ is morphism of $\pi_U^*\Lambda$--modules.
-The function of $\Hom$ sets is defined similarly by pullback.
-\end{itemize}
-\end{thm}
-\begin{proof}
-\todo[inline]{Complete the proof: should be able use \cref{thm:Vect1-psfunctor}
-along with the identification of $\Lambda$--modules with vector bundles on
-$X_\sF$ --- for example, as described in \cite[30]{NonAbHodgeFilt}}
+\begin{cnj}\label{cnj:mod-Lambda-mod-loc-fp}
+For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
+$X \to S$ is smooth and projective, then $\sM(X_\sF)$ is locally of finite
+presentation. In this case, for any finite simplicial set $I$, $\sM_I(X_\sF)$
+is locally of finite presentation.
+\end{cnj}
+\begin{proof}[Proof idea]
+In this case, the forgetful map $\sM(X_\sF) \to \sM(X)$ should be of finite
+presentation. To see this, we observe that for any morphism
+$v : U \to \sM(X)$ for some object $\Aff_{/S}$ corresponding to a finite locally
+free $\mcO_{U \times X}$--module $E$,
+the fibre product $\sM(X_\sF; E) := \sM(X_\sF) \times_{\sM(X)} U$
+parametrizes $\Lambda_{\sF, U} = v^<\Lambda_{\sF}$--module structures
+$\phi : \Lambda_{\sF, U} \oplus E \to E$ on $E$.
+This should be a limit involving
+$P^X_{\Lambda_{\sF, U, 1}^{\oplus 2} \oplus E, E}$,
+$P^X_{\Lambda_{\sF, U, 1} \oplus E, E}$,
+$P^X_{E, E}$, that captures the commutativity constraints on $\phi$, similar
+to the proof of \cref{thm:mod-st-arr-bun-formal-grpd-alg}, and hence should
+be an affine scheme of finite presentation by
+\cref{thm:X-fppf-proj-bndry-map-aff-fp} and the preservation of these properties
+under finite limits.
+Then, the composite $\sM_1(X_\sF) \to \sM(X) \to S$ is locally of finite
+presentation as $\sM(X)$ is locally of finite presentation over $S$
+by \cite[Theorem 1.0.1]{Wang-BunG}, showing that $\sM_1(X_\sF)$ is locally
+of finite presentation over $S$.
+Then, \cref{thm:mod-st-arr-bun-formal-grpd-alg}
+again implies that $\sM_1(X_\sF)$ is locally of finite presentation.
+Finally, since $\sM_I(X_\sF)$ is locally of finite presentation by
+\cref{thm:mod-quiv-bun-formal-grpd-loc-fin-pre}.
 \end{proof}
 
-\begin{thm}\label{thm:Vect-alg-Vect1-alg}
-For any smooth formal groupoid $(X, \sF)$ over a scheme $S$,
-if $\Vect(X/S), \Vect_1(X/S)$ and $\Vect(X_\sF/S)$ are algebraic stacks, then so
-is $\Vect_1(X_\sF/S)$.
-\end{thm}
-\begin{proof}
-Using the concrete description of
-$\Vect_1(\mcX_\sF/S)$ and $\Vect(X/S)$, viewed as pseudofunctors,
-from \cref{thm:Vect1-form-grpd-psfunctor} and \cref{thm:Vect1-psfunctor},
-we consider the map of stacks
-$F : \Vect_1(\mcX_\sF/S) \to \Vect_1(X_\sF)$
-defined for the corresponding pseudofunctors as follows.
-For a scheme $U \in \Sch_{/S, fppf}$, the component map --- that is, the
-functor of $U$--points --- is given by:
-\[\begin{array}{ccccc}
-F_U & : & \Vect_1(\mcX_\sF/S)(U) & \to & \Vect_1(X/S)(U) \\
-    & : & (E_0, \phi_0, E_1, \phi_1, f) & \mapsto & (E_0, E_1, f) \\
-    & : & (\alpha_0, \alpha_1) & \mapsto & (\alpha_0, \alpha_1)
-\end{array}\]
-recalling that morphisms of $\pi_U^*\Lambda$--modules are, in particular,
-morphisms of the underlying vector bundles. Naturality of the $F$
-in $U$ is immediate \todo{How?}.
-
-We then compose with $B := (s, t) : \Vect_1(X/S) \to \Vect(X/S)^2$, the boundary
-map, to obtain a map $F' : \Vect_1(X_\sF/S) \to \Vect(X/S)^2$. We claim that
-$F'$ is representable by algebraic spaces. For this, we will show, for
-some arbitrary scheme $U \in \Sch_{/S, fppf}$ and a map
-$u = (u_0, u_1) : U \to \Vect(X/S)^2$, that the fibre product
-stack/pseudofunctor $U \times_{\Vect(X/S)^2, F', u} \Vect_1(X_\sF/S)$ is
-representable by an algebraic space. Let $E_i'$ be the vector bundle
-on $U \times_S X$ corresponding to the map $u_i : U \to \Vect(X/S)$.
-We then compute the groupoid of
-$V$--points for a scheme $V \in \Sch_{/S, fppf}$ as follows:
-\begin{itemize}
-\item The objects are triples
-$(q, E_0, \phi_0, E_1, \phi_1, f, \beta_0, \beta_1)$ where:
-  \begin{itemize}[itemsep=0pt]
-  \item $q : V \to U$ is a morphism in $Sch_{/S, fppf}$,
-  \item $E_i$ are vector bundles on $V \times_S X$,
-  \item $\phi_i$ is a $\pi_V^*\Lambda$--module structure on $E_i$,
-  \item $f : E_0 \to E_1$ is a morphism of $\pi_V^*\Lambda$--modules,
-  \item $\beta_i$ is an isomorphism of vector bundles
-  $q^*E_i' \to E_i$ such that the following diagram commutes:
-  \[\begin{tikzcd}
-  q^*E_0' \ar[r, "\beta_0"] \ar[d, "q^*(f)" left] &
-  E_0 \ar[d, "f"] \\
-  q^*E_1' \ar[r, "\beta_1" below] & E_1
-  \end{tikzcd}\]
-  \end{itemize}
-
-\item For objects
-$A_i = (q_i, E_{0, i}, \phi_{0, i}, E_{1, i}, \phi_{1, i}, f_i,
-\beta_{0, i}, \beta_{1, i})$, $i \in \set{0, 1}$, a morphism
-$A_0 \to A_1$ is simply a pair of vector bundle morphisms
-$\alpha_{i} : E_{i, }$ ...... such that the following diagram commutes:
-\[\begin{tikzcd}
-  q_0^*E_0' \ar[rr] \ar[rd] \ar[dd] & &
-  E_{0, 0} \ar[dd] \ar[rd] & \\
-  & q_1^*E_{0}' \ar[rr, crossing over] & & E_{0, 1} \ar[dd] \\
-  q_0^*E_1' \ar[rr] \ar[rd] & & E_{1, 0} \ar[rd] & \\
-  & q_1^*E_1' \ar[rr] \ar[from=uu, crossing over] & & E_{1, 1}
-\end{tikzcd}\]
-\end{itemize}
+\begin{cnj}\label{cnj:affine-truncation}
+For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
+$X \to S$ is smooth and projective, then for any finite simplicial set
+$I$, the morphism $\tau : \sM_I(X_\sF) \to \sM(X)^{|I_0|}$ sending a diagram
+to the collection of locally free sheaves underlying the vertices, is an affine
+morphism.
+\end{cnj}
+\begin{proof}[Proof idea]
+Given a collection of maps $v_j : U \to \sM(X)$ for $j \in I_0$,
+$\sM_I(X_\sF) \times_{\sM(X)^{|I_0|}} U$ should be
+a finite limit involving the $P^X_{V, W}$ as $V, W$ ranges over various
+permutations of
+$E_i, \Lambda_{\sF, U} \oplus E_i, \Lambda_{\sF, U}^{\oplus 2} \oplus E_i$,
+where $E_i$ is the underlying locally free sheaf of the
+$\Lambda_{\sF, U}$--module indexed by $i \in I_0$. Since the $P^X_{V, W}$
+are affine by \cref{thm:mod-st-arr-bun-formal-grpd-alg}, the fibre product
+should also be affine.
 \end{proof}
 
-\begin{cor}
-For any smooth formal groupoid $(X, \sF)$ over an algebraically closed field
-$k$ of characteristic zero, where $X$ is a projective variety $k$,
-the stack $\Vect_1(X_\sF/S)$ is algebraic.
-\end{cor}
-\begin{proof}
-The stack $\Vect(X_\sF/S)$ is algebraic by \cref{thm:Vect-proj-form-st},
-and the result follows from \cref{thm:Vect-alg-Vect1-alg}.
+Under these conjectures, we can consider a simple analytification of
+$\sM_I(X_\sF)$ for any finite simplicial set $I$.
+
+\begin{cns}\label{cns:analytification-mod-st-quiv-bun-formal-grpd}
+Suppose $k = \bC$ and $S$ is of finite presentation over $\bC$.
+Given a smooth formal groupoid $(X, \sF)$ with $X \to S$ projective and smooth,
+and any finite simplicial set $I$, choose a smooth atlas
+$a : A = \coprod_{j \in J} U_j \to \sM(X)^{|I_0|}$ such that
+each $U_j \in \Aff_{/S}$ is of finite presentation using
+\cite[Theorem 1.0.1]{Wang-BunG} and
+\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma
+04YF}]{stacks-project}.
+By \cite[Theorem 1.0.1]{Wang-BunG} again, $\sM(X)$ has affine
+diagonal and this implies $a$ must be an affine morphism.
+We can pullback the atlas to $\sM_I(X_\sF)$ by the map
+$\tau : \sM_I(X_\sF) \to \sM(X)^{|I_0|}$ of \cref{cnj:affine-truncation},
+to obtain a smooth atlas
+\[
+a' : A' = \coprod_{j \in J} (U_j \times_{\sM(X)^{|I_0|}} \sM_I(X_\sF))
+  \to \sM_I(X_\sF)
+\]
+where each $U_j \times_{\sM(X)^{|I_0|}} \sM_I(X_\sF)$ is an affine scheme,
+the map $a'$ is affine, using the fact that both $\tau$ and $a$ are affine.
+Next, $\sM_I(X_\sF)$ is is locally of finite presentation by
+\cref{cnj:mod-Lambda-mod-loc-fp}. This means, $A'$ is locally of finite
+presentation by
+\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma
+04YF}]{stacks-project}
+again. Hence, without loss of generality, we can assume that
+$A'$ is a disjoint union $\coprod_{k \in K} V_k$ of affine schemes $V_k$ of
+finite presentation over $S$. By the fact that $a'$ is affine, we also have that
+\[
+R = A' \times_{\sM_I(X_\sF)} A' =
+\coprod_{k, k' \in K} V_k \times_{\sM_I(X_\sF)} V_{k'}
+\]
+is a disjoint union of affine schemes $V_k \times_{\sM_I(X_\sF)} V_{k'}$,
+also of finite presentation over $S$. This implies that $A'$ and
+$R$ are locally separated algebraic spaces locally of finite presentation over
+$S$ and hence over $\bC$.
+
+Next, by
+\cite[\href{https://stacks.math.columbia.edu/tag/04T5}{Lemma 04T5}]
+{stacks-project},
+$(A', R)$ gives a presentation of $\sM_I(X_\sF)$.
+This allows us to analytify $A', R$ to obtain a groupoid object internal
+to complex analytic spaces, which, in turn, also gives a groupoid object in
+topological spaces. We can take the quotient
+stacks over the respective categories to get complex analytic and topological
+stacks:
+\[
+\sM_I^{an}(X_\sF), \sM_I^{top}(X_\sF)
+\]
+respectively. Note that we retain the notation $X_\sF$ as we are not yet talking
+about the analytification of $X$ and $\sF$.
+\end{cns}
+
+We can now state our desired categorification of the non-Abelian Hodge
+correspondence as a conjecture:
+
+\begin{cnj}
+Given a smooth projective variety $X$ over $k$, there is a suitable substack
+\[
+\sM^{top, nice}(X_{Dol}) \subset \sM_1^{top}(X_{Dol}),
+\]
+and mappings
+\[
+\sM^{top}(X_{dR}) \to \sM^{top, nice}(X_{Dol}),
+\sM_1^{top}(X_{dR}) \to \sM_1^{top, nice}(X_{Dol})
+\]
+that induce a ``categorical'' equivalence of simplicial topological stacks
+\[
+\sM^{top}_{\bullet}(X_{dR}) \to[\simeq] \sM^{top, nice}_{\bullet}(X_{Dol})
+\]
+for some suitable meaning of ``categorical'' in context of simplicial objects
+in topological stacks. This should still hold if we
+replace $\sM_\bullet(X_{\sF})$, for various choices of $\sF$, with
+the respective moduli stacks obtained by applying our constructions
+in this paper with derived mapping stacks in place of ordinary mapping stacks.
+\end{cnj}
+\begin{proof}[Proof idea]
+$\sM_\bullet^{top}(X_{dR})$
+and $\sM_\bullet^{top}(X_{Dol})$ are simplicial substacks of
+$\sM_\bullet(X_{Hod}) \to \bA^1_\bC$: namely, the (simplicial degree-wise)
+fibres above $0, 1 \in \bA^1_\bC$ respectively. We can then try to apply
+``preferred sections'' approach as discussed in \cite[\S 4]{NonAbHodgeFilt}
+for every simplicial degree. Assuming we are able to accomplish this,
+we must, of course, then examine how the maps
+$\sM_n^{top}(X_{dR}) \to \sM_n^{top, nice}(X_{Dol})$ interact with the
+simplicial maps. Of course, we must also make precise what we mean by
+``categorical equivalence'' and then check that such a condition is satisfied.
 \end{proof}
+
+\begin{rmk}
+According a conversation we had with Carlos Simpson, it is likely that the above
+result will only be true in the derived setting.
+\end{rmk}
+
+\subsection{Hyperbolic Band Theory}
+
+We end with a brief discussion of potential applications of the theory of quiver
+bundles on formal groupoids in hyperbolic band theory.
+Band theory is concerned with the movement of particles such
+as electrons through a lattice of atoms in Euclidean space. This is modelled
+by considering quantum Hamiltonians on the plane with a periodic potential, and
+considering the solutions to these as states. Bloch's theorem, then, states that
+such solutions are of the form:
+\[
+\psi(x) = e^{i(k \cdot x)}u(x)
+\]
+where $k$ is the crystal momentum and
+$u$ is a fixed function periodic with respect to the lattice.
+This implies that physically relevant wave functions
+are in bijection with isomorphism classes of $U(1)$--representations of the
+translation group of the lattice.
+
+In hyperbolic band theory, we consider, instead, a particle moving through
+the hyperbolic plane under a potential function that is invariant with respect
+to the action of a Fuchsian group $G$ on the hyperbolic plane
+\cite{HyperbolicBandTheory}. In this case, the physically relevant states
+are no longer parametrized by only $U(1)$--representations of $G$. There are
+states that correspond to $U(r)$--representations for $r \geq 1$
+\cite{AutBlochTheorems}. Now, since $G$ is the fundamental group of the
+Riemann surface $\Sigma$ obtained by quotienting the hyperbolic plane by $G$,
+$U(r)$--representations of $G$ are vector bundles on $\Sigma$ with structure
+group $U(r)$, equipped with flat $U(r)$--connections.
+
+It is not clear whether this is an exhaustive
+description of the physically relevant states, and hence, it is reasonable
+to treat bundles with connection as some form of generalized state,
+which may or may not be physically relevant.
+In any situation, it is of general interest to find out any categorical
+structure the states of a system might have.
+If we accept that bundles with flat connections
+describe states, then the stack $\sM_1(\Sigma_{dR})$ gives a very
+natural categorical structure to the space $\sM(\Sigma_{dR})$ of states.
+Whether this categorical structure has any physical significance is an
+interesting question.
+
+On the other hand,
+an object of the moduli stack $\sM_1(\Sigma_{dR})$ is
+a tuple $(E, \phi, F, \psi, f)$, where $E, F$ are vector bundles,
+$\phi, \psi$ are connection maps and $f$ is a morphism of vector bundles
+commuting with the connection maps.
+Then, $f$ is a global section of the tensor product bundle
+$E^\vee \otimes F$. Since tensor products describe entanglement
+in quantum mechanics, it might be possible to
+interpret this $f$ as some form of entanglement between the states
+$(E, \phi), (F, \psi)$.
+The algebraicity and finite presentation results
+in this paper could be useful in answering such questions, and
+we intend to pursue such ideas in the thesis.
 
 \printbibliography
 
