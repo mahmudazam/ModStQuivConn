@@ -1,4 +1,4 @@
-MAIN=QuiverBundlesNonAbHodge
+MAIN=ModStQuivConn
 
 .PHONY: all
 all: ${MAIN}.pdf
