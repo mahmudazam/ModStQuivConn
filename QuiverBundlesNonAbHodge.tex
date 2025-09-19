@@ -20,18 +20,38 @@
 
 \usepackage[margin=1.05in]{geometry}
 
-\title[Quiver Bundles and non-Abelian Hodge theory]
-      {Quiver Bundles and non-Abelian Hodge theory}
+\title[Moduli Stacks of Quiver Connections]
+      {Moduli Stacks of Quiver Connections}
 
 \author{Mahmud Azam}
 \email{mahmud.azam@usask.ca}
 
-\address{Department of Mathematics and Statistics, University of Saskatchewan,
-SK, Canada~ S7N 5E6}
+\author{Steven Rayan}
+\email{rayan@math.usask.ca}
+
+\address{Centre for Quantum Topology and Its Applications (quanTA) and
+Department of Mathematics and Statistics, University of Saskatchewan, SK,
+Canada~ S7N 5E6}
 
 \begin{document}
 
 \maketitle
+
+\begin{abstract}
+In \cite{ModQuivBun}, we constructed, for any finite simplicial set $I$, a
+moduli stack parametrizing  $I$--indexed diagrams of Higgs bundles over a base
+stack $X$, and speculated about extending the non-Abelian Hodge correspondence
+to these moduli stacks. In the present work, we formalize the de Rham side of
+this conjectural extension. We construct moduli stacks parametrizing diagrams of
+bundles with $\lambda$--connections over a base prestack $X$, where $\lambda$
+can be a fixed number or a parameter. Taking $\lambda$ to be $1$ gives a moduli
+stack parametrizing diagrams of bundles with connection, while taking it to be a
+parameter gives a version of Simpson's non-Abelian Hodge filtration for digrams
+of bundles with connection. We show that when $X$ is a smooth and projective
+scheme over an algebraically closed field $k$ of characteristic $0$, these
+moduli stacks are algebraic and locally of finite presentation, and have affine
+diagonal.
+\end{abstract}
 
 \tableofcontents
 
@@ -69,7 +89,7 @@ parametrizing the ``compactified'' dimensions.
 
 A series of equivalences, then, allows us to address representations of
 fundamental groups in terms of vector bundles and connections as we briefly
-discuss now.  There is a well-known equivalence of categories between the
+discuss now. There is a well-known equivalence of categories between the
 category of representations of the fundamental group of a ``nice enough''
 topological space, such as a smooth manifold, and the category of locally
 constant sheaves over the space. This equivalence restricts to an equivalence
@@ -77,7 +97,7 @@ between linear representations of the fundamental group on one side and locally
 constant sheaves of vector spaces on the other. Then, the Riemann-Hilbert
 correspondence (see, for example, \cite[35]{LanglandsIntro}) gives an
 equivalence of categories between the category of locally constant sheaves and
-the category of vector bundles with flat connections.  On the other hand, there
+the category of vector bundles with flat connections. On the other hand, there
 is an equivalence between the category of vector bundles with flat connections
 on a base complex manifold and the category of what are called Higgs bundles on
 the base. This was first shown by Hitchin in \cite{SelfDualityEqn} as an
@@ -236,79 +256,79 @@ higher dimensional diagram obtained by adding identity edges. The collection
 of these results should be thought of as the beginnings of a form of
 categorification of non-Abelian Hodge theory.
 
-\subsection{Overview}
+\subsection{Overview and Main Results}
 
-Strictly speaking, we will be working with moduli stacks in the context of
-algebraic geometry, as opposed to moduli spaces, and hence the concept of paths
-will not be as straightforward as in the case of honest topological spaces or
-manifolds. Instead, we will deal with all possible families  parametrized by
-affine schemes.  Hence, we will work in the setting of prestacks over a base
-affine scheme $S$ over an algebraically closed field $k$ of characteristic zero.
-We set up the basic notation and conventions in \cref{sec:Prelim}. Here, we will
-also prove some basic results in the theory of prestacks and stacks that should
-be known to experts but are difficult to find references for. In
-\cref{sec:RelSpec}, we will give a detailed description of the relative spectrum
-construction for prestacks and show that it is given by a certain Grothendieck
-construction or unstraightening. Again, it is difficult to find this exact
-description in the literature but will be a technical requirement for proving
-our main results in the next sections.
+We set up the basic notation and conventions, and also prove some basic results
+about prestacks and stacks in \cref{sec:Prelim}. These should be well-known but
+are difficult to find explicit descriptions of in the literature.
 
-In \cref{sec:ArrowBun}, For a prestack $\mcX$
-over $S$, we define a prestack $\sM_1(\mcX)$ whose objects over an $S$--scheme
-$U$ are triples $(E, F, s)$ where $E, F$ are vector bundles, or equivalently,
-finite locally free sheaves on $U \times_S \mcX$ and $s : E \to F$ is a morphism
-of vector bundles. This already appeared in our previous work
-\cite{ModQuivBun} but in the present paper, we give a fully concrete description
-of this prestack. We call this prestack the moduli prestack of arrow bundles
-on $\mcX$. From our definitions, it will follow that when $\mcX$ is
-a stack, so is $\sM_1(\mcX)$. It will also follow that when $\mcX$ is
-algebraic and satisfies some mild conditions, then $\sM_1(\mcX)$ is also
-algebraic and satisfies similar conditions. From this, it is possible
-to define similarly ``nice'' algebraic stacks parametrizing diagrams
-of vector bundles of any fixed finite shape --- that is, indexed by a finite
-simplicial set. The construction of these stacks is given in \cite{ModQuivBun}
-and hence we will not discuss the construction in detail in the present paper
-but it will appear in the thesis.
+In \cref{sec:RelSpec}, we will give a detailed description of the relative
+spectrum construction for prestacks, and show that it is given by a certain
+Grothendieck construction or unstraightening.  Again, it is difficult to find
+this exact description in the literature but will be a technical requirement for
+proving our main results in the next sections.
 
-The main results towards a categorification of non-Abelian Hodge theory are in
-\cref{sec:ArrowBunFormalGrpd}. Here, for a scheme $X$ over $S$, we construct a
-moduli stack $\sM_1(X_\sF)$ --- we will explain the meaning of ``$\sF$'' in that
-subsection --- whose objects over an $S$--scheme $U$ are
-``connection'' triples $(E, \phi, F, \psi, s)$, where $E, F$ are
-vector bundles on $U \times_S X$; $\phi, \psi$ are connections on $E, F$
-respectively, and $s : E \to F$ is a morphism of connections in the sense that
-it is a morphism of vector bundles commuting with the connection maps.
-Strictly speaking, we will be dealing with an equivalent formulation of
-connections: a module over a sheaf of rings of differential operators
-\cite[\S 2]{ModRepFunGrpI}.
-One of the main result of this section, and
-indeed of the thesis, is that as long as the moduli stack $\sM_1(X)$, the
-moduli stack $\sM(X)$ of vector bundles on $X$ and the moduli stacks constructed
-in \cite[31---33]{NonAbHodgeFilt} are algebraic, then so is $\sM_1(X_\sF)$.
-This is a simultaneous categorification of the moduli stacks of Higgs bundles
-and connections and of the so called ``non-Abelian Hodge filtration'' given in
-\cite[31---33]{NonAbHodgeFilt}, and whose ``geometricity'' is proved in
-\cite[Theorem 6.13]{GeomNonAbHodgeFilt}.
+In \cref{sec:ArrowBun}, For a prestack $\mcY$ over $S$, we define a prestack
+$\sM_1(\mcY)$ whose objects over an $S$--scheme $U$ are triples $(E, F, s)$
+where $E, F$ are vector bundles, or equivalently, finite locally free sheaves on
+$U \times_S \mcY$ and $s : E \to F$ is a morphism of vector bundles. This
+already appeared in our previous work \cite{ModQuivBun} but in the present
+paper, we give a much more concrete description of this prestack, which will be
+necessary for proving our main results. We call this prestack the moduli
+prestack of arrow bundles on $\mcY$. As shown in \cite{ModQuivBun}, it follows
+from our definition that when $\mcY$ is a stack, so is $\sM_1(\mcY)$, and when
+$\mcY$ is algebraic and satisfies some mild conditions, then $\sM_1(\mcY)$ is
+also algebraic and satisfies similar conditions.
 
-We explore the categorification aspect in \cref{sec:QuivBun} in greater
-generality, by recalling the definition of moduli stacks of quiver bundles from
-\cite{ModQuivBun} and exploring what this means for connections.
-We also discuss some results from \cite{ModQuivBun} about
-transporting linear algebraic operations such as direct sums and tensor
-products of vector bundles to the the setting of moduli stacks.
+Our main results are in \cref{sec:ArrowBunFormalGrpd}.  Here, for a scheme $X$
+over $S$, we consider various formal groupoid structures
+$\sF \rightrightarrows X$ on $X$ and the moduli stack $\sM_1(X_\sF)$ of arrow
+bundles on $X_\sF$ --- where $X_\sF$ is the quotient stack of the formal
+groupoid $(X, \sF)$. We show that the objects of this moduli stack over an
+$S$--scheme $U$ are triples $(E, \phi, F, \psi, s)$, where $E, F$ are vector
+bundles on $U \times_S X$; $\phi, \psi$ are $\lambda$--connections on $E, F$
+respectively --- with $\lambda$ being either $0, 1$ or a morphism
+$\lambda : U \to \bA^1_k$, depending on the choice of $\sF$ --- and
+$s : E \to F$ is a morphism of $\lambda$--connections, in the sense that it is a
+morphism of vector bundles making a certain square involving $\phi$ and $\psi$
+commute.  Strictly speaking, we will be dealing with an equivalent formulation
+of connections: a module over a sheaf of rings of differential operators
+\cite[\S 2]{ModRepFunGrpI}.  We show that as long as the moduli stack $\sM_1(X)$
+of arrow bundles on $X$, the moduli stack $\sM(X)$ of vector bundles on $X$ and
+the moduli stacks $\sM(X_\sF)$ of vector bundles on $X_\sF$ constructed in
+\cite[31---33]{NonAbHodgeFilt} are algebraic, then so is $\sM_1(X_\sF)$ --- see
+\cref{thm:mod-st-arr-bun-formal-grpd-alg}.  Furthermore, in the case that $X$ is
+a smooth and projective scheme, $\sM(X), \sM_1(X)$ are known to be algebraic,
+locally of finite presentation and possessing affine diagonal
+\cites{Wang-BunG, ModQuivBun}, and we show that $\sM_1(X_\sF)$ inherits this
+good behaviour --- see \cref{thm:mod1-Lambda-alg-aff-diag-loc-fp} and
+\cref{thm:mod-st-conn-alg-lfp-aff-diag}. Of course, taking $\lambda$ to be
+$0$, $1$ and a $k$--valued parameter respectively, this gives a certain
+``categorification'' of the moduli stacks of Higgs bundles and connections, and
+of the non-Abelian Hodge filtration from \cite[31---33]{NonAbHodgeFilt}.
 
-In \cref{sec:Future}, we discuss work that remains to be done for the thesis
-and beyond. We discuss the next steps towards a categorified
-non-Abelian Hodge theory by giving an outline to prove a version
-of the non-Abelian Hodge correspondence in the categorified setting.
-Finally, we speculate on some potential applications of our
-work to hyperbolic band theory.
+At the same time, there are moduli stacks $\sM_I(X_\sF)$ parametrizing
+$I$--indexed diagrams of $\lambda$--connections over a scheme $X$ --- these are
+just the moduli stacks $\mcM_{\Vect(X_\sF), I}$ of $I$--shaped quiver bundles
+$X_\sF$ constructed in \cite[\S 4]{ModQuivBun}.  Importantly, this construction
+is contravariantly functorial in $I$, by definition, so that we get ``face'' and
+``degeneracy'' maps $\sM_{\Delta^i}(X_\sF) \to \sM_{\Delta^j}(X_\sF)$
+corresponding to simplicial maps $\Delta^j \to \Delta^i$ as would be expected
+from a categorification.  We discuss this in \cref{subsec:QuivBun} and show
+that, when $X$ is smooth and projective, for any finite simplicial set $I$, the
+moduli stacks $\sM_I(X_\sF)$ are algebraic, locally of finite presentation and
+have affine diagonal. This is \cref{thm:mod-quiv-bun-formal-grpd-loc-fin-pre}.
+Again, by varying $\sF$, we get the corresponding moduli stacks for Higgs
+bundles, connections, or the non-Abelian Hodge filtration. In
+\cref{subsec:NonAbHodge}, we speculate about a version of the non-Abelian Hodge
+correspondence in this categorified setting using the categorified non-Abelian
+Hodge filtration.
 
 %==============================================================================%
 
 \section{Preliminaries}\label{sec:Prelim}
 
-\subsection{Category Theory}
+\subsection{Category Theory Conventions}
 
 For category theoretic notation, we try to stay as close to \cite{HTT} as
 possible. For example, we write $\Delta^n$ for the poset of natural numbers
@@ -1243,7 +1263,7 @@ without having to explicitly define the functor of points.
 The work in this subsection should be considered as evidence for the soundness
 of the definition as well as a proof of algebraicity of the slightly more
 intuitive definition (\cref{cns:mod-prest-arr-bun}) via the functor of points.
-At the same time, as we will discuss in \cref{sec:Future}
+At the same time, as we will discuss in \cref{subsec:NonAbHodge}
 it proves some of the claims made in that paper with only sketches of proofs,
 We begin by recalling the definition of mapping prestacks.
 
@@ -1920,7 +1940,7 @@ presented and projective over $S$, the boundary map is ``well-behaved''.
 
 \begin{thm}\label{thm:X-fppf-proj-bndry-map-aff-fp}
 Let $X \to S$ be a finitely presented, flat and projective morphism of schemes.
-Then, $\partial_X : \sM_1(X) \to \sM(X)^2$ affine and of finite presentation.
+Then, $\partial_X : \sM_1(X) \to \sM(X)^2$ is affine and of finite presentation.
 \end{thm}
 \begin{proof}
 We have to show that for any morphism $(v, w) : U \to \sM(X)^2$ where
@@ -2445,7 +2465,7 @@ it is an equivalence by using the fact that on fibre categories, it is simply
 the crystallization functor which is an equivalence by \cref{prop:diff-op-ring}.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{prop:frml-grpd-bndry-map-fibre}
 In the context of \cref{defn:arr-bun-fixed-src-trgt}, setting $\mcY = X_\sF$ for
 a smooth formal groupoid $(X, \sF)$,
 $\Diamond^{-1}(E) = E_\diamond, \Diamond^{-1}(F) = F_\diamond$ and
@@ -2496,9 +2516,9 @@ on the other.
 \end{proof}
 
 With this, we can prove the algebraicity of the moduli stack of
-arrow bundles on a smooth formal groupoid whenever the moduli stacks
-vector bundles, $\Lambda_\sF$--modules and arrow bundles on the object
-scheme of the formal groupoid are algebraic.
+arrow bundles on a smooth formal groupoid whenever the moduli stacks of vector
+bundles, $\Lambda_\sF$--modules and arrow bundles on the object scheme of the
+formal groupoid are algebraic.
 
 \begin{thm}\label{thm:mod-st-arr-bun-formal-grpd-alg}
 Let $(X, \sF)$ be a smooth formal groupoid over $S$, where the map $X \to S$ is
@@ -2538,384 +2558,294 @@ satisfy descent, we conclude that a morphism $s : (E, \phi) \to (F, \psi)$
 is a morphism of $\Lambda_{\sF, Z}$--modules if and only if the following
 diagram commutes:
 \[\begin{tikzcd}
-\Lambda_{\sF, Z, 1} \oplus E
-\ar[r, "\phi"] \ar[d, "\id_{\Lambda_{\sF, Z, 1}} \oplus s" left] &
+\Lambda_{\sF, Z, 1} \otimes E
+\ar[r, "\phi"] \ar[d, "\id_{\Lambda_{\sF, Z, 1}} \otimes s" left] &
 E \ar[d, "s"] \\
-\Lambda_{\sF, Z, 1} \oplus F \ar[r, "\psi" below] & F
+\Lambda_{\sF, Z, 1} \otimes F \ar[r, "\psi" below] & F
 \end{tikzcd}\]
 
 Now, consider the $\Lambda_{\sF, U}$--modules $(E_0, \phi), (F_0, \psi)$
 corresponding to $v, w$ respectively. Then, we define two functors
-$\rho_1, \rho_2 : P^X_{E, F} \to P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$
+$\rho_1, \rho_2 : P^X_{E, F} \to P^X_{\Lambda_{\sF, U, 1} \otimes E, F}$
 as follows. $\rho_1$ sends an object $(r, s)$ to the composite
 \[
-r^<\Lambda_{\sF, Z, 1} \oplus r^<E \to[r<\phi] r^<E \to[s] r^<F
+r^<\Lambda_{\sF, Z, 1} \otimes r^<E \to[r<\phi] r^<E \to[s] r^<F
 \]
 Then, given a morphism $f : (r, s) \to (r', s')$, we have $f^<s' = s$, so that
 $f^<(s' \circ (r')^<\phi) = f^<s' \circ f^<(r')^<\phi = s \circ r^<\phi$. This
-shows that $f$ is also a morphism in $P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$.
+shows that $f$ is also a morphism in $P^X_{\Lambda_{\sF, U, 1} \otimes E, F}$.
 We set $\rho_1(f) = f$.
 It is straightforward to verify that these mappings make $\rho_1$ a functor
 commuting with the projection to $\Aff_{/S}$. Thus, it is a morphism of
 prestacks.
 The map $\rho_2$ sends $(r, s)$ to the composite
 \[
-r^<\Lambda_{\sF, Z, 1} \oplus r^<E \to[\id \oplus s]
-r^<\Lambda_{\sF, Z, 1} \oplus r^<F \to[r^<\psi]
+r^<\Lambda_{\sF, Z, 1} \otimes r^<E \to[\id \otimes s]
+r^<\Lambda_{\sF, Z, 1} \otimes r^<F \to[r^<\psi]
 r^<F
 \]
 If $f : (r, s) \to (r', s')$ is a morphism, then $f^<s' = s$ again, and this
 implies:
 \[
-f^<((r')^<\psi \circ (\id \oplus s'))
-= f^<(r')^<\psi \circ f^<(\id \oplus s')
-= f^<(r')^<\psi \circ (f^<\id \oplus f^<s')
-= r^<\psi \circ (\id \oplus s)
+f^<((r')^<\psi \circ (\id \otimes s'))
+= f^<(r')^<\psi \circ f^<(\id \otimes s')
+= f^<(r')^<\psi \circ (f^<\id \otimes f^<s')
+= r^<\psi \circ (\id \otimes s)
 \]
-so that $f$ is again a morphism in $P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$.
+so that $f$ is again a morphism in $P^X_{\Lambda_{\sF, U, 1} \otimes E, F}$.
 We again set $\rho_2(f) = f$, and can check that this gives a morphism of
 prestacks.
 
-We can then see that $Q^{X_\sF}_{v, w}$ fits into the following
+We can then see that $P^{X_\sF}_{v, w}$ fits into the following
 equalizer diagram:
 \[\begin{tikzcd}
-Q^{X_\sF}_{v, w} \ar[r] &
+P^{X_\sF}_{v, w} \ar[r] &
 P^X_{E, F}
   \ar[r, shift left, "\rho_1" above]
   \ar[r, shift right, "\rho_2" below] &
-P^{X}_{\Lambda_{\sF, U, 1} \oplus E, F}
+P^{X}_{\Lambda_{\sF, U, 1} \otimes E, F}
 \end{tikzcd}\]
 where the first map is the forgetful functor sending objects and morphisms
 to themselves. To see this, we notice that the equalizer is strict since
-all prestacks involved are fibred in $\Set$. Then, we observe that
-that the objects and morphisms of $Q^{X_\sF}_{v, w}$ are a subset of those
-of $P^X_{E, F}$ satisfying the commutativity constraint for being module
-homomorphisms. The equality of the maps $\rho_1, \rho_2$ is precisely
-this condition.
-
-Since $P^{X_\sF}_{v, w} \simeq Q^{X_\sF}_{v, w}$ by
-\cref{prop:bndry-map-fibre-simple}, it remains to show that
-$P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$ are algebraic spaces.
+all prestacks involved are fibred in $\Set$. Then, by
+\cref{prop:frml-grpd-bndry-map-fibre}, the objects
+and morphisms of $P^{X_\sF}_{v, w}$ are a subset of those of $P^X_{E, F}$
+satisfying the commutativity constraint for being module homomorphisms. The
+equality of the maps $\rho_1, \rho_2$ is precisely this condition.
+It remains to show that
+$P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \otimes E, F}$ are algebraic spaces.
 This follows from \cref{prop:bndry-map-repr-alg-sp}. This shows point (i).
 
 In the case that
 $X \to S$ is projective, \cref{thm:X-fppf-proj-bndry-map-aff-fp} applies
-and shows that $P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \oplus E, F}$ are
-affine and of finite presentation over $U$. Since equalizers over $S$
-are equivalent to equalizers over $U$ and the properties of being affine and of
+and shows that $P^X_{E, F}, P^X_{\Lambda_{\sF, U, 1} \otimes E, F}$ are
+affine and of finite presentation over $U$. Since an equalizer over $S$
+is also an equalizer over $U$, and the properties of being affine and of
 finite presentation are preserved under finite limits, we must have that
-$P^{X_\sF}_{v, w} \simeq Q^{X_\sF}_{v, w}$ is affine and of finite presentation
-over $U$. This shows point (ii).
+$P^{X_\sF}_{v, w}$ is affine and of finite presentation
+over $S$. This shows point (ii).
 %\todo[inline]{Recheck the claim about base change of equalizers, and the
 %preservation of the properties of being affine and of finite presentation.}
 
 For (iii), we observe that $\partial_{X_\sF}$ being of finite
 presentation and $\sM(X_\sF)$ being (locally) of finite presentation implies
-that the morphism $\sM_1(X_\sF) \to[\partial_{X_\sF}] \to \sM(X_\sF) \to S$
+that the morphism $\sM_1(X_\sF) \to[\partial_{X_\sF}] \sM(X_\sF)^2 \to S$
 is (locally) of finite presentation.
 \end{proof}
 
-\begin{thm}\label{thm:mod-st-conn-alg}
+We will now recall that $\sM(X_\sF)$ is well-behaved under some mild conditions,
+which is well-known \cite[Theorem 6.13]{GeomNonAbHodgeFilt},
+and show that some of the good behaviour of $\sM(X_\sF)$ transfers
+over to $\sM_1(X_\sF)$.
+
+\begin{prop}\label{prop:mod-Lambda-forget-aff-loc-fp}
+For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
+$X \to S$ is smooth and projective, then
+the forgetful functor $\sM(X_\sF) \to \sM(X)$ is affine and locally of
+  finite presentation.
+In particular, $\sM(X_\sF)$ is algebraic, locally of finite presentation and has
+  affine diagnoal over $S$.
+\end{prop}
+\begin{proof}
+We first show that the forgetful map $\sM(X_\sF) \to \sM(X)$ is affine and of
+finite presentation. To see this, we observe that for any morphism
+$v : U \to \sM(X)$ for some object $\Aff_{/S}$ corresponding to a finite locally
+free $\mcO_{U \times X}$--module $E$,
+we consider the fibre product $\sM(X_\sF; E) := \sM(X_\sF) \times_{\sM(X)} U$.
+Unwrapping the definition of fibre products, the underlying category
+of this stack has the following description:
+\begin{itemize}
+\item Objects are tuples $(v, F, \phi, \alpha)$ where:
+  \begin{itemize}
+  \item $v : V \to U$ is an object in $\Aff_{/S/U}$.
+  \item $F$ is a finite locally free sheaf on $V \times X$.
+  \item $\phi : \Lambda_{\sF, V} \otimes F \to F$ is a $\Lambda_{\sF, V}$--module
+    structure on $F$.
+  \item $\alpha : v^<E \to F$ is an isomorphism of locally free sheaves.
+  \end{itemize}
+\item Morphisms $(v, F, \phi, \alpha) \to (v', F', \phi', \alpha')$ are tuples
+  $(f, a)$ where:
+  \begin{itemize}
+  \item $f : V = \dom(v) \to V' = \dom(v')$ is a morphism over $U$.
+  \item $a : f^<F' \to F$ is an isomorphism of $\Lambda_{\sF, V}$--modules, such
+    that the following diagram commutes:
+  \[\begin{tikzcd}
+  v^<E = f^<(v')^<E \ar[r, "f^<\alpha'"] \ar[d, "\id" left] &
+  f^<F' \ar[d, "a"] \\
+  v^<E \ar[r, "\alpha" below] &
+  F \\
+  \end{tikzcd}\]
+  \end{itemize}
+\end{itemize}
+We observe that each object $(v, F, \phi, \alpha)$ of this category is
+isomorphic to the object
+\[
+(v, v^<E, \alpha^{-1} \circ \phi \circ (\id_{\Lambda_{\sF, V}} \otimes \alpha),
+  \id_{v^<E})
+\]
+via the morphism $(\id_V, \alpha)$. Next, consider a morphsim
+\[
+(f, a) : (v, v^<E, \phi, \id_{v^<E}) \to (v', (v')^<E, \phi', \id_{(v')^<E})
+\]
+The commutativity condition in the definition of morphisms becomes
+\[
+a \circ f^<\id_{(v')^<E} = \id_{v^<E} \circ \id_{v^<E}
+\iff a = \id_{v^<E}
+\]
+which implies that $f^<\phi' = \phi$, by the fact that $a$ is a morphism
+$\Lambda_{\sF, V}$--modules. This shows that the underlying category is, in
+turn, equivalent to the category with the following description:
+\begin{itemize}
+\item Objects are tuples $(v, \phi)$ where:
+  \begin{itemize}
+  \item $v : V \to U$ is an object in $\Aff_{/S/U}$.
+  \item $\phi : \Lambda_{\sF, V} \otimes v^<E \to v^<E$ is a
+    $\Lambda_{\sF, V}$--module structure on $F$.
+  \end{itemize}
+\item Morphisms $(v, \phi) \to (v', \phi')$ is a morphism
+  $f : V = \dom(v) \to V' = \dom(v')$ over $U$ such that $f^<\phi' = \phi$.
+\end{itemize}
+
+A very similar argument as in the proof of
+\cref{thm:mod-st-arr-bun-formal-grpd-alg} shows that this is a finite limit
+involving $P^X_{\Lambda_{\sF, U, 1}^{\otimes 2} \otimes E, E}$,
+$P^X_{\Lambda_{\sF, U, 1} \otimes E, E}$,
+$P^X_{\mcO_{U \times X} \otimes E, E}$, that captures the commutativity
+constraints defining the structure map of a module sheaf, and hence is an
+affine scheme of finite presentation by \cref{thm:X-fppf-proj-bndry-map-aff-fp}
+and the preservation of these properties under finite limits.
+Since the morphism $\sM(X_\sF) \to \sM(X)$ is affine and of finite presentation,
+while $\sM(X)$ is algebraic locally of finite presentation and has affine
+diagonal by \cite[Theorem 1.0.1]{Wang-BunG}, $\sM(X_\sF)$
+is algebraic by
+\cite[\href{https://stacks.math.columbia.edu/tag/05UM}{Lemma 05UM}]
+{stacks-project} and has affine diagonal by \cite[Lemma 4.9]{ModQuivBun}.
+Then, in the composite $\sM(X_\sF) \to \sM(X) \to S$, the first morphism is of
+finite presentation and the second one is locally of finite presentation by
+\cite[Theorem 1.0.1]{Wang-BunG} again, showing that $\sM(X_\sF)$ is locally
+of finite presentation over $S$.
+\end{proof}
+
+\begin{rmk}
+This is likely a direct consequence of the fibre computation in the proof of
+\cite[Theorem 6.13]{GeomNonAbHodgeFilt}, but we felt it is useful to have
+a simpler proof in the realm of $1$--stacks.
+\end{rmk}
+
+\begin{thm}\label{thm:mod1-Lambda-alg-aff-diag-loc-fp}
+For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
+$X \to S$ is smooth and projective, then $\sM_1(X_\sF)$ is algebraic, locally of
+finite presentation and has affine diagonal.
+\end{thm}
+\begin{proof}
+$\sM(X_\sF)$ has these properties by \cref{prop:mod-Lambda-forget-aff-loc-fp},
+and hence, so does $\sM(X_\sF)^2$. Then, since the morphism $\partial_{X_\sF}$
+is affine by \cref{thm:mod-st-arr-bun-formal-grpd-alg}(ii), $\sM_1(X_\sF)$
+is algebraic by
+\cite[\href{https://stacks.math.columbia.edu/tag/05UM}{Lemma 05UM}]
+{stacks-project} and has affine diagonal by \cite[Lemma 4.9]{ModQuivBun}.
+Then, the morphism $\sM(X_\sF)^2 \to \sM(X)^2$ is locally of finite presentation
+by \cref{prop:mod-Lambda-forget-aff-loc-fp} again, while
+$\partial_{X_\sF}$ is locally of finite presentation by
+\cref{thm:mod-st-arr-bun-formal-grpd-alg}(ii). Also,
+$\sM(X)^2$ is locally of finite presentation by \cite[Theorem 1.0.1]{Wang-BunG}.
+This shows that the composite
+\[
+\sM_1(X_\sF) \to[\partial_{X_\sF}] \sM(X_\sF)^2 \to \sM(X)^2 \to S
+\]
+is locally of finite presentation.
+\end{proof}
+
+\begin{thm}\label{thm:mod-st-conn-alg-lfp-aff-diag}
 In the case that $X \to \Spec(k)$ is a smooth and projective morphism,
 the moduli stacks
 $\sM_1(X_{Dol}), \sM_1(X_{dR}), \sM_1(X_{Hod})$ parametrizing
 Higgs bundle morphisms, connection morphisms and $\lambda$--connection
-morphisms respectively over $X$ are all agebraic.
+morphisms respectively over $X$ are all agebraic, locally of finite presentation
+and have affine diagonal.
 \end{thm}
 \begin{proof}
 For the first two take $S = \Spec(k)$, and for the third, take
-$S = \bA^1_k$ and apply \cref{thm:mod-st-arr-bun-formal-grpd-alg} in combination
-with \cref{thm:mod-st-arr-bun-alg}, the well known fact that
-$\sM(\mcX)$ is algebraic and \cite[Theorem 6.13]{GeomNonAbHodgeFilt}.
+$S = \bA^1_k$, and apply \cref{thm:mod1-Lambda-alg-aff-diag-loc-fp}.
 \end{proof}
 
 \begin{rmk}
 The result \cite[Theorem 6.13]{GeomNonAbHodgeFilt} states that the moduli
 stack of complexes of $\Lambda_\sF$--modules that are perfect as complexes
-of $\mcO_X$--modules is locally geometric $n$--stacks. However, we can unpack
+of $\mcO_X$--modules is a locally geometric $n$--stacks. However, we can unpack
 the meaning of this to discover that this shows the algebraicity of the
 sub--$1$--stack of complexes concentrated in degree $0$.
 \end{rmk}
 
-%\begin{thm}\label{thm:mod-arr-bun-formal-grpd-loc-fin-pre}
-%For any smooth formal groupoid $(X, \sF)$, if the morphism $X \to S$
-%is smooth and projective, there exists an affine, smooth, surjective morphism
-%$a : A \to \sM_1(X_\sF)$ where $A$ is an algebraic space, locally of finite
-%presentation. In particular, $\sM_1(X_\sF)$ is locally of finite presentation.
-%\end{thm}
-%\begin{proof}
-%By \cite[Theorem 1.0.1]{Wang-BunG}, $\sM(X)$ is algebraic, locally of
-%finite presentation and has affine diagonal. By
-%\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma 04YF}]
-%{stacks-project},
-%we can choose a smooth atlas $a : \coprod_{i \in I} U_i \to \sM(X)$ where each
-%$U_i$ is an affine scheme of finite presentation over $S$.
-%Since $\sM(X)$ has an affine diagonal, $a$ is an affine morphism.
-%Hence, $a^2 = (a \times a) : \br{\coprod_{i \in I} U_i}^2
-%\cong \coprod_{i, j \in I} (U_i \times U_j) \to \sM(X)^2$
-%is an affine, smooth, surjective morphism with each $U_i \times U_j$ of finite
-%presentation.
-%We denote $\br{\coprod_{i \in I} U_i}^2$ by $A''$.
-%At the same time, the boundary map
-%$\partial_{X_\sF} : \sM_1(X_\sF) \to \sM(X_\sF)^2$
-%is representable by algebraic spaces by \cref{thm:mod-st-arr-bun-formal-grpd-alg}.
-%Next, we recall from the proof of \cite[Theorem 6.13]{GeomNonAbHodgeFilt} that
-%the forgetful map $\sM(X_\sF) \to \sM(X)$ is geometric, which simply means
-%representable by algebraic spaces in our context.
-%We can thus take the following fibre product:
-%\[\begin{tikzcd}
-%A \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
-%A' \ar[r] \ar[d] \ar[rd, phantom, "\lrcorner" very near start] &
-%A'' \ar[d, "a^2"] \\
-%\sM_1(X_\sF) \ar[r, "\partial_{X_\sF}" below] &
-%\sM(X_\sF)^2 \ar[r] &
-%\sM(X)^2
-%\end{tikzcd}\]
-%to get an affine, smooth, surjective morphism $A \to \sM_1(X_\sF)$, with $A$
-%an algebraic space.
-%\end{proof}
-
 %==============================================================================%
 
-\section{Quiver Bundles}\label{sec:QuivBun}
+\subsection{Quiver Bundles on Formal Groupoids}\label{subsec:QuivBun}
 
-After having a moduli stack parametrizing morphisms of vector bundles, Higgs
-bundles, connections or $\lambda$--connections, it is natural to seek a moduli
-stack parametrizing more general diagrams or graphs in the categories of these
-objects. In light of \cref{thm:arr-bun-arr-sec-equiv} and
-\cref{thm:mod-arr-bun-formal-grpd-concrete}, all results of
-\cite[\S 3, \S 4]{ModQuivBun} now apply to $\sM_1(X_\sF)$,
-and we obtain the desired moduli stacks parametrizing finite shape diagrams
-of connections or $\lambda$--connections by varying the formal groupoid
-$(X, \sF)$. At the same, they will all be algebraic whenever
-$\sM_1(X_\sF)$ is.
-Nevertheless, it is still desirable to show that the limits defining
-these moduli stacks are equivalent to the intuitive definitions.
-We will leave some of this work for the thesis but we will record the intuitive
-definitions and statements of results we seek here.
+In \cite[\S 4]{ModQuivBun}, for each stack $\mcY$ and each fintite simplicial
+set $I$, we gave a construction of a moduli stack $\mcM_{\Vect(\mcY), I}$
+parametrizing diagrams of vector bundles of shape $I$ on a stack $X$. In fact,
+the construction given there is still well-defined when $\mcY$ is a prestack.
+This construction was given as a finite iterated limit involving the (pre)stacks
+$\sM(\mcY), \sM_1(\mcY)$ and $\mathrm{pt}$. Now, in light of
+\cref{thm:arr-bun-arr-sec-equiv} and
+\cref{thm:mod-arr-bun-formal-grpd-concrete}, if we take $\mcY = X_\sF$
+for some formal groupoid $(X, \sF)$, by varying $\sF$ to be
+$\sF_{Dol}, \sF_{dR}$ or $\sF_{Hod}$, we obtain
+moduli stacks parametrizing $I$--shaped diagrams of connections,
+$\lambda$--connections, or Higgs bundles.
 
 \begin{notn}
-For a prestack $\mcY$, we denote the two maps
-$\sM_1(\mcY) \to[\partial_\mcY] \sM(\mcY)^2 \to[pr_i] \sM(\mcY)$
-for $i = 1, 2$ as $s, t$ (standing for ``source'' and ``target'')
-respectively.
+For notational consistency with the rest of the present paper,
+we will write $\mcM_{\Vect(X_\sF), I}$ as $\sM_I(X_\sF)$.
 \end{notn}
 
-\begin{cns}
-Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
-we define a category $\sM_I(\mcY)$ with the following data:
-\begin{itemize}
-\item Objects are tuples $(u, D)$ where
-  \begin{itemize}
-  \item $u : U \to S$ is an object of $\Aff_{/S}$
-  \item $D : I \to \Vect(U \times \mcX)$ is a functor: that is, a diagram of
-    finite locally free sheaves over $U \times \mcX$ indexed by $I$
-  \end{itemize}
-\item Morphisms $(u, D) \to (u', D')$ are tuples $(f, \alpha)$ where:
-  \begin{itemize}
-  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S/U}$
-  \item $\alpha : f^< \circ D' \To D$ is a natural isomorphism of functors:
-  \[\begin{tikzcd}
-  I \ar[rr, "D'", ""{below, name=U}] \ar[rd, "D" below left] & &
-  \Vect(U' \times \mcX) \ar[ld, "f^<" below right] \\
-  & \Vect(U \times \mcX) \ar[from=U, Leftarrow, "\alpha", shorten=0.35em] &
-  \end{tikzcd}\]
-  \end{itemize}
-\end{itemize}
-\end{cns}
-
-\begin{thm}\label{thm:mod-quiv-bun-simple}
-Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
-$\sM_1(\mcY)$ is a equivalent as a prestack to the prestack
-$\mcM_{\Vect(\mcY), I}$ of \cite[Definition 4.4]{ModQuivBun}.
-\end{thm}
-\begin{proof}
-Proof left for the thesis.
-\end{proof}
-
-\begin{thm}
-If $X \to S$ is a smooth, projective morphism, then for any finite simplicial
-set $I$, $\sM_I(X)$ is algebraic, locally of finite presentation and has an
-affine diagonal.
-\end{thm}
-\begin{proof}
-This is \cite[Theorem 4.11]{ModQuivBun}.
-\end{proof}
-
-\begin{cns}
-Given a formal groupoid $(X, \sF)$ over $S$ and a finite simplicial set $I$,
-we define a category $\sM_I(X, \sF)$ with the following data:
-\begin{itemize}
-\item Objects are tuples $(u, D)$ where
-  \begin{itemize}
-  \item $u : U \to S$ is an object of $\Aff_{/S}$
-  \item $D : I \to \LMod_{flf}(u^<\Lambda_\sF)$ is a functor: that is, a
-    diagram of $u^<\Lambda_\sF$--modules over $U \times X$, indexed by $I$,
-    whose vertices are finite locally free as $\mcO_{U \times X}$--modules
-  \end{itemize}
-\item Morphisms $(u, D) \to (u', D')$ are tuples $(f, \alpha)$ where:
-  \begin{itemize}
-  \item $f : U = \dom(u) \to U' = \dom(u')$ is a morphism in $\Aff_{/S/U}$
-  \item $\alpha : f^< \circ D' \To D$ is a natural isomorphism of functors:
-  \[\begin{tikzcd}
-  I \ar[rr, "D'", ""{below, name=U}] \ar[rd, "D" below left] & &
-  \LMod_{flf}((u')^<\Lambda_\sF) \ar[ld, "f^<" below right] \\ &
-  \LMod_{flf}(u^<\Lambda_\sF)
-    \ar[from=U, Leftarrow, "\alpha", shorten=0.35em] &
-  \end{tikzcd}\]
-  \end{itemize}
-\end{itemize}
-\end{cns}
-
-\begin{thm}
-Given a formal groupoid $(X, \sF)$ over $S$ and a finite simplicial set $I$,
-$\sM_I(X ,\sF)$ is a equivalent as a prestack to the prestack
-$\mcM_{\Vect(X_\sF), I}$ of \cite[Definition 4.4]{ModQuivBun}.
-\end{thm}
-\begin{proof}
-Proof left for the thesis.
-\end{proof}
-
-\begin{thm}\label{thm:categorification}
-Given a prestack $\mcY \in \PSt_{/S}$ and a morphism of finite simplicial sets
-$F : J \to I$, we have a morphism of prestacks
-$\sM_F(\mcY) : \sM_I(\mcY) \to \sM_J(\mcY)$ defined by:
-\[\begin{array}{ccc}
-(u, D) & \mapsto & (u, D \circ F) \\
-(f, \alpha) & \mapsto & (u, \alpha \star F)
-\end{array}\]
-Furthermore, these maps are the same as the maps
-$\mcM_{\Vect(\mcY), I} \to \mcM_{\Vect(\mcY), J}$ given by the functor
-defined in \cite[Definition 4.4]{ModQuivBun}.
-Finally, the assignment $I \to \sM_I(\mcY)$ is a functor
-$\sSet_{fin}^\op \to \PSt_{/S}$, which factors through $\St_{/S}$
-if $\mcY$ is a stack.
-\end{thm}
-\begin{proof}
-Proof left for the thesis.
-\end{proof}
-
-\begin{rmk}
-For inclusions of simplicial sets $\iota : J \hto I$, the
-map $\sM_\iota(\mcY)$ sends a diagram to the sub-diagram indexed by $J$.
-For a (strict) epimorphism of simplicial sets $\psi : J \to I$, the map
-$\sM_\psi(\mcY)$ sends a diagram $F$ indexed by $I$ to the $J$--indexed diagram
-obtained by replacing each vertex $F(i)$ with the
-constant $\psi^{-1}(i)$--indexed diagram valued at $F(i)$.
-\end{rmk}
+Furthermore, $\sM_I(X_\sF)$ is contravariantly functorial in $I$ by
+construction. Taking $I = \Delta^n$ for various $n$, we thus obtain, in
+particular, a simplicial object $\sM_{\bullet}(\mcY)$ whose levels are moduli
+stacks of diagrams of vector bundles of shape $\Delta^n$, and whose structure
+maps are given by ``face'' and ``degeneracy'' maps. This is what we mean by the
+categorification of the various sides of non-Abelian Hodge theory. In
+particular, $\sM_\bullet(X_{Hod})$ is the categorification of the non-Abelian
+Hodge filtration.
 
 \begin{rmk}\label{rmk:smplcl-stacks}
-In the case that $\mcY$ is nice enough --- that is, satisfying the hypotheses
-of \cite[Theorem 4.10]{ModQuivBun} --- \cref{thm:categorification} says, in
-particular that we have a simplicial object $\sM_{\bullet}(\mcY)$
-whose levels are the algebraic moduli stacks of diagrams of vector bundles of
-shape $\Delta^n$, and whose structure maps are given by ``face''
-and ``degeneracy'' maps. Taking $\mcY = X_\sF$ for various formal groupoids
-$(X, \sF) \in \set{(X, \sF_{Dol}), (X, \sF_{dR}), (X, \sF_{Hod})}$ in previous
-statement is what we mean by the categorification of the various sides of
-non-Abelian Hodge theory. In particular, $\sM_\bullet(X_{Hod})$ is the
-categorification of the non-Abelian Hodge filtration. However,
-we note that since there are no higher morphisms in the category of sheaves
-over a prestack, we cannot expect these objects to hold much important
-information beyond simplicial dimension $1$: that is, for sheaves over
+However, we note that since there are no higher morphisms in the
+category of sheaves over a prestack, we cannot expect these objects to hold much
+important information beyond simplicial dimension $1$: that is, for sheaves over
 $1$--stacks, $\sM_0(\mcY), \sM_1(\mcY)$ should contain all the important
-information. The full simplicial theory becomes relevant
-when we are dealing with sheaves of simplicial Abelian groups, chain complexes
-or spectra on (derived) stacks, but we will defer any discussion of this point
-to the thesis.
+information. The full simplicial theory becomes relevant when we are dealing
+with sheaves of simplicial Abelian groups, chain complexes or spectra on
+(derived) stacks, but we will defer a discussion of this point to future
+work.
 \end{rmk}
 
-We now observe that $\sM_I(X_\sF)$ is ``well-behaved'' if $\sM(X_\sF)$ is.
+We now observe that $\sM_I(X_\sF)$ is well-behaved under some mild conditions
+on $(X, \sF)$.
 
 \begin{thm}\label{thm:mod-quiv-bun-formal-grpd-loc-fin-pre}
 For any smooth formal groupoid $(X, \sF)$, if the morphism $X \to S$
-is smooth and projective, and $\sM(X_\sF)$ is (locally) of finite presentation,
-then for any finite simplicial set $I$, $\sM_I(X_\sF)$ is (locally) of
-finite presentation.
+is smooth and projective, for any finite simplicial set $I$, $\sM_I(X_\sF)$ is
+algebraic, locally of finite presentation and has affine diagonal.
 \end{thm}
 \begin{proof}
-By \cref{thm:mod-quiv-bun-simple}, $\sM_I(X_\sF)$ is a limit of a finite
-diagram involving $\sM_1(X_\sF)$ and $\sM(X_\sF)$. The claim now follows
-from point (iii) of \cref{thm:mod-st-arr-bun-formal-grpd-alg}, and the fact
-that the property of being (locally) of finite presentation is preserved under
-taking finite limits.
-\end{proof}
-
-We end this section stating some results that transfer linear algebraic
-operations such as direct sums, tensor products and duals to the context
-of moduli stacks of quiver bundles over a prestack.
-
-\begin{thm}
-Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
-we have a morphisms of prestacks
-$- \otimes - : \sM_I(\mcY) \times \sM_I(\mcY) \to \sM_I(\mcY)$
-defined as follows.
-It sends an object $(u, D_1, D_2)$ over $u : U \to S \in \Aff_{/S}$,
-where $D_1, D_2 : I \to \Vect(U \times \mcY)$,
-to the objectwise tensor product $D \otimes D'$ defined by:
-\[
-(D_1 \otimes^I D_2)(i) = D_1(i) \otimes_{\mcO_{U \times \mcY}} D_2(i)
-\]
-A morphism $(f, \alpha_1, \alpha_2) : (u, D_1, D_2) \to (u', D_1', D_2')$,
-where $\alpha : f^<D_1' \To D_1, \alpha_2 : f^<D_2' \To D_2$,
-is sent to the morphism $(f, \alpha_1 \otimes^I \alpha_2)$ where
-$\alpha_1 \otimes^I \alpha_2$ is defined by:
-\[
-(\alpha_1 \otimes^I \alpha_2)_i :=
-\alpha_{1, i} \otimes_{\mcO_{U \times \mcY}} \alpha_{2, i} :
-(f^<D_1' \otimes^I f^<D_2')(i) \cong (f^<(D_1' \otimes^I D_2'))(i) \to
-(D_1 \otimes^I D_2)(i)
-\]
-There is a similarly defined morphism of prestacks
-$- \oplus^I -$ defined with direct sums in place of tensor products.
-\end{thm}
-\begin{proof}
-Proof left for the thesis.
-\end{proof}
-
-\begin{thm}
-Given a prestack $\mcY \in \PSt_{/S}$ and a finite simplicial set $I$,
-we have a morphism of prestacks
-$(-)^\vee : \sM_I(\mcY) \to \sM_{I^\op}(\mcY)$
-defined as follows.
-It sends an object $(u, D)$ over $u : U \to S \in \Aff_{/S}$,
-where $D : I \to \Vect(U \times \mcY)$,
-to the object $(u, D^\vee)$ where $D^\vee$ is the objectwise dual
-defined as follows:
-\[
-D^\vee(i) := D(i)^\vee
-\]
-noting that $D^\vee$ defines a functor $I^\op \to \Vect(U \times \mcY)$.
-A morphism
-$(f, \alpha) : (u, D) \to (u', D')$,
-where $\alpha : f^<D' \To D$, is sent
-to the morphism $(f, \alpha^\vee)$ where $\alpha^\vee$ is defined by:
-\[
-(\alpha^\vee)_i := (\alpha_i^{-1})^\vee : f^<D'(i)^\vee \to D(i)^\vee
-\]
-In particular, we have also have an analogue of the internal Hom defined
-by
-\[
-[-, -] := (-)^\vee \otimes^I - :
-  \sM_{I^\op}(\mcY) \times \sM_I(\mcY) \to \sM_I(\mcY)
-\]
-\end{thm}
-\begin{proof}
-Proof left for the thesis.
+By construction, $\sM_I(X_\sF)$ is an iterated finite limit
+involving $\sM_1(X_\sF)$, $\sM(X_\sF)$ and $\mathrm{pt}$. The claim now follows
+\cref{prop:mod-Lambda-forget-aff-loc-fp},
+\cref{thm:mod1-Lambda-alg-aff-diag-loc-fp}
+and the fact that the properties involved are preserved under taking finite
+limits.
 \end{proof}
 
 %==============================================================================%
 
-\section{Looking Ahead}\label{sec:Future}
+\subsection{Non-Abelian Hodge Theory}\label{subsec:NonAbHodge}
 
-\subsection{Non-Abelian Hodge Theory}
-
-What remains is to produce some kind of non-Abelian Hodge correspondence between
-the simplicial stacks $\sM_\bullet(X_{dR})$ and $\sM_\bullet(X_{Dol})$
-described in \cref{sec:QuivBun}. In light of \cref{rmk:smplcl-stacks},
+We wish to have an analogue of the non-Abelian Hodge correspondence between
+the simplicial stacks $\sM_\bullet(X_{dR})$ and $\sM_\bullet(X_{Dol})$.
+In light of \cref{rmk:smplcl-stacks}, in this work,
 we will mainly deal with the truncated simplicial objects consisting of
 $\sM_1(-)$ and $\sM(-)$ and the terminal stack $\Aff_{/S}$ in higher degrees,
-as we are focussing on sheaves on $1$--stacks at the moment.
+as we are focussing on sheaves of sets on $1$--stacks.
 We first recall that the non-Abelian Hodge correspondence has some
 restrictions. First, it is a bijection between moduli spaces of flat
 connections on one side and Higgs bundles on the other side, which happens to
@@ -2924,120 +2854,59 @@ rational Chern classes on the Higgs bundle side. It is known that
 it cannot be extended
 \cite[Counterexample on pages 38---39]{ModRepFunGrpII}. Furthermore,
 the mapping is neither complex analytic nor smooth even though both sides have
-complex structures. Hence, we need some way to pass from algebraic stacks
-to topological stacks to address non-Abelian Hodge theory.
-For this purpose, let us now suppose $k = \bC$ for simplicity.
+complex structures. This suggests that we need some way to pass from algebraic
+stacks to topological stacks to address non-Abelian Hodge theory.
 This is possible through analytification of stacks, a simple version of which
 we will now discuss.
+For this purpose, let us now suppose $k = \bC$ for simplicity.
 
-\begin{cnj}\label{cnj:mod-Lambda-mod-loc-fp}
-For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
-$X \to S$ is smooth and projective, then $\sM(X_\sF)$ is locally of finite
-presentation. In this case, for any finite simplicial set $I$, $\sM_I(X_\sF)$
-is locally of finite presentation.
-\end{cnj}
-\begin{proof}[Proof idea]
-In this case, the forgetful map $\sM(X_\sF) \to \sM(X)$ should be of finite
-presentation. To see this, we observe that for any morphism
-$v : U \to \sM(X)$ for some object $\Aff_{/S}$ corresponding to a finite locally
-free $\mcO_{U \times X}$--module $E$,
-the fibre product $\sM(X_\sF; E) := \sM(X_\sF) \times_{\sM(X)} U$
-parametrizes $\Lambda_{\sF, U} = v^<\Lambda_{\sF}$--module structures
-$\phi : \Lambda_{\sF, U} \oplus E \to E$ on $E$.
-This should be a limit involving
-$P^X_{\Lambda_{\sF, U, 1}^{\oplus 2} \oplus E, E}$,
-$P^X_{\Lambda_{\sF, U, 1} \oplus E, E}$,
-$P^X_{E, E}$, that captures the commutativity constraints on $\phi$, similar
-to the proof of \cref{thm:mod-st-arr-bun-formal-grpd-alg}, and hence should
-be an affine scheme of finite presentation by
-\cref{thm:X-fppf-proj-bndry-map-aff-fp} and the preservation of these properties
-under finite limits.
-Then, the composite $\sM_1(X_\sF) \to \sM(X) \to S$ is locally of finite
-presentation as $\sM(X)$ is locally of finite presentation over $S$
-by \cite[Theorem 1.0.1]{Wang-BunG}, showing that $\sM_1(X_\sF)$ is locally
-of finite presentation over $S$.
-Then, \cref{thm:mod-st-arr-bun-formal-grpd-alg}
-again implies that $\sM_1(X_\sF)$ is locally of finite presentation.
-Finally, since $\sM_I(X_\sF)$ is locally of finite presentation by
-\cref{thm:mod-quiv-bun-formal-grpd-loc-fin-pre}.
-\end{proof}
+%\begin{prop}\label{prop:affine-truncation}
+%For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
+%$X \to S$ is smooth and projective, then for any finite simplicial set
+%$I$, the morphism $\tau : \sM_I(X_\sF) \to \sM(X)^{|I_0|}$ sending a diagram
+%to the collection of locally free sheaves underlying the vertices, is an affine
+%morphism.
+%\end{prop}
+%\begin{proof}
+%
+%\end{proof}
 
-\begin{cnj}\label{cnj:affine-truncation}
-For a smooth formal groupoid $(X, \sF)$ over $S$, if the morphism
-$X \to S$ is smooth and projective, then for any finite simplicial set
-$I$, the morphism $\tau : \sM_I(X_\sF) \to \sM(X)^{|I_0|}$ sending a diagram
-to the collection of locally free sheaves underlying the vertices, is an affine
-morphism.
-\end{cnj}
-\begin{proof}[Proof idea]
-Given a collection of maps $v_j : U \to \sM(X)$ for $j \in I_0$,
-$\sM_I(X_\sF) \times_{\sM(X)^{|I_0|}} U$ should be
-a finite limit involving the $P^X_{V, W}$ as $V, W$ ranges over various
-permutations of
-$E_i, \Lambda_{\sF, U} \oplus E_i, \Lambda_{\sF, U}^{\oplus 2} \oplus E_i$,
-where $E_i$ is the underlying locally free sheaf of the
-$\Lambda_{\sF, U}$--module indexed by $i \in I_0$. Since the $P^X_{V, W}$
-are affine by \cref{thm:mod-st-arr-bun-formal-grpd-alg}, the fibre product
-should also be affine.
-\end{proof}
-
-Under these conjectures, we can consider a simple analytification of
-$\sM_I(X_\sF)$ for any finite simplicial set $I$.
+%Using these results, we can consider a simple analytification of
+%$\sM_I(X_\sF)$ for any finite simplicial set $I$.
 
 \begin{cns}\label{cns:analytification-mod-st-quiv-bun-formal-grpd}
-Suppose $k = \bC$ and $S$ is of finite presentation over $\bC$.
+Suppose $S$ is of finite presentation over $\bC$.
 Given a smooth formal groupoid $(X, \sF)$ with $X \to S$ projective and smooth,
 and any finite simplicial set $I$, choose a smooth atlas
-$a : A = \coprod_{j \in J} U_j \to \sM(X)^{|I_0|}$ such that
-each $U_j \in \Aff_{/S}$ is of finite presentation using
-\cite[Theorem 1.0.1]{Wang-BunG} and
-\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma
-04YF}]{stacks-project}.
-By \cite[Theorem 1.0.1]{Wang-BunG} again, $\sM(X)$ has affine
-diagonal and this implies $a$ must be an affine morphism.
-We can pullback the atlas to $\sM_I(X_\sF)$ by the map
-$\tau : \sM_I(X_\sF) \to \sM(X)^{|I_0|}$ of \cref{cnj:affine-truncation},
-to obtain a smooth atlas
-\[
-a' : A' = \coprod_{j \in J} (U_j \times_{\sM(X)^{|I_0|}} \sM_I(X_\sF))
-  \to \sM_I(X_\sF)
-\]
-where each $U_j \times_{\sM(X)^{|I_0|}} \sM_I(X_\sF)$ is an affine scheme,
-the map $a'$ is affine, using the fact that both $\tau$ and $a$ are affine.
-Next, $\sM_I(X_\sF)$ is is locally of finite presentation by
-\cref{cnj:mod-Lambda-mod-loc-fp}. This means, $A'$ is locally of finite
-presentation by
-\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma
-04YF}]{stacks-project}
-again. Hence, without loss of generality, we can assume that
-$A'$ is a disjoint union $\coprod_{k \in K} V_k$ of affine schemes $V_k$ of
-finite presentation over $S$. By the fact that $a'$ is affine, we also have that
-\[
-R = A' \times_{\sM_I(X_\sF)} A' =
-\coprod_{k, k' \in K} V_k \times_{\sM_I(X_\sF)} V_{k'}
-\]
-is a disjoint union of affine schemes $V_k \times_{\sM_I(X_\sF)} V_{k'}$,
-also of finite presentation over $S$. This implies that $A'$ and
-$R$ are locally separated algebraic spaces locally of finite presentation over
-$S$ and hence over $\bC$.
-
+$a : A = \coprod_{j \in J} U_j \to \sM_I(X_\sF)$ such that the morphism $a$ is also
+affine and each $U_j \in \Aff_{/S}$ is of finite presentation, using
+\cref{thm:mod-quiv-bun-formal-grpd-loc-fin-pre} and
+\cite[\href{https://stacks.math.columbia.edu/tag/04YF}{Lemma 04YF}]
+{stacks-project}. Since $a$ is affine,
+$R := A \times_{\sM_I(X_\sF)} A = \coprod_{i, j} U_i \times_{\sM_I(X_\sF)} U_j$
+is a disjoint union of affine schemes $U_i \times_{\sM_I(X_\sF)} U_j$
+so that $R$ is a locally separated algebraic space. Of course, $A$ is also
+a locally separated algebraic space for the same reason.
+Furthermore, since $\sM_I(X_\sF)$ and $A$ are locally of finite presentation,
+so is $R$ since this property is preserved by fibre products of stacks.
 Next, by
 \cite[\href{https://stacks.math.columbia.edu/tag/04T5}{Lemma 04T5}]
 {stacks-project},
-$(A', R)$ gives a presentation of $\sM_I(X_\sF)$.
-This allows us to analytify $A', R$ to obtain a groupoid object internal
-to complex analytic spaces, which, in turn, also gives a groupoid object in
-topological spaces. We can take the quotient
-stacks over the respective categories to get complex analytic and topological
-stacks:
+$(A, R)$ gives a presentation of $\sM_I(X_\sF)$.
+This allows us to analytify $A, R$ \cite{GenGAGA} to obtain a groupoid object
+internal to complex analytic spaces, noting that analytification is compatible
+with fibre products \cite[Theorem 2.2.3.]{NonArchAnalytification}. This, in
+turn, also gives a groupoid object in topological spaces. We can take the
+quotient stacks over the respective categories to get complex analytic and
+topological stacks:
 \[
 \sM_I^{an}(X_\sF), \sM_I^{top}(X_\sF)
 \]
-respectively. Note that we retain the notation $X_\sF$ as we are not yet talking
-about the analytification of $X$ and $\sF$.
+respectively. Note that we retain the notation $X_\sF$ although we are not yet
+talking about the analytification of $X$ and $\sF$.
 \end{cns}
 
-We can now state our desired categorification of the non-Abelian Hodge
+We now state our desired categorification of the non-Abelian Hodge
 correspondence as a conjecture:
 
 \begin{cnj}
@@ -3056,15 +2925,15 @@ that induce a ``categorical'' equivalence of simplicial topological stacks
 \]
 for some suitable meaning of ``categorical'' in context of simplicial objects
 in topological stacks. This should still hold if we
-replace $\sM_\bullet(X_{\sF})$, for various choices of $\sF$, with
-the respective moduli stacks obtained by applying our constructions
+replace $\sM_\bullet(X_{dR}), \sM_\bullet(X_{Dol})$ with
+the respective simplicial stacks obtained by applying our constructions
 in this paper with derived mapping stacks in place of ordinary mapping stacks.
 \end{cnj}
 \begin{proof}[Proof idea]
 $\sM_\bullet^{top}(X_{dR})$
 and $\sM_\bullet^{top}(X_{Dol})$ are simplicial substacks of
 $\sM_\bullet(X_{Hod}) \to \bA^1_\bC$: namely, the (simplicial degree-wise)
-fibres above $0, 1 \in \bA^1_\bC$ respectively. We can then try to apply
+fibres above $0, 1 \in \bA^1_\bC$ respectively. We can then try to apply the
 ``preferred sections'' approach as discussed in \cite[\S 4]{NonAbHodgeFilt}
 for every simplicial degree. Assuming we are able to accomplish this,
 we must, of course, then examine how the maps
@@ -3074,64 +2943,9 @@ simplicial maps. Of course, we must also make precise what we mean by
 \end{proof}
 
 \begin{rmk}
-According a conversation we had with Carlos Simpson, it is likely that the above
-result will only be true in the derived setting.
+According to a conversation we had with Carlos Simpson, it is likely that the
+above result will only be true in the derived setting.
 \end{rmk}
-
-\subsection{Hyperbolic Band Theory}
-
-We end with a brief discussion of potential applications of the theory of quiver
-bundles on formal groupoids in hyperbolic band theory.
-Band theory is concerned with the movement of particles such
-as electrons through a lattice of atoms in Euclidean space. This is modelled
-by considering quantum Hamiltonians on the plane with a periodic potential, and
-considering the solutions to these as states. Bloch's theorem, then, states that
-such solutions are of the form:
-\[
-\psi(x) = e^{i(k \cdot x)}u(x)
-\]
-where $k$ is the crystal momentum and
-$u$ is a fixed function periodic with respect to the lattice.
-This implies that physically relevant wave functions
-are in bijection with isomorphism classes of $U(1)$--representations of the
-translation group of the lattice.
-
-In hyperbolic band theory, we consider, instead, a particle moving through
-the hyperbolic plane under a potential function that is invariant with respect
-to the action of a Fuchsian group $G$ on the hyperbolic plane
-\cite{HyperbolicBandTheory}. In this case, the physically relevant states
-are no longer parametrized by only $U(1)$--representations of $G$. There are
-states that correspond to $U(r)$--representations for $r \geq 1$
-\cite{AutBlochTheorems}. Now, since $G$ is the fundamental group of the
-Riemann surface $\Sigma$ obtained by quotienting the hyperbolic plane by $G$,
-$U(r)$--representations of $G$ are vector bundles on $\Sigma$ with structure
-group $U(r)$, equipped with flat $U(r)$--connections.
-
-It is not clear whether this is an exhaustive
-description of the physically relevant states, and hence, it is reasonable
-to treat bundles with connection as some form of generalized state,
-which may or may not be physically relevant.
-In any situation, it is of general interest to find out any categorical
-structure the states of a system might have.
-If we accept that bundles with flat connections
-describe states, then the stack $\sM_1(\Sigma_{dR})$ gives a very
-natural categorical structure to the space $\sM(\Sigma_{dR})$ of states.
-Whether this categorical structure has any physical significance is an
-interesting question.
-
-On the other hand,
-an object of the moduli stack $\sM_1(\Sigma_{dR})$ is
-a tuple $(E, \phi, F, \psi, f)$, where $E, F$ are vector bundles,
-$\phi, \psi$ are connection maps and $f$ is a morphism of vector bundles
-commuting with the connection maps.
-Then, $f$ is a global section of the tensor product bundle
-$E^\vee \otimes F$. Since tensor products describe entanglement
-in quantum mechanics, it might be possible to
-interpret this $f$ as some form of entanglement between the states
-$(E, \phi), (F, \psi)$.
-The algebraicity and finite presentation results
-in this paper could be useful in answering such questions, and
-we intend to pursue such ideas in the thesis.
 
 \printbibliography
 
