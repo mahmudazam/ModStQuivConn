@@ -35,16 +35,8 @@ Canada~ S7N 5E6}
 
 \begin{document}
 
-\maketitle
-
 \begin{abstract}
-In \cite{ModQuivBun}, we constructed, for any finite simplicial set $I$, a
-moduli stack parametrizing  $I$--indexed diagrams of Higgs bundles over a base
-stack $X$, and speculated about extending the non-Abelian Hodge correspondence
-to these moduli stacks. In the present work, we formalize the de Rham side of
-this conjectural extension. We construct moduli stacks parametrizing diagrams of
-bundles with $\lambda$--connections over a base prestack $X$, where $\lambda$
-can be a fixed number or a parameter. Taking $\lambda$ to be $1$ gives a moduli
+In \cite{ModQuivBun}, a moduli stack parametrizing  $I$--indexed diagrams of Higgs bundles over a base stack $X$ was constructed for any finite simplicial set $I$, inspiring speculations about extending the non-Abelian Hodge correspondence to these moduli stacks. In the present work, we formalize the de Rham side of this conjectural extension. We construct moduli stacks parametrizing diagrams of bundles with $\lambda$--connections over a base prestack $X$, where $\lambda$ can be a fixed number or a parameter. Taking $\lambda$ to be $1$ gives a moduli
 stack parametrizing diagrams of bundles with connection, while taking it to be a
 parameter gives a version of Simpson's non-Abelian Hodge filtration for digrams
 of bundles with connection. We show that when $X$ is a smooth and projective
@@ -52,6 +44,8 @@ scheme over an algebraically closed field $k$ of characteristic $0$, these
 moduli stacks are algebraic and locally of finite presentation, and have affine
 diagonal.
 \end{abstract}
+
+\maketitle
 
 \tableofcontents
 
@@ -328,17 +322,16 @@ Hodge filtration.
 
 We would like to thank Gabriel Ribeiro and Qixiang Wang for several
 formative conversations about the de Rham space of a scheme, and Dat Minh Ha,
-for many helpful conversations about general algebraic geometry. We are
-indebted to Carlos Simpson for explaining to us the non-Abelian Hodge
-filtration and many intricacies of non-Abelian Hodge theory. We are grateful to
-Toni Anala for suggesting the use of box tensor products
+for many helpful conversations about relevant algebro-geometry constructions. We are
+indebted to Carlos Simpson for engaging in discussion of some key ideas from non-abelian Hodge theory. We are grateful to
+Toni Annala for suggesting the use of box tensor products
 of universal vector bundles in the present and previous work. We are especially
-indebted to Antoine Bourget for hosting the first named author at CEA Saclay for
-a research stay during which some of the starting ideas of this work were formed,
+indebted to Antoine Bourget for hosting the first-named author at CEA Saclay for
+a research stay in autumn 2024 during which some of the starting ideas of this work were formed,
 as well as several useful conversations about quiver varieties. We are also
 grateful to Campus France and the Embassy of France in Canada for a High Level
-Scientific Fellowship that funded this stay. Throughout this work, the first
-named author was funded by a doctoral Canada Graduate Scholarship from NSERC.
+Scientific Fellowship that funded this stay. The second-named author is grateful to Tony Pantev for very useful discussions during a visit to the University of Pennsylvania in December 2025. Throughout this work, the first
+named-author was funded by a Canada Graduate Scholarship (Doctoral) from NSERC and the second-named author was funded by an NSERC Discovery Grant.
 
 %==============================================================================%
 
@@ -356,15 +349,15 @@ category of functors $C \to D$, and $C^\simeq$ for the core or maximal
 subgroupoid of $C$. For a category $C$ and two objects
 $c, d \in C$, we will write $\Hom_C(c, d)$ or $C(c, d)$ to denote
 the set of morphisms $c \to d$ in $C$.
-We will write an category object internal to a category $C$
+We will write a category object internal to a category $C$
 as a tuples $(O, M, s, t, c, i)$, where $O$ is the object of objects,
 $M$ is the object of morphisms, $s, t, c, i$ are the source, target,
 composition and identity maps respectively.
 
-That said, we will use the following notation for $2$--categorical notions.
+We will use the following notation for $2$--categorical notions.
 Given a pair of objects $a, b$ and $1$--morphisms $f, g : a \to b$ in a
 $2$--category, we will denote a $2$--morphism $\alpha$ from $f$ to $g$ as
-$\alpha : f \To g : a \to b$. We will denote by $- \circ -$, composition of
+$\alpha : f \To g : a \to b$. We will denote by $- \circ -$, the composition of
 $1$--morphisms as usual but also vertical composition. We will denote
 horizontal composition by $- \star -$. We will denote the identity $2$--morphism
 of a $1$--morphism $f$ as $e_f$, but in the case that $f = \id_a$ for some
@@ -396,12 +389,12 @@ preserves limits, we will simply write the word ``limit'' for both
 the $1$--limit of schemes and the $2$--limit of (pre)stacks, and similarly for
 fibre products. By ``colimit'' of prestacks, we will generally mean the
 $2$--colimit. We denote the fibre product functor over a prestack $\mcW$ as
-$- \times_W -$, but $- \times -$, suppressing $\mcW$, when $\mcW = S$.
+$- \times_\mcW -$, but $- \times -$, suppressing $\mcW$, when $\mcW = S$.
 Given prestacks $\mcY_1, \dots, \mcY_n \in \PSt_{/S}$, we write
 $pr_i : \mcY_1 \times \cdots \times \mcY_n \to \mcY_i$ to denote the
 projection of the iterated fibre product onto the $i$--th factor.
-We will write $\mcY^n$ for the $n$--fold fibre product of $\mcY$ with itself $n$
-times.
+We will write $\mcY^n$ for the $n$--fold fibre product of $\mcY$ with itself
+over $S$ $n$ times.
 
 \begin{notn}
 For two prestacks $\mcX, \mcY \in \PSt_{/S}$, we will use the following
@@ -1339,7 +1332,7 @@ of prestacks:
 \Map_S(\mcX, \sB(\mcX)^2)
 \end{tikzcd}\]
 where the right vertical map is induced by the bundle projection of
-$\sH(\mcX)$.
+$\sV(\mcX)$.
 \end{cns}
 
 \begin{prop}\label{prop:M1'-concrete}
@@ -1391,7 +1384,7 @@ $(u, s) \mapsto u, (f, a) \mapsto f$.
 The morphism of prestacks
 \[
 \pi_{\sV(\mcX)} \circ - :
-    \Map_S(\mcX, \sH(\mcX)) \to \Map_S(\mcX, \sB(\mcX)^2)
+    \Map_S(\mcX, \sV(\mcX)) \to \Map_S(\mcX, \sB(\mcX)^2)
 \]
 is given by
 \[
@@ -1453,20 +1446,20 @@ of prestacks given in
 \begin{rmk}\label{rmk:mod-prest-arr-sec}
 An object of the underlying category of $\sM_1'(\mcX)$
 consists of maps
-$U \to S, s : U \times_S \mcX \to \sH(\mcX),
+$U \to S, s : U \times_S \mcX \to \sV(\mcX),
 r = (v, w) : U \to \sM(\mcX)^2$, such that following diagrams $2$--commute:
 \[\begin{tikzcd}
-U \times_S \mcX \ar[r, "s"] \ar[d, "pr_1" left] & \sH(\mcX) \ar[d] \\
+U \times_S \mcX \ar[r, "s"] \ar[d, "pr_1" left] & \sV(\mcX) \ar[d] \\
 U \ar[r, "r" below] & \sM(\mcX) \times_S \sM(\mcX)
 \end{tikzcd}\hspace{3.5em}
 \begin{tikzcd}
-U \times_S \mcX \ar[r, "s"] \ar[d, "pr_2" left] & \sH(\mcX) \ar[d] \\
+U \times_S \mcX \ar[r, "s"] \ar[d, "pr_2" left] & \sV(\mcX) \ar[d] \\
 \mcX \ar[r, "\Delta_\mcX" below] & \mcX \times_S \mcX
 \end{tikzcd}\]
 The $2$--commutativity above means that the map
 $U \times_S \mcX \to[s] \sV(\mcX) \to[\pi_{\sV(\mcX)}] \sB(\mcX)^2$
-is of the form $(v \times_S \id_\mcX, w \times_S \id_\mcX)$
-which is the same as $(v, w) \times \Delta_X$ by the identification
+is of the form $r \times \Delta_X = (v, w) \times \Delta_X$
+which is the same as $(v \times_S \id_\mcX, w \times_S \id_\mcX)$ by the identification
 $\Map_S(\mcX, \sB(X)^2) \simeq
 \Map_S(\mcX, \sM(\mcX)^2) \times \Map_S(\mcX, \mcX^2)$.
 That is, the object is a $2$--categorical diagram in $\PSt_{/S}$ of the form:
@@ -1481,7 +1474,7 @@ U \times \mcX
   \ar[from=U, to=D, Rightarrow, "\phi"] &
 \sB(X)^2
 \end{tikzcd}\]
-Roughly speaking, this data corresponds to a ``global section''
+Roughly speaking, this data corresponds to a global section
 of $(v, w)^\lhd[\mcE(\mcX), \mcE(\mcX)]_{\square}$, where
 $pr_i : \sB(\mcX)^2 \to \sB(\mcX)$ are the projections onto the two factors
 of $\sB(\mcX)$ and not $\sM(\mcX)$ or $\mcX$ separately.
@@ -1676,7 +1669,7 @@ then $\sM_1(X)$:
 \item has affine diagonal (in particular, is quasi-separated).
 \end{enumerate}
 \end{thm}
-\begin{proof}
+\begin{proof}[Proof sketch]
 We observe that $\sM(X) = \coprod_{n = 0}^\infty \Map(X, B\Gl_n)$
 is quasi-separated, locally of finite presentation, and has an affine diagonal by
 \cite[Theorem 1.0.1.]{Wang-BunG}. The projection
@@ -2954,9 +2947,11 @@ fibres above $0, 1 \in \bA^1_\bC$ respectively. We can then try to apply the
 for every simplicial degree. Assuming we are able to accomplish this,
 we must, of course, then examine how the maps
 $\sM_n^{top}(X_{dR}) \to \sM_n^{top, nice}(X_{Dol})$ interact with the
-simplicial maps. Of course, we must also make precise what we mean by
-``categorical equivalence'' and then check that such a condition is satisfied.
+simplicial maps.
 \end{proof}
+
+ Of course, we must also make precise what we mean by
+``categorical equivalence'' and then check that such a condition is satisfied.
 
 \begin{rmk}
 According to a conversation we had with Carlos Simpson, it is likely that the
