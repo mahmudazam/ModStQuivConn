@@ -68,11 +68,11 @@ group characterize solutions to the quantum Yang-Baxter equations
 \cite{KauffmanBraidRepQGates} in the sense of \cite{TopPhasesQC}.
 
 \item Some recent advances in condensed matter physics, namely hyperbolic band
-theory \cites{HyperbolicBandTheory, HypBloch}, are centred around
+theory \cites{HyperbolicBandTheory, AutBlochTheorems, HypBloch}, are centred around
 representations of some choice of discrete translation group acting on the
 hyperbolic plane. In turn, these translation groups are the fundamental groups
 of the Riemann surfaces obtained by quotienting the hyperbolic plane by the
-translation group.
+translation action.
 
 \item A large class of $d = 4, n = 2$ field theories called ``class S''
 \cite{ClassS} obtained by a specific compactification method applied to
@@ -2885,8 +2885,7 @@ For this purpose, let us now suppose $k = \bC$ for simplicity.
 
 \begin{cns}\label{cns:analytification-mod-st-quiv-bun-formal-grpd}
 Suppose $S$ is of finite presentation over $\bC$.
-Given a smooth formal groupoid $(X, \sF)$ with $X \to S$ projective and smooth,
-and any finite simplicial set $I$, choose a smooth atlas
+Given any finite simplicial set $I$ and a smooth formal groupoid $(X, \sF)$ with $X \to S$ projective and smooth, choose a smooth atlas
 $a : A = \coprod_{j \in J} U_j \to \sM_I(X_\sF)$ such that the morphism $a$ is also
 affine and each $U_j \in \Aff_{/S}$ is of finite presentation, using
 \cref{thm:mod-quiv-bun-formal-grpd-loc-fin-pre} and
@@ -2902,7 +2901,7 @@ Next, by
 \cite[\href{https://stacks.math.columbia.edu/tag/04T5}{Lemma 04T5}]
 {stacks-project},
 $(A, R)$ gives a presentation of $\sM_I(X_\sF)$.
-This allows us to analytify $A, R$ \cite{GenGAGA} to obtain a groupoid object
+This allows us to consider analytifications of $A, R$ \cite{GenGAGA} to obtain a groupoid object
 internal to complex analytic spaces, noting that analytification is compatible
 with fibre products \cite[Theorem 2.2.3.]{NonArchAnalytification}. This, in
 turn, also gives a groupoid object in topological spaces. We can take the
